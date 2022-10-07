@@ -45,40 +45,7 @@ public class @Controller : IInputActionCollection, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""D-pad"",
-                    ""id"": ""e3cc3ab8-68ae-47c1-be6d-aaa2c8a1c66b"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""0d23e801-70a2-4175-8267-ecea5dc20001"",
-                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""3819b4e2-392c-4ecb-982c-748ae1709261"",
-                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Stick"",
+                    ""name"": ""Stick_PS3_controller"",
                     ""id"": ""af26d9cc-94a7-4e1e-971a-b6113be847eb"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
@@ -111,9 +78,53 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""Stick_Xbox_controller"",
+                    ""id"": ""c55a0036-670e-4573-9e2b-33f003560aa6"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""2643b057-5573-4e29-8223-cc87a146bb6d"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""9d3df271-2ddb-4627-9b76-3a2436cc40a0"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""6b4bb9d4-d049-4277-981d-8da29c380cca"",
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a747c16-b17b-4f8f-9091-e9c4a1cad8e5"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -134,8 +145,8 @@ public class @Controller : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ed6c5458-3d90-4191-9c00-9835ea063cdf"",
-                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button2"",
+                    ""id"": ""d41cad10-bb6c-4618-a145-753dd88342ef"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -10,12 +10,36 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Yohann/Desktop/Projet fin d'année/Fichier Unity/Chicken_all_stars_clash/Assets/Scripts/movement.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="2FklbXvTge1l9JbK0EbKDXO2lMa" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34994584" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -33,10 +57,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="11056">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="11056" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -53,6 +77,7 @@
       <option name="presentableId" value="Default" />
       <updated>1665044036753</updated>
       <workItem from="1665044053572" duration="15159000" />
+      <workItem from="1665130030144" duration="13627000" />
     </task>
     <servers />
   </component>

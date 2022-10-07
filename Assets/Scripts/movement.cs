@@ -1,102 +1,95 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class movement : MonoBehaviour
-{
-    private float AxisX;
-    public float PlayerSpeed;
-    private float saveSpeed;
-    public float PlayerJumpForce;
-    public GameObject AttackBox,Attack2Box,PlayerPivot;
-    private bool attack,isJumpPressed;
-    public bool isGrounded;
-    private Rigidbody rb;
-    void Start()
-    {
-        AttackBox.SetActive(false); Attack2Box.SetActive(false);
-        rb = GetComponent<Rigidbody>();
-        saveSpeed = PlayerSpeed;
+public class Movement : MonoBehaviour {
+    
+    [SerializeField] private GameObject attackBox;
+    [SerializeField] private GameObject attack2Box;
+    [SerializeField] private GameObject playerPivot;
+    [SerializeField] private bool isNearGrounded,isJumpPressed;
+    [SerializeField] private float playerSpeed;
+    [SerializeField] private float jumpHeight = 1.0f;
+    [SerializeField] private float gravityValue = -9.81f;
+    [SerializeField] private float nearGroundedRange;
+
+    private bool _isGrounded;
+    private float _saveSpeed;
+    private float _axisX;
+    private bool _attack;
+    private bool _airAttack;
+    private Rigidbody _rb;
+    private CharacterController _characterController;
+    private Vector3 _playerVelocity;
+
+    void Start() {
+        attackBox.SetActive(false); attack2Box.SetActive(false);
+        _rb = GetComponent<Rigidbody>();
+        _characterController = GetComponent<CharacterController>();
+        _saveSpeed = playerSpeed;
         isJumpPressed = false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Translate(Vector3.left * PlayerSpeed * AxisX * Time.deltaTime);
-        var position = transform.position;
-        position = new Vector3(Mathf.Clamp(position.x, -155, 35),position.y);
-        transform.position = position;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 8f))
-        {
-            isGrounded = true;
+    
+    private void Update() {
+        isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
+        if (_isGrounded && _airAttack) {
+            CancelInvoke("AttackCooldown");
+            attack2Box.SetActive(false);
+            _attack = false;
         }
-        else
-        {
-            isGrounded = false;
-        }
+        Move();
     }
 
-    private void OnCollisionStay(Collision other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            if (isJumpPressed)
-            {
-                rb.AddForce(Vector3.up * PlayerJumpForce,ForceMode.Impulse);
-                isJumpPressed = false;
-            }
+    private void Move() {
+        _isGrounded = _characterController.isGrounded;
+        if (_isGrounded && _playerVelocity.y < 0) {
+            _playerVelocity.y = 0f;
         }
+        _characterController.Move(new Vector3(-_axisX, 0, 0) * Time.deltaTime * playerSpeed);
+        if (isJumpPressed && _isGrounded) {
+            _playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            isJumpPressed = false;
+        }
+        _playerVelocity.y += gravityValue * Time.deltaTime;
+        _characterController.Move(_playerVelocity * Time.deltaTime);
     }
 
-    public void OnMove(InputValue Moving)
-    {
+    public void OnMove(InputValue Moving) {
         var rotation = transform.rotation;
-        AxisX = Moving.Get<float>();
-        if (AxisX < 0)
-        {
-            PlayerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);
+        _axisX = Moving.Get<float>();
+        if (_attack) return;
+        if (_axisX < 0) {
+            playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);
         }
-        else if(AxisX > 0)
-        {
-            PlayerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
+        else if (_axisX > 0) {
+            playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
         }
     }
 
-    public void OnJump()
-    {
-        if (isGrounded)
-        {
+    public void OnJump() {
+        if (isNearGrounded && !_attack) {
             isJumpPressed = true;
         }
     }
 
     public void OnAttack()
     {
-        if (!attack)
-        {
-            if (isGrounded)
-            {
-                AttackBox.SetActive(true);
-                PlayerSpeed = 0;
-                attack = true;
-                Invoke("AttackCooldown",0.3f);
-            }
-            else
-            {
-                Attack2Box.SetActive(true);
-                attack = true;
-                Invoke("AttackCooldown",0.3f);
-            }
+        if (_attack) return;
+        if (isNearGrounded) {
+            attackBox.SetActive(true);
+            playerSpeed = 0;
+            _attack = true;
+            Invoke("AttackCooldown",0.5f);
+        }
+        else {
+            attack2Box.SetActive(true);
+            _airAttack = true;
+            Invoke("AttackCooldown",0.4f);
         }
     }
 
-    public void AttackCooldown()
-    {
-        AttackBox.SetActive(false); Attack2Box.SetActive(false);
-        PlayerSpeed = saveSpeed;
-        attack = false;
+    public void AttackCooldown() {
+        attackBox.SetActive(false); attack2Box.SetActive(false);
+        playerSpeed = _saveSpeed;
+        _attack = false; _airAttack = false;
     }
 }
