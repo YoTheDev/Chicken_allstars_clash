@@ -9,40 +9,40 @@ public class Movement : MonoBehaviour {
     [SerializeField] private bool isNearGrounded,isJumpPressed;
     [SerializeField] private float playerSpeed;
     [SerializeField] private float jumpHeight = 1.0f;
+    [SerializeField] private float airattackjumpHeight;
+    [SerializeField] private float doubleJumpHeight;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float nearGroundedRange;
 
     private bool _isGrounded;
     private float _saveSpeed;
+    private float _saveGravityValue;
     private float _axisX;
     private bool _attack;
     private bool _airAttack;
-    private Rigidbody _rb;
+    private bool _saveAxisXpositive;
+    private bool _doubleJump;
     private CharacterController _characterController;
     private Vector3 _playerVelocity;
 
     void Start() {
         attackBox.SetActive(false); attack2Box.SetActive(false);
-        _rb = GetComponent<Rigidbody>();
         _characterController = GetComponent<CharacterController>();
         _saveSpeed = playerSpeed;
+        _saveGravityValue = gravityValue;
         isJumpPressed = false;
     }
-    
+
     private void Update() {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
-        if (_isGrounded && _airAttack) {
-            CancelInvoke("AttackCooldown");
-            attack2Box.SetActive(false);
-            _attack = false;
-        }
-        Move();
     }
 
-    private void Move() {
+    private void FixedUpdate() {
         _isGrounded = _characterController.isGrounded;
         if (_isGrounded && _playerVelocity.y < 0) {
             _playerVelocity.y = 0f;
+            _doubleJump = true;
+            gravityValue = _saveGravityValue;
         }
         _characterController.Move(new Vector3(-_axisX, 0, 0) * Time.deltaTime * playerSpeed);
         if (isJumpPressed && _isGrounded) {
@@ -56,18 +56,29 @@ public class Movement : MonoBehaviour {
     public void OnMove(InputValue Moving) {
         var rotation = transform.rotation;
         _axisX = Moving.Get<float>();
-        if (_attack) return;
         if (_axisX < 0) {
-            playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);
+            if (!_attack && !_airAttack) {
+                playerPivot.transform.rotation = Quaternion.Euler(rotation.x, 180, rotation.z); 
+            } 
+            _saveAxisXpositive = false;
         }
         else if (_axisX > 0) {
-            playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
+            if (!_attack && !_airAttack) {
+                playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
+            }
+            _saveAxisXpositive = true;
         }
     }
 
     public void OnJump() {
         if (isNearGrounded && !_attack) {
             isJumpPressed = true;
+        }
+        if (!_isGrounded && _doubleJump) {
+            _playerVelocity.y = 0f;
+            _playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
+            _doubleJump = false;
+            isJumpPressed = false;
         }
     }
 
@@ -81,13 +92,24 @@ public class Movement : MonoBehaviour {
             Invoke("AttackCooldown",0.5f);
         }
         else {
+            _doubleJump = false;
+            gravityValue = _saveGravityValue;
             attack2Box.SetActive(true);
             _airAttack = true;
+            _playerVelocity.y = 0;
+            _playerVelocity.y += Mathf.Sqrt(airattackjumpHeight * -3.0f * gravityValue);
             Invoke("AttackCooldown",0.4f);
         }
     }
 
     public void AttackCooldown() {
+        var rotation = transform.rotation;
+        if (_saveAxisXpositive) {
+            playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
+        }
+        else {
+            playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);
+        }
         attackBox.SetActive(false); attack2Box.SetActive(false);
         playerSpeed = _saveSpeed;
         _attack = false; _airAttack = false;
