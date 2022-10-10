@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour {
     [SerializeField] private GameObject playerPivot;
     [SerializeField] private bool isNearGrounded,isJumpPressed;
     [SerializeField] private float playerSpeed;
+    [SerializeField] private float playerJumpSpeed;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float airattackjumpHeight;
     [SerializeField] private float doubleJumpHeight;
@@ -37,7 +38,8 @@ public class Movement : MonoBehaviour {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         _isGrounded = _characterController.isGrounded;
         if (_isGrounded && _playerVelocity.y < 0) {
             _playerVelocity.y = 0f;
@@ -58,8 +60,8 @@ public class Movement : MonoBehaviour {
         _axisX = Moving.Get<float>();
         if (_axisX < 0) {
             if (!_attack && !_airAttack) {
-                playerPivot.transform.rotation = Quaternion.Euler(rotation.x, 180, rotation.z); 
-            } 
+                playerPivot.transform.rotation = Quaternion.Euler(rotation.x, 180, rotation.z);
+            }
             _saveAxisXpositive = false;
         }
         else if (_axisX > 0) {
