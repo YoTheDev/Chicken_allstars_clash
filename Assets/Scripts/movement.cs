@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement : MonoBehaviour {
+public class movement : MonoBehaviour {
     
     [SerializeField] private GameObject attackBox;
     [SerializeField] private GameObject attack2Box;
@@ -13,7 +13,9 @@ public class Movement : MonoBehaviour {
     [SerializeField] private float airattackjumpHeight;
     [SerializeField] private float doubleJumpHeight;
     [SerializeField] private float gravityValue = -9.81f;
+    [SerializeField] private float dJumpgravityValue = -9.81f;
     [SerializeField] private float nearGroundedRange;
+    [SerializeField] private float fdrag;
 
     private bool _isGrounded;
     private float _saveSpeed;
@@ -36,6 +38,7 @@ public class Movement : MonoBehaviour {
 
     private void Update() {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
+        Debug.Log(_playerVelocity);
     }
 
     private void FixedUpdate()
@@ -50,6 +53,9 @@ public class Movement : MonoBehaviour {
         if (isJumpPressed && _isGrounded) {
             _playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             isJumpPressed = false;
+        }
+        if (!isNearGrounded) {
+            //Add drag
         }
         _playerVelocity.y += gravityValue * Time.deltaTime;
         _characterController.Move(_playerVelocity * Time.deltaTime);
@@ -78,6 +84,7 @@ public class Movement : MonoBehaviour {
         }
         if (!_isGrounded && _doubleJump) {
             _playerVelocity.y = 0f;
+            gravityValue = dJumpgravityValue;
             _playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
             _doubleJump = false;
             isJumpPressed = false;
