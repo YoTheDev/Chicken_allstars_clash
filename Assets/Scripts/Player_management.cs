@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class movement : MonoBehaviour {
+public class Player_management : MonoBehaviour {
     
     [SerializeField] private GameObject attackBox;
     [SerializeField] private GameObject attack2Box;
@@ -15,7 +15,6 @@ public class movement : MonoBehaviour {
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float dJumpgravityValue = -9.81f;
     [SerializeField] private float nearGroundedRange;
-    [SerializeField] private float fdrag;
 
     private bool _isGrounded;
     private float _saveSpeed;
@@ -23,6 +22,7 @@ public class movement : MonoBehaviour {
     private float _axisX;
     private bool _attack;
     private bool _airAttack;
+    private bool _canAirAttack;
     private bool _saveAxisXpositive;
     private bool _doubleJump;
     private CharacterController _characterController;
@@ -38,7 +38,6 @@ public class movement : MonoBehaviour {
 
     private void Update() {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
-        Debug.Log(_playerVelocity);
     }
 
     private void FixedUpdate()
@@ -47,15 +46,14 @@ public class movement : MonoBehaviour {
         if (_isGrounded && _playerVelocity.y < 0) {
             _playerVelocity.y = 0f;
             _doubleJump = true;
+            _canAirAttack = false;
             gravityValue = _saveGravityValue;
         }
         _characterController.Move(new Vector3(-_axisX, 0, 0) * Time.deltaTime * playerSpeed);
         if (isJumpPressed && _isGrounded) {
             _playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             isJumpPressed = false;
-        }
-        if (!isNearGrounded) {
-            //Add drag
+            _canAirAttack = true;
         }
         _playerVelocity.y += gravityValue * Time.deltaTime;
         _characterController.Move(_playerVelocity * Time.deltaTime);
@@ -88,6 +86,7 @@ public class movement : MonoBehaviour {
             _playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
             _doubleJump = false;
             isJumpPressed = false;
+            _canAirAttack = true;
         }
     }
 
@@ -100,11 +99,12 @@ public class movement : MonoBehaviour {
             _attack = true;
             Invoke("AttackCooldown",0.5f);
         }
-        else {
+        else if (_canAirAttack) {
             _doubleJump = false;
             gravityValue = _saveGravityValue;
             attack2Box.SetActive(true);
             _airAttack = true;
+            _canAirAttack = false;
             _playerVelocity.y = 0;
             _playerVelocity.y += Mathf.Sqrt(airattackjumpHeight * -3.0f * gravityValue);
             Invoke("AttackCooldown",0.4f);
