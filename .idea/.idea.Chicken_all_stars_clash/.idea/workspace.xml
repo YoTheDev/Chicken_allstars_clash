@@ -11,7 +11,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PatternSystem/PatternAction.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PatternSystem_Yohann/Dash_Forward.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PatternSystem_Yohann/Pattern_action.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2FklbXvTge1l9JbK0EbKDXO2lMa" />
   <component name="ProjectViewState">
