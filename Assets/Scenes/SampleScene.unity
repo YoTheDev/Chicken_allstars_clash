@@ -1824,7 +1824,7 @@ GameObject:
   - component: {fileID: 831193181}
   m_Layer: 0
   m_Name: Wall 2
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3640,7 +3640,7 @@ GameObject:
   - component: {fileID: 1817318336}
   m_Layer: 0
   m_Name: Wall 1
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3941,9 +3941,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2086711874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b2f6348a94c953459fb3ca9916228cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 7356cb9ebc9ee9042a4ee9a3563917ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossPattern:
-  - {fileID: 11400000, guid: 3f410b91482efea498b201cd2d841949, type: 2}
-  rb: {fileID: 0}
+  RandomizePattern: 1
+  Pattern:
+  - {fileID: 11400000, guid: 94c204ad024ab7d42b172977193537cd, type: 2}
+  Rigidbody: {fileID: 0}

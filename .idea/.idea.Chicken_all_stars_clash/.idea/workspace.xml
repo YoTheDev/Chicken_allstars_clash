@@ -10,10 +10,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PatternSystem_Yohann/Dash_Forward.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PatternSystem_Yohann/Pattern_action.cs" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="ProjectId" id="2FklbXvTge1l9JbK0EbKDXO2lMa" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -64,6 +60,7 @@
       <workItem from="1665387880033" duration="12630000" />
       <workItem from="1665409903376" duration="3705000" />
       <workItem from="1665474018184" duration="17081000" />
+      <workItem from="1665646501084" duration="13629000" />
     </task>
     <servers />
   </component>

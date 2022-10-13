@@ -8,12 +8,15 @@ public class Stay : PatternAction {
 
     public override float PatternDuration => Duration;
 
-    public override void Do(Enemy enemy) {
+    public override void Do(Enemy enemy)
+    {
         enemy.Rigidbody.velocity = Vector3.zero;
+        if (enemy.isCollided) {
+            //Knockback
+        }
     }
 
     public override bool IsFinished(Enemy enemy) {
         return true;
     }
-    
 }

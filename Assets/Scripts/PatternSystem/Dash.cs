@@ -18,5 +18,4 @@ public class Dash : PatternAction {
     public override bool IsFinished(Enemy enemy) {
         return enemy.Rigidbody.velocity.y <= 0;
     }
-    
 }
