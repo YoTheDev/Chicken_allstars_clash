@@ -5,12 +5,18 @@ using UnityEngine;
 public class Dash : PatternAction {
 
     public Vector3 DashPower;
+    public Vector3 KnockbackPower;
     public float Duration;
+
+    public override void isCollided(Enemy enemy) {
+        enemy.Rigidbody.velocity = Vector3.zero;
+        enemy.Rigidbody.AddForce(enemy.transform.TransformDirection(KnockbackPower), ForceMode.Impulse);
+        enemy.Knockback = true;
+    }
 
     public override float PatternDuration => Duration;
 
     public override void Do(Enemy enemy) {
-        Debug.Log(enemy.name+ " doing " + name);
         enemy.Rigidbody.velocity = Vector3.zero;
         enemy.Rigidbody.AddForce(enemy.transform.TransformDirection(DashPower), ForceMode.Impulse);
     }

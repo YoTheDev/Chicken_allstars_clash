@@ -6,14 +6,16 @@ public class Stay : PatternAction {
     
     public float Duration;
 
+    public override void isCollided(Enemy enemy)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override float PatternDuration => Duration;
 
     public override void Do(Enemy enemy)
     {
         enemy.Rigidbody.velocity = Vector3.zero;
-        if (enemy.isCollided) {
-            //Knockback
-        }
     }
 
     public override bool IsFinished(Enemy enemy) {

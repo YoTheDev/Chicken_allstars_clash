@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 namespace PatternSystem {
@@ -10,8 +11,8 @@ namespace PatternSystem {
 
         public bool RandomizePattern;
         public List<PatternAction> Pattern;
-        [HideInInspector] public bool isCollided;
         [HideInInspector] public Rigidbody Rigidbody;
+        [HideInInspector] public bool Knockback;
 
         private PatternAction _currentPatternAction;
         private int _currentPatternIndex;
@@ -19,10 +20,10 @@ namespace PatternSystem {
 
         private void Awake() {
             Rigidbody = GetComponent<Rigidbody>();
+            Physics.gravity = new Vector3(0, -180f, 0);
         }
 
-        private void Update()
-        {
+        private void Update() {
             if (Pattern.Count == 0) return;
             if (_currentPatternAction == null || _currentPatternAction.IsFinished(this) &&
                 _patternTimer >= _currentPatternAction.PatternDuration) {
@@ -34,9 +35,17 @@ namespace PatternSystem {
             _patternTimer += Time.deltaTime;
         }
 
-        public void OnCollisionEnter(Collision other)
-        {
-            isCollided = true;
+        public void OnCollisionEnter(Collision other) {
+            if (other.gameObject.CompareTag("Player")) {
+                _currentPatternAction.isCollided(this);
+            }
+            if (Knockback) {
+                if (other.gameObject.CompareTag("Ground")) {
+                    Rigidbody.velocity = new Vector3(0, 0, 0);
+                    _currentPatternAction.IsFinished(this);
+                    Knockback = false;
+                }
+            }
         }
 
         private PatternAction GetRandomPatternAction() {

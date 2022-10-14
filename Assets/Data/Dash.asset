@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b57aabe08ec6b146afb9fd688205967, type: 3}
   m_Name: Dash
   m_EditorClassIdentifier: 
-  DashPower: {x: 15, y: 0, z: 0}
+  DashPower: {x: 25, y: 0, z: 0}
+  KnockbackPower: {x: -10, y: 30, z: 0}
   Duration: 10
