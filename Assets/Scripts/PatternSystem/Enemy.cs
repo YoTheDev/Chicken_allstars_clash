@@ -36,13 +36,13 @@ namespace PatternSystem {
         }
 
         public void OnCollisionEnter(Collision other) {
-            if (other.gameObject.CompareTag("Player")) {
+            if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Wall")) {
                 _currentPatternAction.isCollided(this);
             }
             if (Knockback) {
                 if (other.gameObject.CompareTag("Ground")) {
                     Rigidbody.velocity = new Vector3(0, 0, 0);
-                    _currentPatternAction.IsFinished(this);
+                    _patternTimer = _currentPatternAction.PatternDuration;
                     Knockback = false;
                 }
             }

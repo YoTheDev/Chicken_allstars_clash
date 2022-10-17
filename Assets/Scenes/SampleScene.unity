@@ -3814,7 +3814,6 @@ GameObject:
   - component: {fileID: 2086711877}
   - component: {fileID: 2086711876}
   - component: {fileID: 2086711875}
-  - component: {fileID: 2086711879}
   - component: {fileID: 2086711880}
   - component: {fileID: 2086711881}
   m_Layer: 0
@@ -3902,20 +3901,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2086711879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2086711874}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c6d63760a00ea948aadc9ca9793f79c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  players: []
-  bossSpeed: 2
 --- !u!54 &2086711880
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3944,8 +3929,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7356cb9ebc9ee9042a4ee9a3563917ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RandomizePattern: 1
+  RandomizePattern: 0
   Pattern:
   - {fileID: 11400000, guid: 94c204ad024ab7d42b172977193537cd, type: 2}
+  - {fileID: 11400000, guid: 88560f81ae9af0644ba5cd141dfe780d, type: 2}
   Rigidbody: {fileID: 0}
   Knockback: 0
