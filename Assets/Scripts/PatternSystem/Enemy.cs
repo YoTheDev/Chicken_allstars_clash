@@ -11,12 +11,19 @@ namespace PatternSystem {
 
         public bool RandomizePattern;
         public List<PatternAction> Pattern;
+        public Transform[] target;
+        public float turnSpeed = .01f;
+        
         [HideInInspector] public Rigidbody Rigidbody;
         [HideInInspector] public bool Knockback;
+        [HideInInspector] public bool Turn;
 
         private PatternAction _currentPatternAction;
         private int _currentPatternIndex;
         private float _patternTimer;
+        private Quaternion _rotGoal;
+        private Vector3 _direction;
+        private int _rngPlayer;
 
         private void Awake() {
             Rigidbody = GetComponent<Rigidbody>();
@@ -30,9 +37,15 @@ namespace PatternSystem {
                 if (_currentPatternAction == null) _currentPatternAction = Pattern.First();
                 else _currentPatternAction = RandomizePattern ? GetRandomPatternAction() : GetNextPatternAction();
                 _currentPatternAction.Do(this);
+                _rngPlayer = Random.Range(0, target.Length);
                 _patternTimer = 0;
             }
             _patternTimer += Time.deltaTime;
+            if (Turn) {
+                _direction = (target[_rngPlayer].position - transform.position).normalized;
+                _rotGoal = Quaternion.LookRotation(_direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation,_rotGoal,turnSpeed);
+            }
         }
 
         public void OnCollisionEnter(Collision other) {
