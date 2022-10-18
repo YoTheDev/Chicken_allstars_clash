@@ -8,7 +8,7 @@ public class Stay : PatternAction {
 
     public override void isCollided(Enemy enemy)
     {
-        throw new System.NotImplementedException();
+        enemy.Rigidbody.velocity = Vector3.zero;
     }
 
     public override float PatternDuration => Duration;

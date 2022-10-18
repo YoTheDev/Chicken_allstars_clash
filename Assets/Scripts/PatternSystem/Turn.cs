@@ -7,6 +7,7 @@ using UnityEngine;
 public class Turn : PatternAction
 {
     public Vector3 JumpPower;
+    public Vector3 KnockbackPower;
     public float Duration;
 
     public override float PatternDuration => Duration;
@@ -18,11 +19,12 @@ public class Turn : PatternAction
     }
 
     public override bool IsFinished(Enemy enemy) {
-        enemy.Turn = false;
         return enemy.Rigidbody.velocity.y <= 0;
     }
 
     public override void isCollided(Enemy enemy) {
-        throw new System.NotImplementedException();
+        enemy.Rigidbody.velocity = Vector3.zero;
+        enemy.Rigidbody.AddForce(enemy.transform.TransformDirection(KnockbackPower), ForceMode.Impulse);
+        enemy.Knockback = true;
     }
 }

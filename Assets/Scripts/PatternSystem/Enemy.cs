@@ -41,10 +41,9 @@ namespace PatternSystem {
                 _patternTimer = 0;
             }
             _patternTimer += Time.deltaTime;
-            if (Turn) {
-                _direction = (target[_rngPlayer].position - transform.position).normalized;
-                _rotGoal = Quaternion.LookRotation(_direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation,_rotGoal,turnSpeed);
+            if (Turn)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.Euler(0,180,0), turnSpeed);
             }
         }
 
