@@ -20,10 +20,10 @@ namespace PatternSystem {
 
         private PatternAction _currentPatternAction;
         private int _currentPatternIndex;
+        private int _rngPlayer;
         private float _patternTimer;
         private Quaternion _rotGoal;
         private Vector3 _direction;
-        private int _rngPlayer;
 
         private void Awake() {
             Rigidbody = GetComponent<Rigidbody>();
@@ -41,9 +41,8 @@ namespace PatternSystem {
                 _patternTimer = 0;
             }
             _patternTimer += Time.deltaTime;
-            if (Turn)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.Euler(0,180,0), turnSpeed);
+            if (Turn) {
+                transform.LookAt(target[_rngPlayer].transform.position);
             }
         }
 

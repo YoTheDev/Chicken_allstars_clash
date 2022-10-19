@@ -15,11 +15,11 @@ public class Player_management : MonoBehaviour {
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float dJumpgravityValue = -9.81f;
     [SerializeField] private float nearGroundedRange;
-
-    private bool _isGrounded;
+    
     private float _saveSpeed;
     private float _saveGravityValue;
     private float _axisX;
+    private bool _isGrounded;
     private bool _attack;
     private bool _airAttack;
     private bool _canAirAttack;
@@ -36,12 +36,9 @@ public class Player_management : MonoBehaviour {
         isJumpPressed = false;
     }
 
-    private void Update() {
-        isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
-    }
-
     private void FixedUpdate()
     {
+        isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
         _isGrounded = _characterController.isGrounded;
         if (_isGrounded && _playerVelocity.y < 0) {
             _playerVelocity.y = 0f;
@@ -64,7 +61,7 @@ public class Player_management : MonoBehaviour {
         _axisX = Moving.Get<float>();
         if (_axisX < 0) {
             if (!_attack && !_airAttack) {
-                playerPivot.transform.rotation = Quaternion.Euler(rotation.x, 180, rotation.z);
+                playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180, rotation.z);
             }
             _saveAxisXpositive = false;
         }

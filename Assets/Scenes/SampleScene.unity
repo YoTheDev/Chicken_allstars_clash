@@ -2408,7 +2408,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000633203}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -37.7, y: 60.463, z: -26.4}
+  m_LocalPosition: {x: -37.7, y: 60.5, z: -26.4}
   m_LocalScale: {x: 308.57294, y: 0.072283, z: 126.44383}
   m_Children: []
   m_Father: {fileID: 1502168582}
@@ -2612,12 +2612,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RandomizePattern: 0
   Pattern:
+  - {fileID: 11400000, guid: 88560f81ae9af0644ba5cd141dfe780d, type: 2}
   - {fileID: 11400000, guid: 94c204ad024ab7d42b172977193537cd, type: 2}
   - {fileID: 11400000, guid: 88560f81ae9af0644ba5cd141dfe780d, type: 2}
   - {fileID: 11400000, guid: 1c8476f46be559d4fa19d80a04df84ba, type: 2}
   target:
   - {fileID: 1205937318}
-  turnSpeed: 0.03
+  turnSpeed: 0.1
   Rigidbody: {fileID: 0}
   Knockback: 0
   Turn: 0
