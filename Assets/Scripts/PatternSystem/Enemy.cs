@@ -42,7 +42,18 @@ namespace PatternSystem {
             }
             _patternTimer += Time.deltaTime;
             if (Turn) {
-                transform.LookAt(target[_rngPlayer].transform.position);
+                Vector3 posTarget = target[_rngPlayer].position ;
+                Vector3 posOrigin = transform.position;
+                Quaternion rotOrigin = transform.rotation;
+                //Debug.DrawLine(posTarget,posOrigin, Color.green);
+                //Vector3 oriantation;
+                //float debugDistance = 3;
+                //oriantation = posTarget - posOrigin;
+                //Debug.DrawLine(posOrigin,posOrigin+(oriantation.normalized * debugDistance), Color.red);
+                //transform.right = oriantation;
+                _direction = (posTarget - posOrigin).normalized;
+                _rotGoal = Quaternion.LookRotation(_direction);
+                transform.rotation = Quaternion.Slerp(rotOrigin,_rotGoal,turnSpeed);
             }
         }
 

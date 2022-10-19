@@ -8,7 +8,14 @@
       <e p="Assets" t="Include">
         <e p="Controller.cs" t="Include" />
         <e p="Scripts" t="Include">
-          <e p="movement.cs" t="Include" />
+          <e p="PatternSystem" t="Include">
+            <e p="Dash.cs" t="Include" />
+            <e p="Enemy.cs" t="Include" />
+            <e p="PatternAction.cs" t="Include" />
+            <e p="Stay.cs" t="Include" />
+            <e p="Turn.cs" t="Include" />
+          </e>
+          <e p="Player_management.cs" t="Include" />
         </e>
       </e>
       <e p="Chicken_allstars_clash.sln" t="IncludeFlat" />

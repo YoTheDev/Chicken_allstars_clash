@@ -15,6 +15,7 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/movement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Movement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Enemy.cs" />
       </list>
     </option>
   </component>
@@ -58,6 +59,8 @@
       <option name="presentableId" value="Default" />
       <updated>1665239067702</updated>
       <workItem from="1665239080559" duration="16402000" />
+      <workItem from="1666211986939" duration="379000" />
+      <workItem from="1666212546417" duration="7008000" />
     </task>
     <servers />
   </component>
