@@ -1,6 +1,8 @@
 using System;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Debug = UnityEngine.Debug;
 
 public class Player_management : MonoBehaviour {
     
@@ -12,12 +14,9 @@ public class Player_management : MonoBehaviour {
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float airattackjumpHeight;
     [SerializeField] private float doubleJumpHeight;
-    [SerializeField] private float gravityValue = -9.81f;
-    [SerializeField] private float dJumpgravityValue = -9.81f;
     [SerializeField] private float nearGroundedRange;
     
     private float _saveSpeed;
-    private float _saveGravityValue;
     private float _axisX;
     private bool _isGrounded;
     private bool _attack;
@@ -25,35 +24,31 @@ public class Player_management : MonoBehaviour {
     private bool _canAirAttack;
     private bool _saveAxisXpositive;
     private bool _doubleJump;
-    private CharacterController _characterController;
     private Vector3 _playerVelocity;
+    private Rigidbody _rigidbody;
 
     void Start() {
         attackBox.SetActive(false); attack2Box.SetActive(false);
-        _characterController = GetComponent<CharacterController>();
+        _rigidbody = GetComponent<Rigidbody>();
         _saveSpeed = playerSpeed;
-        _saveGravityValue = gravityValue;
         isJumpPressed = false;
     }
 
     private void FixedUpdate()
     {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
-        _isGrounded = _characterController.isGrounded;
-        if (_isGrounded && _playerVelocity.y < 0) {
-            _playerVelocity.y = 0f;
-            _doubleJump = true;
-            _canAirAttack = false;
-            gravityValue = _saveGravityValue;
+        if (!_isGrounded) {
+            _rigidbody.drag = 3;
+            playerSpeed = 50;
         }
-        _characterController.Move(new Vector3(-_axisX, 0, 0) * Time.deltaTime * playerSpeed);
+        _rigidbody.AddForce(Vector3.left * _axisX * playerSpeed,ForceMode.Force);
         if (isJumpPressed && _isGrounded) {
-            _playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            _rigidbody.AddForce(Vector3.up * jumpHeight,ForceMode.Impulse);
+            _isGrounded = false;
             isJumpPressed = false;
             _canAirAttack = true;
+            _doubleJump = true;
         }
-        _playerVelocity.y += gravityValue * Time.deltaTime;
-        _characterController.Move(_playerVelocity * Time.deltaTime);
     }
 
     public void OnMove(InputValue Moving) {
@@ -78,22 +73,31 @@ public class Player_management : MonoBehaviour {
             isJumpPressed = true;
         }
         if (!_isGrounded && _doubleJump) {
-            _playerVelocity.y = 0f;
-            gravityValue = dJumpgravityValue;
-            _playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
+            //Physics.gravity = new Vector3(0, -50f, 0);
+            _rigidbody.velocity = Vector3.Normalize(Vector3.up);
+            _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
+            if (_axisX != 0)
+            {
+                if (!_saveAxisXpositive) {
+                    _rigidbody.AddForce(Vector3.right * 20,ForceMode.Impulse);
+                }
+                else {
+                    _rigidbody.AddForce(Vector3.left * 20,ForceMode.Impulse);
+                }
+            }
             _doubleJump = false;
             isJumpPressed = false;
             _canAirAttack = true;
         }
     }
 
-    private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.CompareTag("Boss")) {
-            _playerVelocity.y = 0; _playerVelocity.x = 0;
-            _playerVelocity.y += Mathf.Sqrt(2 * -3.0f * gravityValue); _playerVelocity.x += Mathf.Sqrt(2 * -1 * gravityValue);
-        }
+    private void OnCollisionEnter(Collision other)
+    {
         if (other.gameObject.CompareTag("Ground")) {
-            _playerVelocity.x += Mathf.Sqrt(0 * 0 * gravityValue);
+            _rigidbody.drag = 10;
+            playerSpeed = _saveSpeed;
+            _isGrounded = true;
+            //Physics.gravity = new Vector3(0, -150f, 0);
         }
     }
 
@@ -108,12 +112,21 @@ public class Player_management : MonoBehaviour {
         }
         else if (_canAirAttack) {
             _doubleJump = false;
-            gravityValue = _saveGravityValue;
+            //Physics.gravity = new Vector3(0, -200f, 0);
+            _rigidbody.velocity = Vector3.Normalize(Vector3.up);
+            if (_axisX != 0)
+            {
+                if (!_saveAxisXpositive) {
+                    _rigidbody.AddForce(Vector3.right * 20,ForceMode.Impulse);
+                }
+                else {
+                    _rigidbody.AddForce(Vector3.left * 20,ForceMode.Impulse);
+                }
+            }
             attack2Box.SetActive(true);
             _airAttack = true;
             _canAirAttack = false;
-            _playerVelocity.y = 0;
-            _playerVelocity.y += Mathf.Sqrt(airattackjumpHeight * -3.0f * gravityValue);
+            _rigidbody.AddForce(Vector3.up * airattackjumpHeight,ForceMode.Impulse);
             Invoke("AttackCooldown",0.4f);
         }
     }

@@ -2964,6 +2964,7 @@ GameObject:
   - component: {fileID: 1205937320}
   - component: {fileID: 1205937319}
   - component: {fileID: 1205937321}
+  - component: {fileID: 1205937322}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3033,16 +3034,29 @@ MonoBehaviour:
   playerPivot: {fileID: 345529763}
   isNearGrounded: 0
   isJumpPressed: 0
-  playerSpeed: 10
-  playerJumpSpeed: 0
-  jumpHeight: 3
-  airattackjumpHeight: 1.5
-  doubleJumpHeight: 6
-  gravityValue: -80
-  dJumpgravityValue: -20
+  playerSpeed: 120
+  jumpHeight: 60
+  airattackjumpHeight: 60
+  doubleJumpHeight: 100
   nearGroundedRange: 1.5
---- !u!143 &1205937321
-CharacterController:
+--- !u!54 &1205937321
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205937317}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 10
+  m_AngularDrag: 1.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 120
+  m_CollisionDetection: 0
+--- !u!136 &1205937322
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3051,13 +3065,9 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1373583913
 GameObject:
