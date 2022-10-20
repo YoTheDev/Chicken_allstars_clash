@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,6 @@ public class Player_management : MonoBehaviour {
     [SerializeField] private GameObject playerPivot;
     [SerializeField] private bool isNearGrounded,isJumpPressed;
     [SerializeField] private float playerSpeed;
-    [SerializeField] private float playerJumpSpeed;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float airattackjumpHeight;
     [SerializeField] private float doubleJumpHeight;
@@ -84,6 +84,16 @@ public class Player_management : MonoBehaviour {
             _doubleJump = false;
             isJumpPressed = false;
             _canAirAttack = true;
+        }
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.CompareTag("Boss")) {
+            _playerVelocity.y = 0; _playerVelocity.x = 0;
+            _playerVelocity.y += Mathf.Sqrt(2 * -3.0f * gravityValue); _playerVelocity.x += Mathf.Sqrt(2 * -1 * gravityValue);
+        }
+        if (other.gameObject.CompareTag("Ground")) {
+            _playerVelocity.x += Mathf.Sqrt(0 * 0 * gravityValue);
         }
     }
 
