@@ -867,7 +867,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345529764}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player_Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2591,7 +2591,7 @@ GameObject:
   - component: {fileID: 1111019501}
   - component: {fileID: 1111019504}
   - component: {fileID: 1111019503}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Boss
   m_TagString: Boss
   m_Icon: {fileID: 0}
@@ -2965,7 +2965,7 @@ GameObject:
   - component: {fileID: 1205937319}
   - component: {fileID: 1205937321}
   - component: {fileID: 1205937322}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3039,6 +3039,8 @@ MonoBehaviour:
   airattackjumpHeight: 60
   doubleJumpHeight: 100
   nearGroundedRange: 1.5
+  knockbackForce: 10
+  knockbackForceUp: 50
 --- !u!54 &1205937321
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3175,7 +3177,7 @@ GameObject:
   - component: {fileID: 1450492337}
   - component: {fileID: 1450492336}
   - component: {fileID: 1450492335}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3385,7 +3387,7 @@ GameObject:
   - component: {fileID: 1661632927}
   - component: {fileID: 1661632930}
   - component: {fileID: 1661632929}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Vision_line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3467,7 +3469,7 @@ GameObject:
   - component: {fileID: 1672106097}
   - component: {fileID: 1672106096}
   - component: {fileID: 1672106095}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attack2_placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3656,7 +3658,7 @@ GameObject:
   - component: {fileID: 1759342561}
   - component: {fileID: 1759342563}
   - component: {fileID: 1759342562}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Vision_line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3817,7 +3819,7 @@ GameObject:
   - component: {fileID: 2007410036}
   - component: {fileID: 2007410035}
   - component: {fileID: 2007410034}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attack_placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3911,7 +3913,7 @@ GameObject:
   - component: {fileID: 2086711878}
   - component: {fileID: 2086711877}
   - component: {fileID: 2086711876}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}

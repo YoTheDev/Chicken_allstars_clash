@@ -15,6 +15,8 @@ public class Player_management : MonoBehaviour {
     [SerializeField] private float airattackjumpHeight;
     [SerializeField] private float doubleJumpHeight;
     [SerializeField] private float nearGroundedRange;
+    [SerializeField] private float knockbackForce;
+    [SerializeField] private float knockbackForceUp;
     
     private float _saveSpeed;
     private float _axisX;
@@ -26,9 +28,11 @@ public class Player_management : MonoBehaviour {
     private bool _doubleJump;
     private Vector3 _playerVelocity;
     private Rigidbody _rigidbody;
+    private GameObject _boss;
 
     void Start() {
         attackBox.SetActive(false); attack2Box.SetActive(false);
+        _boss = GameObject.FindWithTag("Boss");
         _rigidbody = GetComponent<Rigidbody>();
         _saveSpeed = playerSpeed;
         isJumpPressed = false;
@@ -37,7 +41,7 @@ public class Player_management : MonoBehaviour {
     private void FixedUpdate()
     {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
-        if (!_isGrounded) {
+        if (!isNearGrounded) {
             _rigidbody.drag = 3;
             playerSpeed = 50;
         }
@@ -76,13 +80,12 @@ public class Player_management : MonoBehaviour {
             //Physics.gravity = new Vector3(0, -50f, 0);
             _rigidbody.velocity = Vector3.Normalize(Vector3.up);
             _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
-            if (_axisX != 0)
-            {
+            if (_axisX != 0) {
                 if (!_saveAxisXpositive) {
-                    _rigidbody.AddForce(Vector3.right * 20,ForceMode.Impulse);
+                    _rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
                 }
                 else {
-                    _rigidbody.AddForce(Vector3.left * 20,ForceMode.Impulse);
+                    _rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
                 }
             }
             _doubleJump = false;
@@ -99,6 +102,18 @@ public class Player_management : MonoBehaviour {
             _isGrounded = true;
             //Physics.gravity = new Vector3(0, -150f, 0);
         }
+        if (other.gameObject.CompareTag("Boss")) {
+            Vector3 knockbackDirection = new Vector3(transform.position.x - _boss.transform.position.x, 0);
+            _rigidbody.velocity = Vector3.Normalize(Vector3.up); _rigidbody.velocity = Vector3.Normalize(Vector3.left); _rigidbody.velocity = Vector3.Normalize(Vector3.right);
+            _rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
+            _rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
+            gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+            Invoke(nameof(InvulnerabilityEnd),1);
+        }
+    }
+
+    void InvulnerabilityEnd() {
+        gameObject.layer = LayerMask.NameToLayer("Player_one");
     }
 
     public void OnAttack()
@@ -114,13 +129,12 @@ public class Player_management : MonoBehaviour {
             _doubleJump = false;
             //Physics.gravity = new Vector3(0, -200f, 0);
             _rigidbody.velocity = Vector3.Normalize(Vector3.up);
-            if (_axisX != 0)
-            {
+            if (_axisX != 0) {
                 if (!_saveAxisXpositive) {
-                    _rigidbody.AddForce(Vector3.right * 20,ForceMode.Impulse);
+                    _rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
                 }
                 else {
-                    _rigidbody.AddForce(Vector3.left * 20,ForceMode.Impulse);
+                    _rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
                 }
             }
             attack2Box.SetActive(true);
