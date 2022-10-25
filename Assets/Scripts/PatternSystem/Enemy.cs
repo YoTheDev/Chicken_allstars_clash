@@ -17,6 +17,9 @@ namespace PatternSystem {
         [HideInInspector] public Rigidbody Rigidbody;
         [HideInInspector] public bool Knockback;
         [HideInInspector] public bool Turn;
+        [HideInInspector] public GameObject player;
+        [HideInInspector] public GameObject Wall;
+        [HideInInspector] public float damageCoast;
 
         private PatternAction _currentPatternAction;
         private int _currentPatternIndex;
@@ -39,6 +42,7 @@ namespace PatternSystem {
                 _currentPatternAction.Do(this);
                 _rngPlayer = Random.Range(0, target.Length);
                 _patternTimer = 0;
+                damageCoast = _currentPatternAction.PatternDamage;
             }
             _patternTimer += Time.deltaTime;
             if (Turn) {
@@ -53,8 +57,13 @@ namespace PatternSystem {
         }
 
         public void OnCollisionEnter(Collision other) {
-            if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Wall")) {
+            if (other.gameObject.CompareTag("Player")) {
+                player = other.gameObject;
                 _currentPatternAction.isCollided(this);
+            }
+            else if (other.gameObject.CompareTag("Wall")) {
+                Wall = other.gameObject;
+                _currentPatternAction.isCollidedWall(this);
             }
             if (Knockback) {
                 if (other.gameObject.CompareTag("Ground")) {

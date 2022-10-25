@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Dash
   m_EditorClassIdentifier: 
   DashPower: {x: 0, y: 0, z: 25}
-  KnockbackPower: {x: 0, y: 30, z: -10}
+  knockbackForce: 2
+  knockbackForceUp: 30
   Duration: 10
+  damage: 1

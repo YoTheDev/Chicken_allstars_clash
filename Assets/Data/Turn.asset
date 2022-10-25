@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Turn
   m_EditorClassIdentifier: 
   JumpPower: {x: 0, y: 50, z: 0}
-  KnockbackPower: {x: 0, y: 30, z: -10}
+  knockbackForce: 2
+  knockbackForceUp: 30
   Duration: 0.25
+  damage: 1

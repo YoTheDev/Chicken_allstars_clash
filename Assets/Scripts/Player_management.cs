@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
+using PatternSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class Player_management : MonoBehaviour {
@@ -17,16 +19,19 @@ public class Player_management : MonoBehaviour {
     [SerializeField] private float nearGroundedRange;
     [SerializeField] private float knockbackForce;
     [SerializeField] private float knockbackForceUp;
+    [SerializeField] public float maxHealth;
+    [SerializeField] public Slider slider01;
+    [SerializeField] public Slider slider02;
     
     private float _saveSpeed;
     private float _axisX;
+    private float _damage;
     private bool _isGrounded;
     private bool _attack;
     private bool _airAttack;
     private bool _canAirAttack;
     private bool _saveAxisXpositive;
     private bool _doubleJump;
-    private Vector3 _playerVelocity;
     private Rigidbody _rigidbody;
     private GameObject _boss;
 
@@ -36,6 +41,7 @@ public class Player_management : MonoBehaviour {
         _rigidbody = GetComponent<Rigidbody>();
         _saveSpeed = playerSpeed;
         isJumpPressed = false;
+        slider01.maxValue = maxHealth; slider02.maxValue = maxHealth;
     }
 
     private void FixedUpdate()
@@ -52,6 +58,9 @@ public class Player_management : MonoBehaviour {
             isJumpPressed = false;
             _canAirAttack = true;
             _doubleJump = true;
+        }
+        if (slider01.value < slider02.value) {
+            slider02.value = slider02.value - 0.05f;
         }
     }
 
@@ -77,8 +86,7 @@ public class Player_management : MonoBehaviour {
             isJumpPressed = true;
         }
         if (!_isGrounded && _doubleJump) {
-            //Physics.gravity = new Vector3(0, -50f, 0);
-            _rigidbody.velocity = Vector3.Normalize(Vector3.up);
+            _rigidbody.velocity = new Vector3(0, 0, 0);
             _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
             if (_axisX != 0) {
                 if (!_saveAxisXpositive) {
@@ -100,15 +108,25 @@ public class Player_management : MonoBehaviour {
             _rigidbody.drag = 10;
             playerSpeed = _saveSpeed;
             _isGrounded = true;
-            //Physics.gravity = new Vector3(0, -150f, 0);
         }
         if (other.gameObject.CompareTag("Boss")) {
+            _rigidbody.velocity = new Vector3(0, 0, 0);
             Vector3 knockbackDirection = new Vector3(transform.position.x - _boss.transform.position.x, 0);
-            _rigidbody.velocity = Vector3.Normalize(Vector3.up); _rigidbody.velocity = Vector3.Normalize(Vector3.left); _rigidbody.velocity = Vector3.Normalize(Vector3.right);
             _rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
             _rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
             gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
             Invoke(nameof(InvulnerabilityEnd),1);
+            Damage();
+        }
+    }
+
+    void Damage() {
+        _damage = FindObjectOfType<Enemy>().damageCoast;
+        if (slider01.value > 0) {
+            slider01.value = slider01.value - _damage;
+        }
+        else {
+            slider02.value = slider02.value - _damage;
         }
     }
 
@@ -123,12 +141,11 @@ public class Player_management : MonoBehaviour {
             attackBox.SetActive(true);
             playerSpeed = 0;
             _attack = true;
-            Invoke("AttackCooldown",0.5f);
+            Invoke(nameof(AttackCooldown),0.5f);
         }
         else if (_canAirAttack) {
             _doubleJump = false;
-            //Physics.gravity = new Vector3(0, -200f, 0);
-            _rigidbody.velocity = Vector3.Normalize(Vector3.up);
+            _rigidbody.velocity = new Vector3(0, 0, 0);
             if (_axisX != 0) {
                 if (!_saveAxisXpositive) {
                     _rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
@@ -141,7 +158,7 @@ public class Player_management : MonoBehaviour {
             _airAttack = true;
             _canAirAttack = false;
             _rigidbody.AddForce(Vector3.up * airattackjumpHeight,ForceMode.Impulse);
-            Invoke("AttackCooldown",0.4f);
+            Invoke(nameof(AttackCooldown),0.4f);
         }
     }
 
