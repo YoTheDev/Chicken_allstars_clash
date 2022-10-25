@@ -32,8 +32,10 @@ public class Player_management : MonoBehaviour {
     private bool _canAirAttack;
     private bool _saveAxisXpositive;
     private bool _doubleJump;
-    private Rigidbody _rigidbody;
     private GameObject _boss;
+
+    public bool isDead;
+    public Rigidbody _rigidbody;
 
     void Start() {
         attackBox.SetActive(false); attack2Box.SetActive(false);
@@ -62,43 +64,54 @@ public class Player_management : MonoBehaviour {
         if (slider01.value < slider02.value) {
             slider02.value = slider02.value - 0.05f;
         }
+        if (isDead == false) {
+            if (slider02.value <= 0) {
+                isDead = true;
+                _axisX = 0;
+                playerSpeed = 0;
+            }
+        }
     }
 
     public void OnMove(InputValue Moving) {
-        var rotation = transform.rotation;
-        _axisX = Moving.Get<float>();
-        if (_axisX < 0) {
-            if (!_attack && !_airAttack) {
-                playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180, rotation.z);
+        if (isDead == false) {
+            var rotation = transform.rotation;
+            _axisX = Moving.Get<float>();
+            if (_axisX < 0) {
+                if (!_attack && !_airAttack) {
+                    playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180, rotation.z);
+                }
+                _saveAxisXpositive = false;
             }
-            _saveAxisXpositive = false;
-        }
-        else if (_axisX > 0) {
-            if (!_attack && !_airAttack) {
-                playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
+            else if (_axisX > 0) {
+                if (!_attack && !_airAttack) {
+                    playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
+                }
+                _saveAxisXpositive = true;
             }
-            _saveAxisXpositive = true;
         }
     }
 
     public void OnJump() {
-        if (isNearGrounded && !_attack) {
-            isJumpPressed = true;
-        }
-        if (!_isGrounded && _doubleJump) {
-            _rigidbody.velocity = new Vector3(0, 0, 0);
-            _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
-            if (_axisX != 0) {
-                if (!_saveAxisXpositive) {
-                    _rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
-                }
-                else {
-                    _rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
-                }
+        if (isDead == false) {
+            if (isNearGrounded && !_attack) {
+                isJumpPressed = true;
             }
-            _doubleJump = false;
-            isJumpPressed = false;
-            _canAirAttack = true;
+            if (!_isGrounded && _doubleJump) {
+                _rigidbody.velocity = new Vector3(0, 0, 0);
+                _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
+                if (_axisX != 0) {
+                    if (!_saveAxisXpositive) {
+                        _rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
+                    }
+                    else {
+                        _rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
+                    }
+                }
+                _doubleJump = false;
+                isJumpPressed = false;
+                _canAirAttack = true;
+            }
         }
     }
 

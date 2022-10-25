@@ -18,6 +18,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/WeaponSystem/DoubleSaber.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="2FklbXvTge1l9JbK0EbKDXO2lMa" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -77,7 +80,7 @@
       <workItem from="1666251229454" duration="22901000" />
       <workItem from="1666338163901" duration="10463000" />
       <workItem from="1666597506377" duration="17878000" />
-      <workItem from="1666683347341" duration="8004000" />
+      <workItem from="1666683347341" duration="15853000" />
     </task>
     <servers />
   </component>
