@@ -13,6 +13,7 @@ namespace PatternSystem {
         public List<PatternAction> Pattern;
         public Transform[] target;
         public float turnSpeed = .01f;
+        public float maxHealth;
         
         [HideInInspector] public Rigidbody Rigidbody;
         [HideInInspector] public bool Knockback;
@@ -21,30 +22,43 @@ namespace PatternSystem {
         [HideInInspector] public GameObject Wall;
         [HideInInspector] public float damageCoast;
 
+        [SerializeField] private float deathKnockback;
+        [SerializeField] private float deathKnockbackUp;
+
         private PatternAction _currentPatternAction;
         private int _currentPatternIndex;
         private int _rngPlayer;
+        private float _currentHealth;
         private float _patternTimer;
+        private float fixedDeltaTime;
+        private bool _isDead;
         private Quaternion _rotGoal;
         private Vector3 _direction;
 
         private void Awake() {
             Rigidbody = GetComponent<Rigidbody>();
             Physics.gravity = new Vector3(0, -180f, 0);
+            _currentHealth = maxHealth;
+            fixedDeltaTime = Time.fixedDeltaTime;
         }
 
         private void Update() {
-            if (Pattern.Count == 0) return;
-            if (_currentPatternAction == null || _currentPatternAction.IsFinished(this) &&
-                _patternTimer >= _currentPatternAction.PatternDuration) {
-                if (_currentPatternAction == null) _currentPatternAction = Pattern.First();
-                else _currentPatternAction = RandomizePattern ? GetRandomPatternAction() : GetNextPatternAction();
-                _currentPatternAction.Do(this);
-                _rngPlayer = Random.Range(0, target.Length);
-                _patternTimer = 0;
-                damageCoast = _currentPatternAction.PatternDamage;
+            if (Pattern.Count == 0) {
+                Debug.LogWarning("List for " + gameObject.name + " is set to 0");
+                return;
             }
-            _patternTimer += Time.deltaTime;
+            if (_isDead == false) {
+                if (_currentPatternAction == null || _currentPatternAction.IsFinished(this) &&
+                    _patternTimer >= _currentPatternAction.PatternDuration) {
+                    if (_currentPatternAction == null) _currentPatternAction = Pattern.First();
+                    else _currentPatternAction = RandomizePattern ? GetRandomPatternAction() : GetNextPatternAction();
+                    _currentPatternAction.Do(this);
+                    _rngPlayer = Random.Range(0, target.Length);
+                    _patternTimer = 0;
+                    damageCoast = _currentPatternAction.PatternDamage;
+                }
+                _patternTimer += Time.deltaTime;
+            }
             if (Turn) {
                 Vector3 posTarget = target[_rngPlayer].position ;
                 Vector3 posOrigin = transform.position;
@@ -73,8 +87,37 @@ namespace PatternSystem {
                 }
             }
             if(other.gameObject.CompareTag("Ground")) {
+                Rigidbody.velocity = Vector3.zero;
                 Turn = false;
             }
+        }
+
+        private void OnTriggerEnter(Collider other) {
+            if (other.gameObject.CompareTag("Attack")) {
+                float damage = other.GetComponentInParent<Player_management>()._currentWeapon.DamageData;
+                _currentHealth = _currentHealth - damage;
+                if (_currentHealth <= 0) {
+                    _isDead = true;
+                    player = other.gameObject.GetComponentInParent<Player_management>().gameObject;
+                    Vector3 posTarget = player.transform.position ;
+                    Vector3 posOrigin = transform.position;
+                    _direction = (posTarget - posOrigin).normalized;
+                    _direction.y = 0; _direction.z = 0;
+                    transform.rotation = Quaternion.LookRotation(_direction);
+                    Rigidbody.velocity = Vector3.zero;
+                    Vector3 knockbackDirection = new Vector3(transform.position.x - player.transform.position.x, 0);
+                    Rigidbody.AddForce(knockbackDirection * deathKnockback,ForceMode.Impulse);
+                    Rigidbody.AddForce(Vector3.up * deathKnockbackUp,ForceMode.Impulse);
+                    Time.timeScale = 0.05f;
+                    Time.fixedDeltaTime = fixedDeltaTime * Time.timeScale;
+                    Invoke(nameof(NormalizeTime),0.05f);
+                }
+            }
+        }
+
+        void NormalizeTime() {
+            Time.timeScale = 1;
+            Time.fixedDeltaTime = fixedDeltaTime * Time.timeScale;
         }
 
         private PatternAction GetRandomPatternAction() {

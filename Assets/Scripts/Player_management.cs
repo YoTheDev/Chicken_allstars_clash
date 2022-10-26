@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using PatternSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,42 +10,52 @@ using Debug = UnityEngine.Debug;
 
 public class Player_management : MonoBehaviour {
     
-    [SerializeField] private GameObject attackBox;
-    [SerializeField] private GameObject attack2Box;
+    
     [SerializeField] private GameObject playerPivot;
-    [SerializeField] private bool isNearGrounded,isJumpPressed;
-    [SerializeField] private float playerSpeed;
     [SerializeField] private float jumpHeight = 1.0f;
-    [SerializeField] private float airattackjumpHeight;
     [SerializeField] private float doubleJumpHeight;
-    [SerializeField] private float nearGroundedRange;
+    [SerializeField] public float airattackjumpHeight;
     [SerializeField] private float knockbackForce;
     [SerializeField] private float knockbackForceUp;
-    [SerializeField] public float maxHealth;
-    [SerializeField] public Slider slider01;
-    [SerializeField] public Slider slider02;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private Slider slider01;
+    [SerializeField] private Slider slider02;
     
-    private float _saveSpeed;
-    private float _axisX;
+    private bool isJumpPressed;
     private float _damage;
-    private bool _isGrounded;
-    private bool _attack;
-    private bool _airAttack;
-    private bool _canAirAttack;
-    private bool _saveAxisXpositive;
-    private bool _doubleJump;
     private GameObject _boss;
-
-    public bool isDead;
-    public Rigidbody _rigidbody;
+    
+    [HideInInspector] public WeaponData _currentWeapon;
+    [HideInInspector] public bool _canAirAttack;
+    [HideInInspector] public bool _saveAxisXpositive;
+    [HideInInspector] public bool _doubleJump;
+    [HideInInspector] public float _axisX;
+    [HideInInspector] public float _saveSpeed;
+    [HideInInspector] public float nearGroundedRange;
+    [HideInInspector] public int weaponIndex;
+    [HideInInspector] public bool isDead;
+    [HideInInspector] public bool isNearGrounded;
+    [HideInInspector] public bool _isGrounded;
+    [HideInInspector] public bool _attack;
+    [HideInInspector] public bool _airAttack;
+    [HideInInspector] public Rigidbody _rigidbody;
+    
+    public float playerSpeed;
+    public GameObject attackBox;
+    public GameObject attack2Box;
+    public List<WeaponData> weapon;
 
     void Start() {
         attackBox.SetActive(false); attack2Box.SetActive(false);
         _boss = GameObject.FindWithTag("Boss");
         _rigidbody = GetComponent<Rigidbody>();
         _saveSpeed = playerSpeed;
-        isJumpPressed = false;
         slider01.maxValue = maxHealth; slider02.maxValue = maxHealth;
+        if (weapon.Count == 0) {
+            Debug.LogWarning("List for " + gameObject.name + " is set to 0");
+            return;
+        }
+        if (_currentWeapon == null) _currentWeapon = weapon.First();
     }
 
     private void FixedUpdate()
@@ -69,6 +81,8 @@ public class Player_management : MonoBehaviour {
                 isDead = true;
                 _axisX = 0;
                 playerSpeed = 0;
+                CancelInvoke(nameof(InvulnerabilityEnd));
+                gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
             }
         }
     }
@@ -151,26 +165,11 @@ public class Player_management : MonoBehaviour {
     {
         if (_attack) return;
         if (isNearGrounded) {
-            attackBox.SetActive(true);
-            playerSpeed = 0;
-            _attack = true;
-            Invoke(nameof(AttackCooldown),0.5f);
+            _currentWeapon.DoSimple(this);
+            Invoke(nameof(AttackCooldown),0.4f);
         }
         else if (_canAirAttack) {
-            _doubleJump = false;
-            _rigidbody.velocity = new Vector3(0, 0, 0);
-            if (_axisX != 0) {
-                if (!_saveAxisXpositive) {
-                    _rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
-                }
-                else {
-                    _rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
-                }
-            }
-            attack2Box.SetActive(true);
-            _airAttack = true;
-            _canAirAttack = false;
-            _rigidbody.AddForce(Vector3.up * airattackjumpHeight,ForceMode.Impulse);
+            _currentWeapon.DoAirSimple(this);
             Invoke(nameof(AttackCooldown),0.4f);
         }
     }
