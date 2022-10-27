@@ -36,4 +36,8 @@ public class DoubleSaber : WeaponData
         player._rigidbody.AddForce(Vector3.up * player.airattackjumpHeight,ForceMode.Impulse);
         damageGiven = airSimpleDamage;
     }
+
+    public override void Interrupt(Player_management player) {
+        player.attackBox.SetActive(false); player.attack2Box.SetActive(false);
+    }
 }

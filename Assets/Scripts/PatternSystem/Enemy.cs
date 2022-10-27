@@ -24,6 +24,7 @@ namespace PatternSystem {
 
         [SerializeField] private float deathKnockback;
         [SerializeField] private float deathKnockbackUp;
+        [SerializeField] private float deathKnockbackBack;
 
         private PatternAction _currentPatternAction;
         private int _currentPatternIndex;
@@ -105,9 +106,11 @@ namespace PatternSystem {
                     _direction.y = 0; _direction.z = 0;
                     transform.rotation = Quaternion.LookRotation(_direction);
                     Rigidbody.velocity = Vector3.zero;
-                    Vector3 knockbackDirection = new Vector3(transform.position.x - player.transform.position.x, 0);
+                    Vector3 knockbackDirection = new Vector3(posOrigin.x - posTarget.x, 0);
                     Rigidbody.AddForce(knockbackDirection * deathKnockback,ForceMode.Impulse);
                     Rigidbody.AddForce(Vector3.up * deathKnockbackUp,ForceMode.Impulse);
+                    Rigidbody.AddForce(Vector3.back * deathKnockbackBack,ForceMode.Impulse);
+                    gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
                     Time.timeScale = 0.05f;
                     Time.fixedDeltaTime = fixedDeltaTime * Time.timeScale;
                     Invoke(nameof(NormalizeTime),0.05f);
