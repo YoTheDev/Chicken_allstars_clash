@@ -44,6 +44,7 @@ public class Player_management : MonoBehaviour {
     public GameObject attackBox;
     public GameObject attack2Box;
     public List<WeaponData> weapon;
+    public Game_management Game_management;
 
     void Start() {
         attackBox.SetActive(false); attack2Box.SetActive(false);
@@ -56,6 +57,7 @@ public class Player_management : MonoBehaviour {
             return;
         }
         if (_currentWeapon == null) _currentWeapon = weapon.First();
+        Game_management.PlayerCount();
     }
 
     private void FixedUpdate()
