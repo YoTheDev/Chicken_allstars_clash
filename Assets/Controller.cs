@@ -35,12 +35,28 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""JumpHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""943758a0-40a5-4128-b282-71022564679d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""32fac9a9-2c44-4466-b869-4acf4a8ad30a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""AttackHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""e14b79da-0430-4891-9148-6a38ebfd9793"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Block"",
@@ -183,6 +199,28 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5cc428b-b100-417e-8da5-b6980425fe52"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AttackHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f517747b-32a6-49da-86cd-871aa4b41394"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -193,7 +231,9 @@ public class @Controller : IInputActionCollection, IDisposable
         m_InGame = asset.FindActionMap("InGame", throwIfNotFound: true);
         m_InGame_Move = m_InGame.FindAction("Move", throwIfNotFound: true);
         m_InGame_Jump = m_InGame.FindAction("Jump", throwIfNotFound: true);
+        m_InGame_JumpHold = m_InGame.FindAction("JumpHold", throwIfNotFound: true);
         m_InGame_Attack = m_InGame.FindAction("Attack", throwIfNotFound: true);
+        m_InGame_AttackHold = m_InGame.FindAction("AttackHold", throwIfNotFound: true);
         m_InGame_Block = m_InGame.FindAction("Block", throwIfNotFound: true);
     }
 
@@ -246,7 +286,9 @@ public class @Controller : IInputActionCollection, IDisposable
     private IInGameActions m_InGameActionsCallbackInterface;
     private readonly InputAction m_InGame_Move;
     private readonly InputAction m_InGame_Jump;
+    private readonly InputAction m_InGame_JumpHold;
     private readonly InputAction m_InGame_Attack;
+    private readonly InputAction m_InGame_AttackHold;
     private readonly InputAction m_InGame_Block;
     public struct InGameActions
     {
@@ -254,7 +296,9 @@ public class @Controller : IInputActionCollection, IDisposable
         public InGameActions(@Controller wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_InGame_Move;
         public InputAction @Jump => m_Wrapper.m_InGame_Jump;
+        public InputAction @JumpHold => m_Wrapper.m_InGame_JumpHold;
         public InputAction @Attack => m_Wrapper.m_InGame_Attack;
+        public InputAction @AttackHold => m_Wrapper.m_InGame_AttackHold;
         public InputAction @Block => m_Wrapper.m_InGame_Block;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
@@ -271,9 +315,15 @@ public class @Controller : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnJump;
+                @JumpHold.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnJumpHold;
+                @JumpHold.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnJumpHold;
+                @JumpHold.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnJumpHold;
                 @Attack.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnAttack;
+                @AttackHold.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnAttackHold;
+                @AttackHold.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnAttackHold;
+                @AttackHold.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnAttackHold;
                 @Block.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnBlock;
                 @Block.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnBlock;
                 @Block.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnBlock;
@@ -287,9 +337,15 @@ public class @Controller : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @JumpHold.started += instance.OnJumpHold;
+                @JumpHold.performed += instance.OnJumpHold;
+                @JumpHold.canceled += instance.OnJumpHold;
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @AttackHold.started += instance.OnAttackHold;
+                @AttackHold.performed += instance.OnAttackHold;
+                @AttackHold.canceled += instance.OnAttackHold;
                 @Block.started += instance.OnBlock;
                 @Block.performed += instance.OnBlock;
                 @Block.canceled += instance.OnBlock;
@@ -301,7 +357,9 @@ public class @Controller : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnJumpHold(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnAttackHold(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
     }
 }

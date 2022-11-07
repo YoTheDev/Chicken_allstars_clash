@@ -22,12 +22,28 @@
                     "interactions": ""
                 },
                 {
+                    "name": "JumpHold",
+                    "type": "Button",
+                    "id": "943758a0-40a5-4128-b282-71022564679d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "32fac9a9-2c44-4466-b869-4acf4a8ad30a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "AttackHold",
+                    "type": "Button",
+                    "id": "e14b79da-0430-4891-9148-6a38ebfd9793",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "Block",
@@ -168,6 +184,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5cc428b-b100-417e-8da5-b6980425fe52",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttackHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f517747b-32a6-49da-86cd-871aa4b41394",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JumpHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
