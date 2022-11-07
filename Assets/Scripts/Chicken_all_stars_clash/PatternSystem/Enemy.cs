@@ -11,6 +11,7 @@ namespace PatternSystem {
 
         public bool RandomizePattern;
         public List<PatternAction> Pattern;
+        public Game_management gameManagement;
         public Transform[] target;
         public float turnSpeed = .01f;
         public float maxHealth;
@@ -48,7 +49,7 @@ namespace PatternSystem {
                 Debug.LogWarning("List for " + gameObject.name + " is set to 0");
                 return;
             }
-            if (_isDead == false) {
+            if (_isDead == false || gameManagement.GameOver()) {
                 if (_currentPatternAction == null || _currentPatternAction.IsFinished(this) &&
                     _patternTimer >= _currentPatternAction.PatternDuration) {
                     if (_currentPatternAction == null) _currentPatternAction = Pattern.First();
@@ -121,6 +122,7 @@ namespace PatternSystem {
         void NormalizeTime() {
             Time.timeScale = 1;
             Time.fixedDeltaTime = fixedDeltaTime * Time.timeScale;
+            gameManagement.Victory();
         }
 
         private PatternAction GetRandomPatternAction() {

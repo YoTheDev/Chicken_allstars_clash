@@ -85,6 +85,7 @@ public class Player_management : MonoBehaviour {
                 playerSpeed = 0;
                 CancelInvoke(nameof(InvulnerabilityEnd));
                 gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+                Game_management.PlayerDead();
             }
         }
     }

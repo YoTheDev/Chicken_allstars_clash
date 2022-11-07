@@ -15,7 +15,12 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/movement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Movement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Player_management.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Enemy.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Game_management.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Dash.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Stay.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Turn.cs" />
       </list>
     </option>
   </component>
@@ -61,6 +66,9 @@
       <workItem from="1665239080559" duration="16402000" />
       <workItem from="1666211986939" duration="379000" />
       <workItem from="1666212546417" duration="7008000" />
+      <workItem from="1667081654894" duration="6280000" />
+      <workItem from="1667344453570" duration="1007000" />
+      <workItem from="1667414215212" duration="782000" />
     </task>
     <servers />
   </component>

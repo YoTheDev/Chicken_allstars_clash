@@ -1,7 +1,7 @@
 ﻿using PatternSystem;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Stay", menuName = "PatternAction/Stay")]
+[CreateAssetMenu(fileName = "New Stay", menuName = "ChickenAllStarsClash/PatternAction/Stay")]
 public class Stay : PatternAction {
     
     public float Duration;

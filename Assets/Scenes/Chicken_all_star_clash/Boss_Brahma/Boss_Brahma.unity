@@ -3339,6 +3339,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94c204ad024ab7d42b172977193537cd, type: 2}
   - {fileID: 11400000, guid: 88560f81ae9af0644ba5cd141dfe780d, type: 2}
   - {fileID: 11400000, guid: 1c8476f46be559d4fa19d80a04df84ba, type: 2}
+  gameManagement: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
   target:
   - {fileID: 1205937318}
   turnSpeed: 0.1
