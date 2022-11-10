@@ -73,6 +73,14 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Start"",
+                    ""type"": ""Button"",
+                    ""id"": ""b67238b4-7904-4842-b439-4b27198ba80c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -240,6 +248,28 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bbf1c21-2bed-4f63-a1ae-fde8c793b7f8"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1683b861-fbac-49c3-9411-edfcab7c9bad"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -267,17 +297,6 @@ public class @Controller : IInputActionCollection, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""8873a92f-5a29-4a4b-85c3-e6dccebf6821"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""New action"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""78efbe1a-bb9b-41c3-9844-61492db36ed6"",
                     ""path"": """",
                     ""interactions"": """",
@@ -290,19 +309,7 @@ public class @Controller : IInputActionCollection, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": [
-        {
-            ""name"": ""Gamepad"",
-            ""bindingGroup"": ""Gamepad"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                }
-            ]
-        }
-    ]
+    ""controlSchemes"": []
 }");
         // InGame
         m_InGame = asset.FindActionMap("InGame", throwIfNotFound: true);
@@ -313,6 +320,7 @@ public class @Controller : IInputActionCollection, IDisposable
         m_InGame_AttackHold = m_InGame.FindAction("AttackHold", throwIfNotFound: true);
         m_InGame_Block = m_InGame.FindAction("Block", throwIfNotFound: true);
         m_InGame_Back = m_InGame.FindAction("Back", throwIfNotFound: true);
+        m_InGame_Start = m_InGame.FindAction("Start", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -373,6 +381,7 @@ public class @Controller : IInputActionCollection, IDisposable
     private readonly InputAction m_InGame_AttackHold;
     private readonly InputAction m_InGame_Block;
     private readonly InputAction m_InGame_Back;
+    private readonly InputAction m_InGame_Start;
     public struct InGameActions
     {
         private @Controller m_Wrapper;
@@ -384,6 +393,7 @@ public class @Controller : IInputActionCollection, IDisposable
         public InputAction @AttackHold => m_Wrapper.m_InGame_AttackHold;
         public InputAction @Block => m_Wrapper.m_InGame_Block;
         public InputAction @Back => m_Wrapper.m_InGame_Back;
+        public InputAction @Start => m_Wrapper.m_InGame_Start;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -414,6 +424,9 @@ public class @Controller : IInputActionCollection, IDisposable
                 @Back.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnBack;
+                @Start.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnStart;
+                @Start.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnStart;
+                @Start.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnStart;
             }
             m_Wrapper.m_InGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -439,6 +452,9 @@ public class @Controller : IInputActionCollection, IDisposable
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
+                @Start.started += instance.OnStart;
+                @Start.performed += instance.OnStart;
+                @Start.canceled += instance.OnStart;
             }
         }
     }
@@ -484,15 +500,6 @@ public class @Controller : IInputActionCollection, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
-    private int m_GamepadSchemeIndex = -1;
-    public InputControlScheme GamepadScheme
-    {
-        get
-        {
-            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
-            return asset.controlSchemes[m_GamepadSchemeIndex];
-        }
-    }
     public interface IInGameActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -502,6 +509,7 @@ public class @Controller : IInputActionCollection, IDisposable
         void OnAttackHold(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnStart(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -11,6 +11,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Vacation_resort_island/Player_select.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Vacation_resort_island/UI_title.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -91,7 +92,8 @@
       <workItem from="1667813961947" duration="87000" />
       <workItem from="1667814062802" duration="10739000" />
       <workItem from="1667896604994" duration="9143000" />
-      <workItem from="1667982708501" duration="20029000" />
+      <workItem from="1667982708501" duration="20249000" />
+      <workItem from="1668069777256" duration="19800000" />
     </task>
     <servers />
   </component>
