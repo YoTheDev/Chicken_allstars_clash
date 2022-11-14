@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using PatternSystem;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Turn", menuName = "ChickenAllStarsClash/PatternAction/Turn")]
+[CreateAssetMenu(fileName = "New Turn", menuName = "ChickenAllStarsClash/InGame/PatternAction/Turn")]
 public class Turn : PatternAction
 {
     public Vector3 JumpPower;

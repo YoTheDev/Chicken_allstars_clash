@@ -8,6 +8,10 @@ TagManager:
   - Wall
   - Boss
   - Attack
+  - Player_01
+  - Player_02
+  - Player_03
+  - Player_04
   layers:
   - Default
   - TransparentFX

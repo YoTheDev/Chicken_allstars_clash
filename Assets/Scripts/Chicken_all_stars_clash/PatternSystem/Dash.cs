@@ -1,7 +1,7 @@
 using PatternSystem;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Dash", menuName = "ChickenAllStarsClash/PatternAction/Dash")]
+[CreateAssetMenu(fileName = "New Dash", menuName = "ChickenAllStarsClash/InGame/PatternAction/Dash")]
 public class Dash : PatternAction {
 
     public Vector3 DashPower;

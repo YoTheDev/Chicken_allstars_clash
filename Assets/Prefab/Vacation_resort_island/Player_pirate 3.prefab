@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 4596024779317720302}
   - component: {fileID: 1328319885232822125}
   m_Layer: 0
-  m_Name: Player_pirate
-  m_TagString: Player
+  m_Name: Player_pirate 3
+  m_TagString: Player_04
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,4 +157,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cc1f96c97529e46b355f768b2b6fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crochet: {fileID: 0}
   xAxis: 0

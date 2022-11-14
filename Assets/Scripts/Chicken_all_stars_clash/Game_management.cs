@@ -5,7 +5,7 @@ using System.Linq;
 using PatternSystem;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Game manager",menuName = "Game_manager")]
+[CreateAssetMenu(fileName = "new Game manager",menuName = "ChickenAllStarsClash/InGame/Game_manager")]
 public class Game_management : ScriptableObject
 {
     [SerializeField] private List<bool> playerAlive;
@@ -18,7 +18,7 @@ public class Game_management : ScriptableObject
     public void PlayerDead() {
         playerAlive[aliveIndex] = false;
         if (aliveIndex < playerAlive.Count) aliveIndex++;
-        GameOver();
+        else GameOver();
     }
 
     public bool GameOver() {

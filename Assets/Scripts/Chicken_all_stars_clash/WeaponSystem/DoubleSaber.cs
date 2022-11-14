@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Double saber",menuName = "Weapon/Double saber")]
+[CreateAssetMenu(fileName = "New Double saber",menuName = "ChickenAllStarsClash/InGame/Weapon/Double saber")]
 public class DoubleSaber : WeaponData
 {
     private float damageGiven;
