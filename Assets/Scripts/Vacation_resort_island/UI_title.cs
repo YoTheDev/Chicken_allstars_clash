@@ -18,6 +18,8 @@ public class UI_title : MonoBehaviour {
     public List<GameObject> playerui = new List<GameObject>();
     public List<GameObject> player = new List<GameObject>();
     public List<GameObject> playerSpawner = new List<GameObject>();
+    public int playerConnected;
+    public int playerReady;
 
     private bool _attackPressed;
     private bool _jumpPressed;
@@ -32,13 +34,13 @@ public class UI_title : MonoBehaviour {
     private void Start() {
         _playOneShot = true;
         titleScreen.SetActive(true);
-        startButton.onClick.AddListener(() => { PlayerJoining(); } );
-        readyButton.onClick.AddListener(() => { MorePlayer(); } );
+        startButton.onClick.AddListener(() => PlayerJoining());
+        readyButton.onClick.AddListener(() => MorePlayer());
         readyButton.interactable = false;
         _inputManager = GetComponent<PlayerInputManager>();
         _playerInput = GetComponent<PlayerInput>();
-        for (int i = 0; i < ui.Count; i++) { ui[i].SetActive(false); }
-        for (int i = 0; i < playerui.Count; i++) { playerui[i].SetActive(false); }
+        for (int i = 0; i < ui.Count; i++) ui[i].SetActive(false);
+        for (int i = 0; i < playerui.Count; i++) playerui[i].SetActive(false);
     }
 
     private void Update() {
@@ -47,6 +49,12 @@ public class UI_title : MonoBehaviour {
             ui[0].SetActive(true);
             _playerInput.enabled = false;
         }
+        if (!ui[1].activeSelf) return;
+        if (playerReady == playerConnected) {
+            readyButton.interactable = true;
+            readyButton.Select();
+        }
+        else readyButton.interactable = false;
     }
     
     public void PlayerJoining() {
@@ -76,7 +84,7 @@ public class UI_title : MonoBehaviour {
     }
 
     void OnPlayerJoined() {
-        if (ui[1].activeSelf != true) return;
+        if (!ui[1].activeSelf) return;
         JoinedPlayer();
     }
 }

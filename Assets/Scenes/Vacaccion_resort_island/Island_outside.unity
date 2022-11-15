@@ -2986,7 +2986,7 @@ MonoBehaviour:
         m_Action: Join
         m_Flags: 0
     m_Reference: {fileID: -4744230313485937009, guid: a37d76bdf954ff94bb44e1557cff89b1, type: 3}
-  m_PlayerPrefab: {fileID: 2338084808930640597, guid: 4f8cced98d304974bb8cd927211660b4, type: 3}
+  m_PlayerPrefab: {fileID: 2073087735063707665, guid: b372b34046a338641803bd20b1e59a83, type: 3}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
   m_FixedNumberOfSplitScreens: -1
@@ -3054,15 +3054,17 @@ MonoBehaviour:
   - {fileID: 872327824}
   - {fileID: 2024660190}
   player:
-  - {fileID: 2338084808930640597, guid: 4f8cced98d304974bb8cd927211660b4, type: 3}
-  - {fileID: 2338084808930640597, guid: 85ddf075dcfbaf04a91f165c0787d757, type: 3}
-  - {fileID: 2338084808930640597, guid: b004be01d9d8c7c4fb8ec0b6febb61d6, type: 3}
-  - {fileID: 2338084808930640597, guid: 3da3f3575680dcc47a49dc736f2fbbd3, type: 3}
+  - {fileID: 2073087735063707665, guid: b372b34046a338641803bd20b1e59a83, type: 3}
+  - {fileID: 8131613019704382001, guid: 89f28ad6bf0edd84a973a88253400b43, type: 3}
+  - {fileID: 4294497489768595856, guid: a80a0f4342a5ac44cbd801ed75600b63, type: 3}
+  - {fileID: 5696438109243170727, guid: 9a416f545263f2449972db37092de4a5, type: 3}
   playerSpawner:
   - {fileID: 384101524}
   - {fileID: 1536532018}
   - {fileID: 546648388}
   - {fileID: 1450427998}
+  playerConnected: 0
+  playerReady: 0
 --- !u!4 &756662030
 Transform:
   m_ObjectHideFlags: 0
