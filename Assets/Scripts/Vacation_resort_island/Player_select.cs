@@ -13,6 +13,8 @@ public class Player_select : MonoBehaviour
     [SerializeField] private Button readyButton;
     [SerializeField] private List<GameObject> _class = new List<GameObject>();
     [SerializeField] private List<GameObject> _classObject = new List<GameObject>();
+    [SerializeField] private string playerTag;
+    [SerializeField] private string playerUI;
 
     private float xAxis;
     private int uiIndex;
@@ -23,10 +25,12 @@ public class Player_select : MonoBehaviour
         readyButton = GameObject.Find("Ready").GetComponent<Button>();
         ui = FindObjectOfType<UI_title>();
         ui.playerConnected++;
-        if (gameObject.CompareTag("Player_01")) {
-            _class.Add(GameObject.Find("P1/Class/Pirate")); _class.Add(GameObject.Find("P1/Class/Mage"));
-            _class.Add(GameObject.Find("P1/Class/Science")); _class.Add(GameObject.Find("P1/Class/Thief"));
-            crochet = GameObject.Find("P1/Validation");
+        if (gameObject.CompareTag(playerTag)) {
+            _class.Add(GameObject.Find(playerUI+"/Class/Pirate")); 
+            _class.Add(GameObject.Find(playerUI+"/Class/Mage"));
+            _class.Add(GameObject.Find(playerUI+"/Class/Science")); 
+            _class.Add(GameObject.Find(playerUI+"/Class/Thief"));
+            crochet = GameObject.Find(playerUI+"/Validation");
             ButtonAdd();
         }
     }
@@ -41,15 +45,19 @@ public class Player_select : MonoBehaviour
         if (validate) return;
         if (xAxis <= -1) {
             _class[uiIndex].SetActive(false);
+            _classObject[uiIndex].SetActive(false);
             if (uiIndex <= 0) uiIndex = 3;
             else uiIndex--;
             _class[uiIndex].SetActive(true);
+            _classObject[uiIndex].SetActive(true);
         }
         if (xAxis >= 1) {
             _class[uiIndex].SetActive(false);
+            _classObject[uiIndex].SetActive(false);
             if (uiIndex >= 3) uiIndex = 0;
             else uiIndex++;
             _class[uiIndex].SetActive(true);
+            _classObject[uiIndex].SetActive(true);
         }
     }
 
@@ -57,15 +65,16 @@ public class Player_select : MonoBehaviour
         if (validate == false) {
             crochet.SetActive(true);
             validate = true;
-            ui.playerReady++;
+            ui.playerReadyCount++;
         }
     }
 
     void OnBack() {
+        if (ui.ui[2].activeSelf) return;
         if (validate) {
             crochet.SetActive(false);
             readyButton.interactable = false;
-            ui.playerReady--;
+            ui.playerReadyCount--;
             validate = false;
         }
     }

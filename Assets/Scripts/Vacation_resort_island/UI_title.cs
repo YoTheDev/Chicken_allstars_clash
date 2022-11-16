@@ -6,24 +6,29 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+
 public class UI_title : MonoBehaviour {
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject grayOpacity;
     [SerializeField] private Button startButton;
     [SerializeField] private Button readyButton;
+    [SerializeField] private Button startMissionAnyway;
 
     public List<GameObject> ui = new List<GameObject>();
     public List<GameObject> playerui = new List<GameObject>();
     public List<GameObject> player = new List<GameObject>();
     public List<GameObject> playerSpawner = new List<GameObject>();
+    public List<string> missionScene = new List<string>();
     public int playerConnected;
-    public int playerReady;
+    public int playerReadyCount;
 
     private bool _attackPressed;
     private bool _jumpPressed;
     private bool _playOneShot;
+    private bool _playerReadyBool;
     private int _playerIndex = 0;
     private PlayerInputManager _inputManager;
     private PlayerInput _playerInput;
@@ -36,6 +41,7 @@ public class UI_title : MonoBehaviour {
         titleScreen.SetActive(true);
         startButton.onClick.AddListener(() => PlayerJoining());
         readyButton.onClick.AddListener(() => MorePlayer());
+        startMissionAnyway.onClick.AddListener(() => StartMission());
         readyButton.interactable = false;
         _inputManager = GetComponent<PlayerInputManager>();
         _playerInput = GetComponent<PlayerInput>();
@@ -49,8 +55,8 @@ public class UI_title : MonoBehaviour {
             ui[0].SetActive(true);
             _playerInput.enabled = false;
         }
-        if (!ui[1].activeSelf) return;
-        if (playerReady == playerConnected) {
+        if (!ui[1].activeSelf || ui[2].activeSelf) return;
+        if (playerReadyCount == playerConnected && _playerReadyBool) {
             readyButton.interactable = true;
             readyButton.Select();
         }
@@ -71,8 +77,12 @@ public class UI_title : MonoBehaviour {
             grayOpacity.SetActive(true);
         }
         else {
-            Debug.Log("beggin");
+            StartMission();
         }
+    }
+
+    public void StartMission() {
+        SceneManager.LoadScene(missionScene[0]);
     }
 
     void JoinedPlayer() {
@@ -80,6 +90,7 @@ public class UI_title : MonoBehaviour {
         player[_playerIndex].transform.position = playerSpawner[_playerIndex].transform.position;
         _inputManager.playerPrefab = player[_playerIndex+1];
         playerui[_playerIndex].SetActive(true);
+        _playerReadyBool = true;
         _playerIndex++;
     }
 
