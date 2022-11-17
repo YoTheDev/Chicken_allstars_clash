@@ -11,7 +11,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/playerData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Player_management.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/projectile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Vacation_resort_island/Player_select.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Vacation_resort_island/UI_title.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -105,6 +106,7 @@
       <workItem from="1668069777256" duration="19800000" />
       <workItem from="1668501764146" duration="18818000" />
       <workItem from="1668588825121" duration="14542000" />
+      <workItem from="1668674044089" duration="21281000" />
     </task>
     <servers />
   </component>

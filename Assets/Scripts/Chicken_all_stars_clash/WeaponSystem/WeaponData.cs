@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class WeaponData : ScriptableObject {
     
     public abstract float DamageData { get; }
-    public abstract void DoSimple(Player_management player);
-    public abstract void DoAirSimple(Player_management player);
-    public abstract void Interrupt(Player_management player);
+    public abstract void DoSimple(Player_controll player);
+    public abstract void DoAirSimple(Player_controll player);
+    public abstract void Interrupt(Player_controll player);
 }

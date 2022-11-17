@@ -3,23 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Double saber",menuName = "ChickenAllStarsClash/InGame/Weapon/Double saber")]
-public class DoubleSaber : WeaponData
+public class StickOfTrue : WeaponData
 {
     private float damageGiven;
 
     public float simpleDamage;
     public float airSimpleDamage;
+    public bool simpleProjectile;
+    public bool airProjectile;
 
     public override float DamageData => damageGiven;
 
     public override void DoSimple(Player_controll player) {
-        player.playerSpeed = 0;
+        player.attackBox.SetActive(true);
+        player.playerSpeed = 50;
         player._attack = true;
         damageGiven = simpleDamage;
     }
 
     public override void DoAirSimple(Player_controll player) {
-        player.attack2Box.SetActive(true);
+        Instantiate(player.projectile,player.transform);
         player._doubleJump = false;
         player._rigidbody.velocity = Vector3.zero;
         if (player._axisX != 0) {

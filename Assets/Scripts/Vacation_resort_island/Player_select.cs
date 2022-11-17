@@ -20,6 +20,7 @@ public class Player_select : MonoBehaviour
     private int uiIndex;
     private bool validate;
     private UI_title ui;
+    private Player_controll player_data;
 
     private void Start() {
         readyButton = GameObject.Find("Ready").GetComponent<Button>();
