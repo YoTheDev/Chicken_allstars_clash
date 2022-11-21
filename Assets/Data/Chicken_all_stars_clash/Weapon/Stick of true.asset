@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simpleDamage: 0
   airSimpleDamage: 0
+  airProjectileCount: 3
   simpleProjectile: 1
   airProjectile: 0

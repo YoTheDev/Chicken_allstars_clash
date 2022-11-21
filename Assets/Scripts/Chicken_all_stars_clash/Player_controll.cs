@@ -55,6 +55,7 @@ public class Player_controll : MonoBehaviour {
         _rigidbody = GetComponent<Rigidbody>();
         _saveSpeed = playerSpeed;
         slider01.maxValue = maxHealth; slider02.maxValue = maxHealth;
+        slider01.value = maxHealth; slider02.value = maxHealth;
         if (weapon.Count == 0) {
             Debug.LogWarning("List for " + gameObject.name + " is set to 0");
             return;
@@ -78,66 +79,60 @@ public class Player_controll : MonoBehaviour {
             _canAirAttack = true;
             _doubleJump = true;
         }
-        if (slider01.value < slider02.value) {
-            slider02.value = slider02.value - 0.05f;
-        }
-        if (isDead == false) {
-            if (slider02.value <= 0) {
-                isDead = true;
-                _axisX = 0;
-                playerSpeed = 0;
-                CancelInvoke(nameof(InvulnerabilityEnd));
-                gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
-                Game_management.PlayerDead();
-            }
-        }
+        if (slider01.value < slider02.value) slider02.value -= 0.05f;
+        if (isDead) return;
+        if (!(slider02.value <= 0)) return;
+        isDead = true;
+        _axisX = 0;
+        playerSpeed = 0;
+        CancelInvoke(nameof(InvulnerabilityEnd));
+        gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+        Game_management.PlayerDead();
     }
 
     public void OnMove(InputValue Moving) {
-        if (isDead == false) {
-            var rotation = transform.rotation;
-            _axisX = Moving.Get<float>();
-            if (_axisX < 0) {
-                if (!_attack && !_airAttack) {
-                    playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180, rotation.z);
-                }
-                _saveAxisXpositive = false;
+        if (isDead) return;
+        var rotation = transform.rotation;
+        _axisX = Moving.Get<float>();
+        if (_axisX < 0) {
+            if (!_attack && !_airAttack) {
+                playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180, rotation.z);
             }
-            else if (_axisX > 0) {
-                if (!_attack && !_airAttack) {
-                    playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
-                }
-                _saveAxisXpositive = true;
+            _saveAxisXpositive = false;
+        }
+        else if (_axisX > 0) {
+            if (!_attack && !_airAttack) {
+                playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
             }
+            _saveAxisXpositive = true;
         }
     }
 
     public void OnJump() {
-        if (isDead == false) {
-            if (isNearGrounded && !_attack) {
-                isJumpPressed = true;
-            }
-            if (!_isGrounded && _doubleJump) {
-                _rigidbody.velocity = new Vector3(0, 0, 0);
-                _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
-                if (_axisX != 0) {
-                    if (!_saveAxisXpositive) {
-                        _rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
-                    }
-                    else {
-                        _rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
-                    }
+        if (isDead) return;
+        if (isNearGrounded && !_attack) {
+            isJumpPressed = true;
+        }
+        if (!_isGrounded && _doubleJump) {
+            _rigidbody.velocity = new Vector3(0, 0, 0);
+            _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
+            if (_axisX != 0) {
+                if (!_saveAxisXpositive) {
+                    _rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
                 }
-                _doubleJump = false;
-                isJumpPressed = false;
-                _canAirAttack = true;
+                else {
+                    _rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
+                }
             }
+            _doubleJump = false;
+            isJumpPressed = false;
+            _canAirAttack = true;
         }
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
+    private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Ground")) {
+            _currentWeapon.currentAirProjectile = 0;
             _rigidbody.drag = 10;
             playerSpeed = _saveSpeed;
             _isGrounded = true;
@@ -149,27 +144,23 @@ public class Player_controll : MonoBehaviour {
             _rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
             gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
             Invoke(nameof(InvulnerabilityEnd),1);
+            AttackCooldown();
             Damage();
         }
     }
 
     void Damage() {
         _damage = FindObjectOfType<Enemy>().damageCoast;
-        if (slider01.value > 0) {
-            slider01.value = slider01.value - _damage;
-        }
-        else {
-            slider02.value = slider02.value - _damage;
-        }
+        if (slider01.value > 0) slider01.value -= _damage;
+        else slider02.value -= _damage;
     }
 
     void InvulnerabilityEnd() {
         gameObject.layer = LayerMask.NameToLayer("Player_one");
     }
 
-    public void OnAttack()
-    {
-        if (_attack) return;
+    public void OnAttack() {
+        if (_attack || isDead) return;
         if (isNearGrounded) {
             _currentWeapon.DoSimple(this);
             Invoke(nameof(AttackCooldown),simpleReload);
@@ -181,15 +172,18 @@ public class Player_controll : MonoBehaviour {
     }
 
     public void AttackCooldown() {
+        CancelInvoke(nameof(AttackCooldown));
         var rotation = transform.rotation;
-        if (_saveAxisXpositive) {
-            playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
-        }
-        else {
-            playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);
-        }
-        attackBox.SetActive(false); attack2Box.SetActive(false);
+        if (_saveAxisXpositive) playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
+        else playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);
         playerSpeed = _saveSpeed;
-        _attack = false; _airAttack = false;
+        if(_attack) {
+            _attack = false;
+            attackBox.SetActive(false);
+        }
+        if(_airAttack) {
+            _airAttack = false;
+            attack2Box.SetActive(false);
+        }
     }
 }

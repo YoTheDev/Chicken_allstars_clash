@@ -1286,7 +1286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPivot: {fileID: 1597272540}
   jumpHeight: 60
-  doubleJumpHeight: 90
+  doubleJumpHeight: 80
   airattackjumpHeight: 50
   knockbackForce: 12
   knockbackForceUp: 50
@@ -4164,7 +4164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPivot: {fileID: 345529763}
   jumpHeight: 60
-  doubleJumpHeight: 100
+  doubleJumpHeight: 90
   airattackjumpHeight: 60
   knockbackForce: 10
   knockbackForceUp: 50
@@ -4186,8 +4186,8 @@ MonoBehaviour:
   _airAttack: 0
   _rigidbody: {fileID: 0}
   playerSpeed: 120
-  simpleReload: 0.4
-  airReload: 0.4
+  simpleReload: 0.5
+  airReload: 0.5
   attackBox: {fileID: 2007410032}
   attack2Box: {fileID: 1672106093}
   projectile: {fileID: 0}

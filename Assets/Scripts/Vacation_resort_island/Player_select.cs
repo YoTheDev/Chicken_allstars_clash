@@ -63,20 +63,18 @@ public class Player_select : MonoBehaviour
     }
 
     void OnJump() {
-        if (validate == false) {
-            crochet.SetActive(true);
-            validate = true;
-            ui.playerReadyCount++;
-        }
+        if (validate) return;
+        crochet.SetActive(true);
+        validate = true;
+        ui.playerReadyCount++;
     }
 
     void OnBack() {
         if (ui.ui[2].activeSelf) return;
-        if (validate) {
-            crochet.SetActive(false);
-            readyButton.interactable = false;
-            ui.playerReadyCount--;
-            validate = false;
-        }
+        if (!validate) return;
+        crochet.SetActive(false);
+        readyButton.interactable = false;
+        ui.playerReadyCount--;
+        validate = false;
     }
 }

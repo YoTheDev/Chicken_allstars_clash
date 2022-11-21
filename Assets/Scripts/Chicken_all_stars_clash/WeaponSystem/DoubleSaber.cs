@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Double saber",menuName = "ChickenAllStarsClash/InGame/Weapon/Double saber")]
-public class DoubleSaber : WeaponData
-{
+public class DoubleSaber : WeaponData {
     private float damageGiven;
 
     public float simpleDamage;
     public float airSimpleDamage;
 
     public override float DamageData => damageGiven;
+    public override float currentAirProjectile { get; set; }
 
     public override void DoSimple(Player_controll player) {
+        player.attackBox.SetActive(true);
         player.playerSpeed = 0;
         player._attack = true;
         damageGiven = simpleDamage;
