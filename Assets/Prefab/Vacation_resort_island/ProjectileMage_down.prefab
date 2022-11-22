@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1316202251585092172}
   - component: {fileID: 1316202251585092175}
   - component: {fileID: -8949021590678964826}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ProjectileMage_down
   m_TagString: Attack
   m_Icon: {fileID: 0}

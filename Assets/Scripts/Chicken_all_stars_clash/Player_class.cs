@@ -8,8 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
-public class Player_controll : MonoBehaviour {
-    
+public class Player_class : MonoBehaviour {
     
     [SerializeField] private GameObject playerPivot;
     [SerializeField] private float jumpHeight = 1.0f;

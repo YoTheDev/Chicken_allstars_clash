@@ -12,6 +12,7 @@ TagManager:
   - Player_02
   - Player_03
   - Player_04
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Water
   - UI
   - Player_one
-  - 
+  - Player_two
   - 
   - 
   - IgnoreCollision

@@ -12,7 +12,7 @@ namespace PatternSystem {
         public bool RandomizePattern;
         public List<PatternAction> Pattern;
         public Game_management gameManagement;
-        public Transform[] target;
+        public List<GameObject> target = new List<GameObject>();
         public float turnSpeed = .01f;
         public float maxHealth;
         
@@ -42,8 +42,12 @@ namespace PatternSystem {
             Physics.gravity = new Vector3(0, -180f, 0);
             _currentHealth = maxHealth;
             fixedDeltaTime = Time.fixedDeltaTime;
+            if(GameObject.FindWithTag("Player_01")) target.Add(GameObject.FindWithTag("Player_01"));
+            if(GameObject.FindWithTag("Player_02")) target.Add(GameObject.FindWithTag("Player_02"));
+            if(GameObject.FindWithTag("Player_03")) target.Add(GameObject.FindWithTag("Player_03"));
+            if(GameObject.FindWithTag("Player_04")) target.Add(GameObject.FindWithTag("Player_04"));
         }
-
+        
         private void Update() {
             if (Pattern.Count == 0) {
                 Debug.LogWarning("List for " + gameObject.name + " is set to 0");
@@ -55,25 +59,24 @@ namespace PatternSystem {
                     if (_currentPatternAction == null) _currentPatternAction = Pattern.First();
                     else _currentPatternAction = RandomizePattern ? GetRandomPatternAction() : GetNextPatternAction();
                     _currentPatternAction.Do(this);
-                    _rngPlayer = Random.Range(0, target.Length);
                     _patternTimer = 0;
                     damageCoast = _currentPatternAction.PatternDamage;
                 }
                 _patternTimer += Time.deltaTime;
             }
             if (Turn) {
-                Vector3 posTarget = target[_rngPlayer].position ;
+                Vector3 posTarget = target[_rngPlayer].transform.position ;
                 Vector3 posOrigin = transform.position;
                 Quaternion rotOrigin = transform.rotation;
                 _direction = (posTarget - posOrigin).normalized;
                 _direction.y = 0; _direction.z = 0;
                 _rotGoal = Quaternion.LookRotation(_direction);
-                transform.rotation = Quaternion.Slerp(rotOrigin,_rotGoal,turnSpeed);
+                transform.rotation = Quaternion.Slerp(rotOrigin,_rotGoal,turnSpeed * Time.deltaTime);
             }
         }
 
         public void OnCollisionEnter(Collision other) {
-            if (other.gameObject.CompareTag("Player")) {
+            if (other.gameObject.CompareTag("Player_01") || other.gameObject.CompareTag("Player_02") || other.gameObject.CompareTag("Player_03") || other.gameObject.CompareTag("Player_04")) {
                 player = other.gameObject;
                 _currentPatternAction.isCollided(this);
             }
@@ -81,14 +84,14 @@ namespace PatternSystem {
                 Wall = other.gameObject;
                 _currentPatternAction.isCollidedWall(this);
             }
-            if (Knockback) {
-                if (other.gameObject.CompareTag("Ground")) {
-                    Rigidbody.velocity = new Vector3(0, 0, 0);
+            if(other.gameObject.CompareTag("Ground")) {
+                if (Knockback) {
+                    Rigidbody.velocity = Vector3.zero;
                     _patternTimer = _currentPatternAction.PatternDuration;
                     Knockback = false;
                 }
-            }
-            if(other.gameObject.CompareTag("Ground")) {
+                if (Turn) transform.rotation = Quaternion.LookRotation(_direction);
+                _rngPlayer = Random.Range(0, target.Count);
                 Rigidbody.velocity = Vector3.zero;
                 Turn = false;
             }
@@ -96,12 +99,13 @@ namespace PatternSystem {
 
         private void OnTriggerEnter(Collider other) {
             if (other.gameObject.CompareTag("Attack")) {
-                float damage = other.GetComponentInParent<Player_controll>()._currentWeapon.DamageData;
-                _currentHealth = _currentHealth - damage;
+                float damage = other.GetComponentInParent<Player_class>()._currentWeapon.DamageData;
+                _currentHealth -= damage;
+                Debug.Log(_currentHealth);
                 if (_currentHealth <= 0) {
                     _isDead = true;
-                    player = other.gameObject.GetComponentInParent<Player_controll>().gameObject;
-                    Vector3 posTarget = player.transform.position ;
+                    player = other.gameObject.GetComponentInParent<Player_class>().gameObject;
+                    Vector3 posTarget = player.transform.position;
                     Vector3 posOrigin = transform.position;
                     _direction = (posTarget - posOrigin).normalized;
                     _direction.y = 0; _direction.z = 0;

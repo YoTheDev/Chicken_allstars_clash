@@ -2,48 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New StickOfTrue",menuName = "ChickenAllStarsClash/InGame/Weapon/StickOfTrue")]
-public class StickOfTrue : WeaponData
-{
+[CreateAssetMenu(fileName = "New Nitro Baker",menuName = "ChickenAllStarsClash/InGame/Weapon/NitroBaker")]
+public class NitroBaker : WeaponData {
     private float damageGiven;
-    
+
     public float simpleDamage;
     public float airSimpleDamage;
-    public float airProjectileCount;
-    public bool simpleProjectile;
-    public bool airProjectile;
 
     public override float DamageData => damageGiven;
     public override float currentAirProjectile { get; set; }
 
     public override void DoSimple(Player_class player) {
-        player.attackBox.SetActive(true);
-        player.playerSpeed = 50;
+        Debug.Log("hello");
+        player.playerSpeed = 0;
         player._attack = true;
         damageGiven = simpleDamage;
     }
 
     public override void DoAirSimple(Player_class player) {
-        Instantiate(player.projectile,player.transform);
+        player.attack2Box.SetActive(true);
         player._doubleJump = false;
         player._rigidbody.velocity = Vector3.zero;
         if (player._axisX != 0) {
             if (!player._saveAxisXpositive) {
-                player._rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
+                player._rigidbody.AddForce(Vector3.right * 20,ForceMode.Impulse);
             }
             else {
-                player._rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
+                player._rigidbody.AddForce(Vector3.left * 20,ForceMode.Impulse);
             }
         }
         player._airAttack = true;
-        player._attack = false;
-        player._rigidbody.AddForce(Vector3.up * player.airattackjumpHeight, ForceMode.Impulse);
+        player._canAirAttack = false;
+        player._rigidbody.AddForce(Vector3.up * player.airattackjumpHeight,ForceMode.Impulse);
         damageGiven = airSimpleDamage;
-        currentAirProjectile++;
-        if (currentAirProjectile >= airProjectileCount) player._canAirAttack = false;
     }
 
     public override void Interrupt(Player_class player) {
-        player.attackBox.SetActive(false);
+        player.attackBox.SetActive(false); player.attack2Box.SetActive(false);
     }
 }

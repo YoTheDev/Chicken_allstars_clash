@@ -12,14 +12,14 @@ public class DoubleSaber : WeaponData {
     public override float DamageData => damageGiven;
     public override float currentAirProjectile { get; set; }
 
-    public override void DoSimple(Player_controll player) {
+    public override void DoSimple(Player_class player) {
         player.attackBox.SetActive(true);
         player.playerSpeed = 0;
         player._attack = true;
         damageGiven = simpleDamage;
     }
 
-    public override void DoAirSimple(Player_controll player) {
+    public override void DoAirSimple(Player_class player) {
         player.attack2Box.SetActive(true);
         player._doubleJump = false;
         player._rigidbody.velocity = Vector3.zero;
@@ -37,7 +37,7 @@ public class DoubleSaber : WeaponData {
         damageGiven = airSimpleDamage;
     }
 
-    public override void Interrupt(Player_controll player) {
+    public override void Interrupt(Player_class player) {
         player.attackBox.SetActive(false); player.attack2Box.SetActive(false);
     }
 }
