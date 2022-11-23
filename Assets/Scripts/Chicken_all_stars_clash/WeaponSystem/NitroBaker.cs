@@ -13,7 +13,7 @@ public class NitroBaker : WeaponData {
     public override float currentAirProjectile { get; set; }
 
     public override void DoSimple(Player_class player) {
-        Debug.Log("hello");
+        Instantiate(player.projectile,player.transform);
         player.playerSpeed = 0;
         player._attack = true;
         damageGiven = simpleDamage;
