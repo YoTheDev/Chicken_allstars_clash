@@ -12,6 +12,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Player_management.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/MetalFist.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/NitroBaker.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/projectile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Vacation_resort_island/Player_select.cs" root0="FORCE_HIGHLIGHTING" />
@@ -111,6 +112,7 @@
       <workItem from="1669020686620" duration="14516000" />
       <workItem from="1669106221523" duration="23820000" />
       <workItem from="1669192614320" duration="24207000" />
+      <workItem from="1669278464356" duration="20565000" />
     </task>
     <servers />
   </component>

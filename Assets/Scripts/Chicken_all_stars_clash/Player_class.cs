@@ -5,6 +5,7 @@ using System.Linq;
 using PatternSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
@@ -17,12 +18,12 @@ public class Player_class : MonoBehaviour {
     [SerializeField] private float knockbackForce;
     [SerializeField] private float knockbackForceUp;
     [SerializeField] private float maxHealth;
-    [SerializeField] private Slider slider01;
-    [SerializeField] private Slider slider02;
-    
-    private bool isJumpPressed;
+
+    private bool _isJumpPressed;
     private float _damage;
     private GameObject _boss;
+    private Slider _slider01;
+    private Slider _slider02;
     
     [HideInInspector] public WeaponData _currentWeapon;
     [HideInInspector] public bool _canAirAttack;
@@ -32,6 +33,7 @@ public class Player_class : MonoBehaviour {
     [HideInInspector] public float _saveSpeed;
     [HideInInspector] public float nearGroundedRange;
     [HideInInspector] public int weaponIndex;
+    [HideInInspector] public int currentPlayerInputIndex;
     [HideInInspector] public bool isDead;
     [HideInInspector] public bool isNearGrounded;
     [HideInInspector] public bool _isGrounded;
@@ -42,19 +44,24 @@ public class Player_class : MonoBehaviour {
     public float playerSpeed;
     public float simpleReload;
     public float airReload;
+    public float propulsion;
     public GameObject attackBox;
     public GameObject attack2Box;
     public GameObject projectile;
     public List<WeaponData> weapon;
     public Game_management Game_management;
+    public List<string> playerLifeUIstring;
 
     void Start() {
+        currentPlayerInputIndex = GetComponent<PlayerInput>().playerIndex;
+        _slider01 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_01").GetComponent<Slider>();
+        _slider02 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_02").GetComponent<Slider>();
         attackBox.SetActive(false); attack2Box.SetActive(false);
         _boss = GameObject.FindWithTag("Boss");
         _rigidbody = GetComponent<Rigidbody>();
         _saveSpeed = playerSpeed;
-        slider01.maxValue = maxHealth; slider02.maxValue = maxHealth;
-        slider01.value = maxHealth; slider02.value = maxHealth;
+        _slider01.maxValue = maxHealth; _slider02.maxValue = maxHealth;
+        _slider01.value = maxHealth; _slider02.value = maxHealth;
         if (weapon.Count == 0) {
             Debug.LogWarning("List for " + gameObject.name + " is set to 0");
             return;
@@ -71,16 +78,16 @@ public class Player_class : MonoBehaviour {
             playerSpeed = 50;
         }
         _rigidbody.AddForce(Vector3.left * _axisX * playerSpeed,ForceMode.Force);
-        if (isJumpPressed && _isGrounded) {
+        if (_isJumpPressed && _isGrounded) {
             _rigidbody.AddForce(Vector3.up * jumpHeight,ForceMode.Impulse);
             _isGrounded = false;
-            isJumpPressed = false;
+            _isJumpPressed = false;
             _canAirAttack = true;
             _doubleJump = true;
         }
-        if (slider01.value < slider02.value) slider02.value -= 0.05f;
+        if (_slider01.value < _slider02.value) _slider02.value -= 0.05f;
         if (isDead) return;
-        if (!(slider02.value <= 0)) return;
+        if (!(_slider02.value <= 0)) return;
         isDead = true;
         _axisX = 0;
         playerSpeed = 0;
@@ -110,21 +117,21 @@ public class Player_class : MonoBehaviour {
     public void OnJump() {
         if (isDead) return;
         if (isNearGrounded && !_attack) {
-            isJumpPressed = true;
+            _isJumpPressed = true;
         }
         if (!_isGrounded && _doubleJump) {
             _rigidbody.velocity = new Vector3(0, 0, 0);
             _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
             if (_axisX != 0) {
                 if (!_saveAxisXpositive) {
-                    _rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
+                    _rigidbody.AddForce(Vector3.right * propulsion,ForceMode.Impulse);
                 }
                 else {
-                    _rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
+                    _rigidbody.AddForce(Vector3.left * propulsion,ForceMode.Impulse);
                 }
             }
             _doubleJump = false;
-            isJumpPressed = false;
+            _isJumpPressed = false;
             _canAirAttack = true;
         }
     }
@@ -150,8 +157,8 @@ public class Player_class : MonoBehaviour {
 
     void Damage() {
         _damage = FindObjectOfType<Enemy>().damageCoast;
-        if (slider01.value > 0) slider01.value -= _damage;
-        else slider02.value -= _damage;
+        if (_slider01.value > 0) _slider01.value -= _damage;
+        else _slider02.value -= _damage;
     }
 
     void InvulnerabilityEnd() {
@@ -160,18 +167,19 @@ public class Player_class : MonoBehaviour {
 
     public void OnAttack() {
         if (_attack || isDead) return;
-        if (isNearGrounded) {
+        if (isNearGrounded && !_attack && !_airAttack) {
             _currentWeapon.DoSimple(this);
+            CancelInvoke(nameof(AttackCooldown));
             Invoke(nameof(AttackCooldown),simpleReload);
         }
         else if (_canAirAttack) {
             _currentWeapon.DoAirSimple(this);
+            CancelInvoke(nameof(AttackCooldown));
             Invoke(nameof(AttackCooldown),airReload);
         }
     }
 
     public void AttackCooldown() {
-        CancelInvoke(nameof(AttackCooldown));
         var rotation = transform.rotation;
         if (_saveAxisXpositive) playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
         else playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);

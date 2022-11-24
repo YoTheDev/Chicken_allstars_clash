@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Nitro Baker",menuName = "ChickenAllStarsClash/InGame/Weapon/NitroBaker")]
 public class NitroBaker : WeaponData {
     private float damageGiven;
-
-    public float simpleDamage;
+    
     public float airSimpleDamage;
+    public float saveDamage;
 
     public override float DamageData => damageGiven;
     public override float currentAirProjectile { get; set; }
@@ -16,10 +16,10 @@ public class NitroBaker : WeaponData {
         Instantiate(player.projectile,player.transform);
         player.playerSpeed = 0;
         player._attack = true;
-        damageGiven = simpleDamage;
     }
 
     public override void DoAirSimple(Player_class player) {
+        saveDamage = airSimpleDamage;
         player.attack2Box.SetActive(true);
         player._doubleJump = false;
         player._rigidbody.velocity = Vector3.zero;
@@ -34,7 +34,9 @@ public class NitroBaker : WeaponData {
         player._airAttack = true;
         player._canAirAttack = false;
         player._rigidbody.AddForce(Vector3.up * player.airattackjumpHeight,ForceMode.Impulse);
+        airSimpleDamage = Random.Range(airSimpleDamage, airSimpleDamage + 3);
         damageGiven = airSimpleDamage;
+        airSimpleDamage = saveDamage;
     }
 
     public override void Interrupt(Player_class player) {

@@ -98,13 +98,19 @@ namespace PatternSystem {
         }
 
         private void OnTriggerEnter(Collider other) {
-            if (other.gameObject.CompareTag("Attack")) {
-                float damage = other.GetComponentInParent<Player_class>()._currentWeapon.DamageData;
-                _currentHealth -= damage;
+            if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("Projectile")) {
+                if (other.gameObject.CompareTag("Attack")) {
+                    float damage = other.GetComponentInParent<Player_class>()._currentWeapon.DamageData;
+                    _currentHealth -= damage;
+                }
+                if (other.gameObject.CompareTag("Projectile")) {
+                    float damage = other.GetComponentInParent<projectile>().damage;
+                    _currentHealth -= damage;
+                }
                 Debug.Log(_currentHealth);
                 if (_currentHealth <= 0) {
                     _isDead = true;
-                    player = other.gameObject.GetComponentInParent<Player_class>().gameObject;
+                    player = other.gameObject;
                     Vector3 posTarget = player.transform.position;
                     Vector3 posOrigin = transform.position;
                     _direction = (posTarget - posOrigin).normalized;

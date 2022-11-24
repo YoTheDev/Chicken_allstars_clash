@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 1316202251585092175}
   - component: {fileID: -8949021590678964826}
   - component: {fileID: 5169451685005016988}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ProjectileMage_air_01
-  m_TagString: Attack
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,12 +110,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isExplode: 0
+  isExplosion: 0
   savantPotion: 0
+  potionDamage: 0
   mageStick: 1
+  stickDamage: 20
   explosionTime: 0
   explosion: {fileID: 0}
   rb: {fileID: 5169451685005016988}
-  player: {fileID: 0}
+  playerScript: {fileID: 0}
+  damage: 0
 --- !u!54 &5169451685005016988
 Rigidbody:
   m_ObjectHideFlags: 0

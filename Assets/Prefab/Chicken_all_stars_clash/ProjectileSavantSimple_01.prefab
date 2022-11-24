@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1316202251585092175}
   - component: {fileID: -8949021590678964826}
   - component: {fileID: 619430580168275063}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ProjectileSavantSimple_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,12 +111,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isExplode: 1
+  isExplosion: 0
   savantPotion: 1
+  potionDamage: 25
   mageStick: 0
+  stickDamage: 0
   explosionTime: 1
   explosion: {fileID: 5780975967705826338}
   rb: {fileID: 619430580168275063}
-  player: {fileID: 0}
+  playerScript: {fileID: 0}
+  damage: 0
 --- !u!54 &619430580168275063
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -144,10 +148,10 @@ GameObject:
   - component: {fileID: 1095835779215588984}
   - component: {fileID: 5858577616015711058}
   - component: {fileID: 2107393713417516939}
-  - component: {fileID: 368264048192023689}
-  m_Layer: 0
+  - component: {fileID: 5867288142696253631}
+  m_Layer: 11
   m_Name: Explosion
-  m_TagString: Attack
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,7 +165,7 @@ Transform:
   m_GameObject: {fileID: 5780975967705826338}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10.395013, y: 10.395013, z: 10.395013}
+  m_LocalScale: {x: 10.395013, y: 10.395013, z: 7.559239}
   m_Children: []
   m_Father: {fileID: 1316202251585092174}
   m_RootOrder: 0
@@ -215,8 +219,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &368264048192023689
-SphereCollider:
+--- !u!65 &5867288142696253631
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -226,5 +230,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.49999997
+  m_Size: {x: 1, y: 1, z: 0.99999994}
   m_Center: {x: 0, y: 0, z: 0}

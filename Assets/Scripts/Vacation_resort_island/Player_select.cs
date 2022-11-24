@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 public class Player_select : MonoBehaviour
 {
-
     [SerializeField] private GameObject crochet;
     [SerializeField] private Button readyButton;
     [SerializeField] private List<GameObject> _class = new List<GameObject>();
     [SerializeField] private List<GameObject> _classObject = new List<GameObject>();
+    [SerializeField] private Game_management playerData;
     [SerializeField] private string playerTag;
     [SerializeField] private string playerUI;
 
@@ -20,7 +20,6 @@ public class Player_select : MonoBehaviour
     private int uiIndex;
     private bool validate;
     private UI_title ui;
-    private Player_class player_data;
 
     private void Start() {
         readyButton = GameObject.Find("Ready").GetComponent<Button>();

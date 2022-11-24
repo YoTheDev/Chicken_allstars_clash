@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Double saber",menuName = "ChickenAllStarsClash/InGame/Weapon/Double saber")]
-public class DoubleSaber : WeaponData {
+[CreateAssetMenu(fileName = "New Metal fist",menuName = "ChickenAllStarsClash/InGame/Weapon/Metal fist")]
+public class MetalFist : WeaponData {
     private float damageGiven;
 
     public float simpleDamage;
@@ -14,10 +14,9 @@ public class DoubleSaber : WeaponData {
     public override float currentAirProjectile { get; set; }
 
     public override void DoSimple(Player_class player) {
+        player._attack = true;
         saveDamage = simpleDamage;
         player.attackBox.SetActive(true);
-        player.playerSpeed = 0;
-        player._attack = true;
         simpleDamage = Random.Range(simpleDamage, simpleDamage + 3);
         damageGiven = simpleDamage;
         simpleDamage = saveDamage;
@@ -25,20 +24,20 @@ public class DoubleSaber : WeaponData {
 
     public override void DoAirSimple(Player_class player)
     {
+        player._canAirAttack = false;
         saveDamage = airSimpleDamage;
         player.attack2Box.SetActive(true);
         player._doubleJump = false;
         player._rigidbody.velocity = Vector3.zero;
         if (player._axisX != 0) {
             if (!player._saveAxisXpositive) {
-                player._rigidbody.AddForce(Vector3.right * 5,ForceMode.Impulse);
+                player._rigidbody.AddForce(Vector3.right * 30,ForceMode.Impulse);
             }
             else {
-                player._rigidbody.AddForce(Vector3.left * 5,ForceMode.Impulse);
+                player._rigidbody.AddForce(Vector3.left * 30,ForceMode.Impulse);
             }
         }
         player._airAttack = true;
-        player._canAirAttack = false;
         player._rigidbody.AddForce(Vector3.up * player.airattackjumpHeight,ForceMode.Impulse);
         airSimpleDamage = Random.Range(airSimpleDamage, airSimpleDamage + 3);
         damageGiven = airSimpleDamage;

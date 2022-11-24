@@ -425,6 +425,7 @@ MonoBehaviour:
   - {fileID: 2858660359985994851}
   - {fileID: 7751350070698218572}
   - {fileID: 1495799322527385150}
+  playerData: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
   playerTag: Player_04
   playerUI: P4
 --- !u!1 &7751350070698218572

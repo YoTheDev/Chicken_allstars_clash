@@ -10,17 +10,19 @@ public class StickOfTrue : WeaponData
     public float simpleDamage;
     public float airSimpleDamage;
     public float airProjectileCount;
-    public bool simpleProjectile;
-    public bool airProjectile;
+    public float saveDamage;
 
     public override float DamageData => damageGiven;
     public override float currentAirProjectile { get; set; }
 
     public override void DoSimple(Player_class player) {
+        saveDamage = simpleDamage;
         player.attackBox.SetActive(true);
         player.playerSpeed = 50;
         player._attack = true;
+        simpleDamage = Random.Range(simpleDamage, simpleDamage + 3);
         damageGiven = simpleDamage;
+        simpleDamage = saveDamage;
     }
 
     public override void DoAirSimple(Player_class player) {

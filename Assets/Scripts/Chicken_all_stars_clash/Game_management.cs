@@ -9,9 +9,11 @@ using UnityEngine;
 public class Game_management : ScriptableObject
 {
     [SerializeField] private List<bool> playerAlive;
+    [SerializeField] private List<GameObject> playerClass;
     [SerializeField] int aliveIndex;
     
     public void PlayerCount() {
+        if (playerAlive.Count > 4) return;
         playerAlive.Add(true);
     }
 
@@ -22,8 +24,9 @@ public class Game_management : ScriptableObject
     }
 
     public bool GameOver() {
-        if (playerAlive.Last() == false) {
+        if (playerAlive.Last() == false && Victory() == false) {
             Debug.Log("GameOver");
+            playerAlive.Clear();
             return true;
         }
         return false;
@@ -31,6 +34,7 @@ public class Game_management : ScriptableObject
 
     public bool Victory() {
         Debug.Log("Victory!");
+        playerAlive.Clear();
         return true;
     }
 }
