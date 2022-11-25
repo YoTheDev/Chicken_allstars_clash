@@ -11,7 +11,6 @@ public class Player_select : MonoBehaviour
     [SerializeField] private GameObject crochet;
     [SerializeField] private Button readyButton;
     [SerializeField] private List<GameObject> _class = new List<GameObject>();
-    [SerializeField] private List<GameObject> _classObject = new List<GameObject>();
     [SerializeField] private Game_management playerData;
     [SerializeField] private string playerTag;
     [SerializeField] private string playerUI;
@@ -19,9 +18,13 @@ public class Player_select : MonoBehaviour
     private float xAxis;
     private int uiIndex;
     private bool validate;
+    private PlayerInput playerInput;
     private UI_title ui;
+    
+    public List<GameObject> _classObject = new List<GameObject>();
 
     private void Start() {
+        playerInput = GetComponent<PlayerInput>();
         readyButton = GameObject.Find("Ready").GetComponent<Button>();
         ui = FindObjectOfType<UI_title>();
         ui.playerConnected++;
@@ -54,7 +57,7 @@ public class Player_select : MonoBehaviour
         if (xAxis >= 1) {
             _class[uiIndex].SetActive(false);
             _classObject[uiIndex].SetActive(false);
-            if (uiIndex >= 3) uiIndex = 0;
+            if (uiIndex >= _class.Count-1) uiIndex = 0;
             else uiIndex++;
             _class[uiIndex].SetActive(true);
             _classObject[uiIndex].SetActive(true);
@@ -63,6 +66,9 @@ public class Player_select : MonoBehaviour
 
     void OnJump() {
         if (validate) return;
+        playerData._aliveIndex = playerInput.playerIndex;
+        playerData._classIndex = uiIndex;
+        playerData.PlayerCount();
         crochet.SetActive(true);
         validate = true;
         ui.playerReadyCount++;
@@ -71,6 +77,8 @@ public class Player_select : MonoBehaviour
     void OnBack() {
         if (ui.ui[2].activeSelf) return;
         if (!validate) return;
+        playerData._aliveIndex = playerInput.playerIndex;
+        playerData.PlayerLeft();
         crochet.SetActive(false);
         readyButton.interactable = false;
         ui.playerReadyCount--;

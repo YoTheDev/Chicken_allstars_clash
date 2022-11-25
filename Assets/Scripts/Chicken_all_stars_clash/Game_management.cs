@@ -10,31 +10,45 @@ public class Game_management : ScriptableObject
 {
     [SerializeField] private List<bool> playerAlive;
     [SerializeField] private List<GameObject> playerClass;
-    [SerializeField] int aliveIndex;
-    
-    public void PlayerCount() {
-        if (playerAlive.Count > 4) return;
-        playerAlive.Add(true);
-    }
+    [SerializeField] private List<GameObject> playerClassChoosen;
 
+    public int _aliveIndex;
+    public int _classIndex;
+
+    public void PlayerCount() {
+        playerAlive[_aliveIndex] = true;
+        playerClassChoosen[_aliveIndex] = playerClass[_classIndex];
+    }
+    
+    public void PlayerLeft() {
+        playerAlive[_aliveIndex] = false;
+        playerClassChoosen[_aliveIndex] = null;
+    }
+    
     public void PlayerDead() {
-        playerAlive[aliveIndex] = false;
-        if (aliveIndex < playerAlive.Count) aliveIndex++;
-        else GameOver();
+        playerAlive[_aliveIndex] = false;
+        foreach (bool currentPlayer in playerAlive) {
+            if (currentPlayer) return;
+        }
+        GameOver();
     }
 
     public bool GameOver() {
-        if (playerAlive.Last() == false && Victory() == false) {
-            Debug.Log("GameOver");
-            playerAlive.Clear();
-            return true;
-        }
-        return false;
+        Debug.Log("GameOver");
+        return true;
     }
 
     public bool Victory() {
         Debug.Log("Victory!");
-        playerAlive.Clear();
         return true;
+    }
+
+    private void OnEnable() {
+        for (int i = 0; i < playerClassChoosen.Count; i++) {
+            playerClassChoosen[i] = null;
+        }
+        for (int i = 0; i < playerAlive.Count; i++) {
+            playerAlive[i] = false;
+        }
     }
 }

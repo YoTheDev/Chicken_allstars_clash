@@ -37,7 +37,7 @@ namespace PatternSystem {
         private Quaternion _rotGoal;
         private Vector3 _direction;
 
-        private void Awake() {
+        private void Start() {
             Rigidbody = GetComponent<Rigidbody>();
             Physics.gravity = new Vector3(0, -180f, 0);
             _currentHealth = maxHealth;
@@ -47,7 +47,7 @@ namespace PatternSystem {
             if(GameObject.FindWithTag("Player_03")) target.Add(GameObject.FindWithTag("Player_03"));
             if(GameObject.FindWithTag("Player_04")) target.Add(GameObject.FindWithTag("Player_04"));
         }
-        
+
         private void Update() {
             if (Pattern.Count == 0) {
                 Debug.LogWarning("List for " + gameObject.name + " is set to 0");

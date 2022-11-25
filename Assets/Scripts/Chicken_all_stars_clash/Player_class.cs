@@ -51,11 +51,15 @@ public class Player_class : MonoBehaviour {
     public List<WeaponData> weapon;
     public Game_management Game_management;
     public List<string> playerLifeUIstring;
+    public List<Transform> playerSpawnerArena;
 
     void Start() {
         currentPlayerInputIndex = GetComponent<PlayerInput>().playerIndex;
         _slider01 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_01").GetComponent<Slider>();
         _slider02 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_02").GetComponent<Slider>();
+        playerSpawnerArena[0] = GameObject.Find("P1_spawner").transform; playerSpawnerArena[1] = GameObject.Find("P2_spawner").transform;
+        playerSpawnerArena[2] = GameObject.Find("P3_spawner").transform; playerSpawnerArena[3] = GameObject.Find("P4_spawner").transform;
+        transform.position = playerSpawnerArena[currentPlayerInputIndex].position;
         attackBox.SetActive(false); attack2Box.SetActive(false);
         _boss = GameObject.FindWithTag("Boss");
         _rigidbody = GetComponent<Rigidbody>();
@@ -67,7 +71,6 @@ public class Player_class : MonoBehaviour {
             return;
         }
         if (_currentWeapon == null) _currentWeapon = weapon.First();
-        Game_management.PlayerCount();
     }
 
     private void FixedUpdate()
@@ -93,6 +96,7 @@ public class Player_class : MonoBehaviour {
         playerSpeed = 0;
         CancelInvoke(nameof(InvulnerabilityEnd));
         gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+        Game_management._aliveIndex = currentPlayerInputIndex;
         Game_management.PlayerDead();
     }
 

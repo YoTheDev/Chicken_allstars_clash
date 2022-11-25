@@ -98,7 +98,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Macaque
+  m_text: 'Kafait
 
     \/'
   m_isRightToLeft: 0
@@ -639,6 +639,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7784eb112799eb9468e0ef8a3872dab0, type: 2}
   Game_management: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
   playerLifeUIstring: []
+  playerSpawnerArena: []
 --- !u!114 &7067628304756306361
 MonoBehaviour:
   m_ObjectHideFlags: 0
