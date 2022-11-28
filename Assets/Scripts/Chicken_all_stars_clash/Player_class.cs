@@ -51,15 +51,10 @@ public class Player_class : MonoBehaviour {
     public List<WeaponData> weapon;
     public Game_management Game_management;
     public List<string> playerLifeUIstring;
-    public List<Transform> playerSpawnerArena;
 
     void Start() {
-        currentPlayerInputIndex = GetComponent<PlayerInput>().playerIndex;
         _slider01 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_01").GetComponent<Slider>();
         _slider02 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_02").GetComponent<Slider>();
-        playerSpawnerArena[0] = GameObject.Find("P1_spawner").transform; playerSpawnerArena[1] = GameObject.Find("P2_spawner").transform;
-        playerSpawnerArena[2] = GameObject.Find("P3_spawner").transform; playerSpawnerArena[3] = GameObject.Find("P4_spawner").transform;
-        transform.position = playerSpawnerArena[currentPlayerInputIndex].position;
         attackBox.SetActive(false); attack2Box.SetActive(false);
         _boss = GameObject.FindWithTag("Boss");
         _rigidbody = GetComponent<Rigidbody>();

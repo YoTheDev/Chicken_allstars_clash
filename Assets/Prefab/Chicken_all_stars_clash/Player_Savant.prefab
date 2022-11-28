@@ -143,7 +143,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746758828337159637}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.13, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 746758828143905507}
@@ -195,7 +195,11 @@ MonoBehaviour:
   weapon:
   - {fileID: 11400000, guid: 69f0bcf828c506b4d9277bece2eaa8ec, type: 2}
   Game_management: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
-  playerLifeUIstring: []
+  playerLifeUIstring:
+  - P1_health
+  - P2_health
+  - P3_health
+  - P4_health
 --- !u!114 &746758828337159634
 MonoBehaviour:
   m_ObjectHideFlags: 0

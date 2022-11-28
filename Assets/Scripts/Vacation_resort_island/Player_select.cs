@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 using UnityEngine.UI;
 
 public class Player_select : MonoBehaviour
@@ -20,7 +21,7 @@ public class Player_select : MonoBehaviour
     private bool validate;
     private PlayerInput playerInput;
     private UI_title ui;
-    
+
     public List<GameObject> _classObject = new List<GameObject>();
 
     private void Start() {

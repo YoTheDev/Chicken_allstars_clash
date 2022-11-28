@@ -586,7 +586,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7067628304756306356}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.13, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7067628303896787124}
@@ -638,8 +638,11 @@ MonoBehaviour:
   weapon:
   - {fileID: 11400000, guid: 7784eb112799eb9468e0ef8a3872dab0, type: 2}
   Game_management: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
-  playerLifeUIstring: []
-  playerSpawnerArena: []
+  playerLifeUIstring:
+  - P1_health
+  - P2_health
+  - P3_health
+  - P4_health
 --- !u!114 &7067628304756306361
 MonoBehaviour:
   m_ObjectHideFlags: 0

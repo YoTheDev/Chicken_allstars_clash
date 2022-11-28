@@ -34,6 +34,7 @@ namespace PatternSystem {
         private float _patternTimer;
         private float fixedDeltaTime;
         private bool _isDead;
+        private bool _enemyReady;
         private Quaternion _rotGoal;
         private Vector3 _direction;
 
@@ -42,13 +43,18 @@ namespace PatternSystem {
             Physics.gravity = new Vector3(0, -180f, 0);
             _currentHealth = maxHealth;
             fixedDeltaTime = Time.fixedDeltaTime;
+        }
+
+        public void EnemyStart() {
             if(GameObject.FindWithTag("Player_01")) target.Add(GameObject.FindWithTag("Player_01"));
             if(GameObject.FindWithTag("Player_02")) target.Add(GameObject.FindWithTag("Player_02"));
             if(GameObject.FindWithTag("Player_03")) target.Add(GameObject.FindWithTag("Player_03"));
             if(GameObject.FindWithTag("Player_04")) target.Add(GameObject.FindWithTag("Player_04"));
+            _enemyReady = true;
         }
 
         private void Update() {
+            if(!_enemyReady) return;
             if (Pattern.Count == 0) {
                 Debug.LogWarning("List for " + gameObject.name + " is set to 0");
                 return;

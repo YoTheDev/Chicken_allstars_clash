@@ -10,8 +10,8 @@ public class Game_management : ScriptableObject
 {
     [SerializeField] private List<bool> playerAlive;
     [SerializeField] private List<GameObject> playerClass;
-    [SerializeField] private List<GameObject> playerClassChoosen;
-
+    
+    public List<GameObject> playerClassChoosen;
     public int _aliveIndex;
     public int _classIndex;
 
