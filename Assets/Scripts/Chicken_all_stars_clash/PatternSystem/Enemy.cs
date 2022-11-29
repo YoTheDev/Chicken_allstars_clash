@@ -46,11 +46,14 @@ namespace PatternSystem {
         }
 
         public void EnemyStart() {
-            if(GameObject.FindWithTag("Player_01")) target.Add(GameObject.FindWithTag("Player_01"));
-            if(GameObject.FindWithTag("Player_02")) target.Add(GameObject.FindWithTag("Player_02"));
-            if(GameObject.FindWithTag("Player_03")) target.Add(GameObject.FindWithTag("Player_03"));
-            if(GameObject.FindWithTag("Player_04")) target.Add(GameObject.FindWithTag("Player_04"));
-            _enemyReady = true;
+            if (!_enemyReady)
+            {
+                if(GameObject.FindWithTag("Player_01")) target.Add(GameObject.FindWithTag("Player_01"));
+                if(GameObject.FindWithTag("Player_02")) target.Add(GameObject.FindWithTag("Player_02"));
+                if(GameObject.FindWithTag("Player_03")) target.Add(GameObject.FindWithTag("Player_03"));
+                if(GameObject.FindWithTag("Player_04")) target.Add(GameObject.FindWithTag("Player_04"));
+                _enemyReady = true;
+            }
         }
 
         private void Update() {

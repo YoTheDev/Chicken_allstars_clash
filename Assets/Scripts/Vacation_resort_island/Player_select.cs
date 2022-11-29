@@ -26,6 +26,8 @@ public class Player_select : MonoBehaviour
 
     private void Start() {
         playerInput = GetComponent<PlayerInput>();
+        playerData.ControllerOrder[playerInput.playerIndex] = playerInput.currentControlScheme[playerInput.playerIndex];
+        playerData.Controll[playerInput.playerIndex] = playerInput.currentControlScheme;
         readyButton = GameObject.Find("Ready").GetComponent<Button>();
         ui = FindObjectOfType<UI_title>();
         ui.playerConnected++;

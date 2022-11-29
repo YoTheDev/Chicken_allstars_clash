@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PatternSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "new Game manager",menuName = "ChickenAllStarsClash/InGame/Game_manager")]
 public class Game_management : ScriptableObject
@@ -12,8 +13,10 @@ public class Game_management : ScriptableObject
     [SerializeField] private List<GameObject> playerClass;
     
     public List<GameObject> playerClassChoosen;
+    public List<char> ControllerOrder;
     public int _aliveIndex;
     public int _classIndex;
+    public List<string> Controll;
 
     public void PlayerCount() {
         playerAlive[_aliveIndex] = true;
@@ -49,6 +52,9 @@ public class Game_management : ScriptableObject
         }
         for (int i = 0; i < playerAlive.Count; i++) {
             playerAlive[i] = false;
+        }
+        for (int i = 0; i < ControllerOrder.Count; i++) {
+            ControllerOrder[i] = "\0"[0];
         }
     }
 }

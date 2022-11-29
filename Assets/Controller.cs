@@ -134,7 +134,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -145,7 +145,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -167,7 +167,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -178,7 +178,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -189,7 +189,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Generic_USB"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -198,6 +198,17 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""6a747c16-b17b-4f8f-9091-e9c4a1cad8e5"",
                     ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Xbox Controller"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f486c161-3983-44fb-b461-06b23141a315"",
+                    ""path"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>/button2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -211,7 +222,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button4"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Generic_USB"",
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -220,6 +231,17 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""d41cad10-bb6c-4618-a145-753dd88342ef"",
                     ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Xbox Controller"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac119e20-a763-4651-8767-5f405ee38b1e"",
+                    ""path"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -233,7 +255,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -244,7 +266,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -266,7 +288,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""AttackHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -277,7 +299,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button4"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Generic_USB"",
                     ""action"": ""AttackHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -288,7 +310,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""JumpHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -297,6 +319,17 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""16ee88c9-8d22-4dc4-b116-fdd8ba414970"",
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Generic_USB"",
+                    ""action"": ""JumpHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f80ae70d-c8f6-4ab4-869d-598a01a8a524"",
+                    ""path"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>/button2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -310,7 +343,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -319,6 +352,17 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""a68d63bc-dbb7-4889-b275-055a0076e0d3"",
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Generic_USB"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""263597b7-c3db-4e72-89a7-0a0f91d6d7f4"",
+                    ""path"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>/button3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -332,7 +376,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Xbox Controller"",
                     ""action"": ""Start"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -354,7 +398,7 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button10"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Generic_USB"",
                     ""action"": ""Start"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -399,22 +443,78 @@ public class @Controller : IInputActionCollection, IDisposable
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""Gamepad"",
-            ""bindingGroup"": ""Gamepad"",
+            ""name"": ""Xbox Controller"",
+            ""bindingGroup"": ""Xbox Controller"",
             ""devices"": [
                 {
-                    ""devicePath"": ""<Gamepad>"",
+                    ""devicePath"": ""<XInputController>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<XInputController>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<XInputController>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<XInputController>"",
                     ""isOptional"": true,
                     ""isOR"": false
                 }
             ]
         },
         {
-            ""name"": ""PS3_controller"",
-            ""bindingGroup"": ""PS3_controller"",
+            ""name"": ""Generic_USB"",
+            ""bindingGroup"": ""Generic_USB"",
             ""devices"": [
                 {
                     ""devicePath"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Logitek precision"",
+            ""bindingGroup"": ""Logitek precision"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>"",
                     ""isOptional"": true,
                     ""isOR"": false
                 }
@@ -611,22 +711,31 @@ public class @Controller : IInputActionCollection, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
-    private int m_GamepadSchemeIndex = -1;
-    public InputControlScheme GamepadScheme
+    private int m_XboxControllerSchemeIndex = -1;
+    public InputControlScheme XboxControllerScheme
     {
         get
         {
-            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
-            return asset.controlSchemes[m_GamepadSchemeIndex];
+            if (m_XboxControllerSchemeIndex == -1) m_XboxControllerSchemeIndex = asset.FindControlSchemeIndex("Xbox Controller");
+            return asset.controlSchemes[m_XboxControllerSchemeIndex];
         }
     }
-    private int m_PS3_controllerSchemeIndex = -1;
-    public InputControlScheme PS3_controllerScheme
+    private int m_Generic_USBSchemeIndex = -1;
+    public InputControlScheme Generic_USBScheme
     {
         get
         {
-            if (m_PS3_controllerSchemeIndex == -1) m_PS3_controllerSchemeIndex = asset.FindControlSchemeIndex("PS3_controller");
-            return asset.controlSchemes[m_PS3_controllerSchemeIndex];
+            if (m_Generic_USBSchemeIndex == -1) m_Generic_USBSchemeIndex = asset.FindControlSchemeIndex("Generic_USB");
+            return asset.controlSchemes[m_Generic_USBSchemeIndex];
+        }
+    }
+    private int m_LogitekprecisionSchemeIndex = -1;
+    public InputControlScheme LogitekprecisionScheme
+    {
+        get
+        {
+            if (m_LogitekprecisionSchemeIndex == -1) m_LogitekprecisionSchemeIndex = asset.FindControlSchemeIndex("Logitek precision");
+            return asset.controlSchemes[m_LogitekprecisionSchemeIndex];
         }
     }
     public interface IInGameActions

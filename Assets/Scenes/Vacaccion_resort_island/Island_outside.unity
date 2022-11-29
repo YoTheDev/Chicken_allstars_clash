@@ -2997,6 +2997,14 @@ MonoBehaviour:
         m_Groups: 
         m_Action: Join
         m_Flags: 0
+      - m_Name: 
+        m_Id: f187bc38-ad36-4fd4-ad71-a3e112aa5c40
+        m_Path: <HID::Logitech Logitech(R) Precision(TM) Gamepad>/button10
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
     m_Reference: {fileID: -4744230313485937009, guid: a37d76bdf954ff94bb44e1557cff89b1, type: 3}
   m_PlayerPrefab: {fileID: 2073087735063707665, guid: b372b34046a338641803bd20b1e59a83, type: 3}
   m_SplitScreen: 0

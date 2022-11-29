@@ -4216,6 +4216,7 @@ MonoBehaviour:
   - {fileID: 749601900}
   - {fileID: 1910957318}
   startTimeRemain: 4
+  Controll: 0
 --- !u!1 &1272468167
 GameObject:
   m_ObjectHideFlags: 0

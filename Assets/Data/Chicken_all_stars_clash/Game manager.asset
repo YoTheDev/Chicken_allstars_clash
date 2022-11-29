@@ -23,5 +23,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  ControllerOrder: 5800650067000000
   _aliveIndex: 0
   _classIndex: 0
+  Controll:
+  - Xbox Controller
+  - Generic_USB
+  - Logitek precision
+  - 

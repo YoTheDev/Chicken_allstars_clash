@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PatternSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class Player_management : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Player_management : MonoBehaviour
     public Enemy enemy;
     public List<Transform> playerSpawnerArena;
     public float startTimeRemain;
+    public char ControllOrder;
+    public string Controll;
+    public string currentControlScheme;
 
     private int playerInputIndex;
     void Start() {
@@ -17,6 +21,10 @@ public class Player_management : MonoBehaviour
             GameObject thisPlayer = GameManagement.playerClassChoosen[i];
             if (thisPlayer == null) continue;
             Instantiate(thisPlayer);
+            currentControlScheme = thisPlayer.GetComponent<PlayerInput>().currentControlScheme;
+            Controll = GameManagement.Controll[i];
+            currentControlScheme = Controll;
+            ControllOrder = GameManagement.ControllerOrder[i];
             thisPlayer.transform.position = playerSpawnerArena[i].position;
         }
     }
