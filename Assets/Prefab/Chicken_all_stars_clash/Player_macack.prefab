@@ -356,6 +356,8 @@ MonoBehaviour:
   - P2_health
   - P3_health
   - P4_health
+  ControllerOrder: 0
+  controlScheme: 
 --- !u!114 &1354727619519666526
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,8 @@
                     "id": "bde98ef3-6929-4b7c-8f88-fb0a939c1ddf",
                     "expectedControlType": "Analog",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -19,7 +20,8 @@
                     "id": "889f6f81-c1fe-485b-a766-032356e5100f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "JumpHold",
@@ -27,7 +29,8 @@
                     "id": "943758a0-40a5-4128-b282-71022564679d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)"
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Attack",
@@ -35,7 +38,8 @@
                     "id": "32fac9a9-2c44-4466-b869-4acf4a8ad30a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "AttackHold",
@@ -43,7 +47,8 @@
                     "id": "e14b79da-0430-4891-9148-6a38ebfd9793",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)"
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Block",
@@ -51,7 +56,8 @@
                     "id": "7d33955b-798e-481b-9a11-b8551aebe8e1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Back",
@@ -59,7 +65,8 @@
                     "id": "b4c3b9ba-47ad-436b-be1a-40b1c4414d2a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Start",
@@ -67,7 +74,8 @@
                     "id": "b67238b4-7904-4842-b439-4b27198ba80c",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -198,7 +206,7 @@
                     "path": "<HID::Logitech Logitech(R) Precision(TM) Gamepad>/button2",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Logitek precision",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -231,7 +239,7 @@
                     "path": "<HID::Logitech Logitech(R) Precision(TM) Gamepad>/trigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Logitek precision",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -319,7 +327,7 @@
                     "path": "<HID::Logitech Logitech(R) Precision(TM) Gamepad>/button2",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Logitek precision",
                     "action": "JumpHold",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -352,7 +360,7 @@
                     "path": "<HID::Logitech Logitech(R) Precision(TM) Gamepad>/button3",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Logitek precision",
                     "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -402,7 +410,8 @@
                     "id": "53892014-7c6e-416a-a60e-29bea59408d8",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "New action1",
@@ -410,7 +419,8 @@
                     "id": "7ddce36e-126e-4745-8fae-af08414dcb56",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [

@@ -13,7 +13,7 @@ public class Game_management : ScriptableObject
     [SerializeField] private List<GameObject> playerClass;
     
     public List<GameObject> playerClassChoosen;
-    public List<char> ControllerOrder;
+    public List<int> ControllerOrder;
     public int _aliveIndex;
     public int _classIndex;
     public List<string> Controll;
@@ -55,6 +55,9 @@ public class Game_management : ScriptableObject
         }
         for (int i = 0; i < ControllerOrder.Count; i++) {
             ControllerOrder[i] = "\0"[0];
+        }
+        for (int i = 0; i < Controll.Count; i++) {
+            Controll[i] = null;
         }
     }
 }

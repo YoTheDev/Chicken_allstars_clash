@@ -11,20 +11,28 @@ public class Player_management : MonoBehaviour
     public Enemy enemy;
     public List<Transform> playerSpawnerArena;
     public float startTimeRemain;
-    public char ControllOrder;
-    public string Controll;
-    public string currentControlScheme;
+    public List<int> ControllOrder;
+    public List<string> Controll;
+    public string currentControllScheme;
+    public int currentControlSchemeOrder;
 
     private int playerInputIndex;
-    void Start() {
+    private PlayerInputManager playerInputManager;
+    void Start()
+    {
+        playerInputManager = GetComponent<PlayerInputManager>();
         for (int i = 0; i < GameManagement.playerClassChoosen.Count; i++) {
             GameObject thisPlayer = GameManagement.playerClassChoosen[i];
             if (thisPlayer == null) continue;
-            Instantiate(thisPlayer);
-            currentControlScheme = thisPlayer.GetComponent<PlayerInput>().currentControlScheme;
-            Controll = GameManagement.Controll[i];
-            currentControlScheme = Controll;
-            ControllOrder = GameManagement.ControllerOrder[i];
+            playerInputManager.JoinPlayer(i,i,Controll[i]);
+            playerInputManager.playerPrefab = GameManagement.playerClassChoosen[i];
+            Debug.Log(playerInputManager.playerPrefab);
+            //currentControllScheme = thisPlayer.GetComponent<PlayerInput>().defaultControlScheme;
+            //Controll[i] = GameManagement.Controll[i];
+            //currentControllScheme = Controll[i];
+            //currentControlSchemeOrder = currentControllScheme[0];
+            //ControllOrder[i] = GameManagement.ControllerOrder[i];
+            //currentControlSchemeOrder = ControllOrder[i];
             thisPlayer.transform.position = playerSpawnerArena[i].position;
         }
     }
