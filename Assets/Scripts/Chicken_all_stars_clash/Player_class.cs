@@ -53,8 +53,7 @@ public class Player_class : MonoBehaviour {
     public List<string> playerLifeUIstring;
 
     void Start() {
-        //Debug-----------------------------------
-        //----------------------------------------
+        currentPlayerInputIndex = GetComponent<PlayerInput>().playerIndex;
         _slider01 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_01").GetComponent<Slider>();
         _slider02 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_02").GetComponent<Slider>();
         attackBox.SetActive(false); attack2Box.SetActive(false);

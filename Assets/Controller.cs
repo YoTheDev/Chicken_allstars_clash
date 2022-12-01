@@ -467,7 +467,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<XInputController>"",
-                    ""isOptional"": true,
+                    ""isOptional"": false,
                     ""isOR"": false
                 },
                 {
@@ -493,7 +493,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >"",
-                    ""isOptional"": true,
+                    ""isOptional"": false,
                     ""isOR"": false
                 },
                 {
@@ -519,7 +519,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>"",
-                    ""isOptional"": true,
+                    ""isOptional"": false,
                     ""isOR"": false
                 },
                 {

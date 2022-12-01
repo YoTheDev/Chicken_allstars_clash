@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 2a0353ff24bf89248a9466c3d3ece7a9, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -4217,14 +4217,8 @@ MonoBehaviour:
   - {fileID: 749601900}
   - {fileID: 1910957318}
   startTimeRemain: 4
-  ControllOrder: 00000000000000000000000000000000
-  Controll:
-  - 
-  - 
-  - 
-  - 
-  currentControllScheme: 
-  currentControlSchemeOrder: 0
+  inputAction: {fileID: -944628639613478452, guid: a37d76bdf954ff94bb44e1557cff89b1, type: 3}
+  inputManager: {fileID: 1269513677}
 --- !u!114 &1269513677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4238,7 +4232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 0
-  m_MaxPlayerCount: -1
+  m_MaxPlayerCount: 4
   m_AllowJoining: 1
   m_JoinBehavior: 2
   m_PlayerJoinedEvent:
@@ -4253,7 +4247,7 @@ MonoBehaviour:
       m_Name: Join
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 87de6305-7786-475f-b0be-6188b46b04ce
+      m_Id: cafa9453-460d-4342-831e-5a4d11f0de41
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []

@@ -62,7 +62,7 @@ namespace PatternSystem {
                 Debug.LogWarning("List for " + gameObject.name + " is set to 0");
                 return;
             }
-            if (_isDead == false || gameManagement.GameOver()) {
+            if (_isDead == false) {
                 if (_currentPatternAction == null || _currentPatternAction.IsFinished(this) &&
                     _patternTimer >= _currentPatternAction.PatternDuration) {
                     if (_currentPatternAction == null) _currentPatternAction = Pattern.First();
