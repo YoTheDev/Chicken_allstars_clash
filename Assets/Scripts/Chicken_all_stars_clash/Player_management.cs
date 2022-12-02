@@ -16,10 +16,14 @@ public class Player_management : MonoBehaviour
     public InputActionAsset inputAction;
     public PlayerInputManager inputManager;
     public List<GameObject> life;
+    public GameObject ready;
+    public GameObject go;
     
     private int playerInputIndex;
 
     private void Start() {
+        ready.SetActive(true);
+        go.SetActive(false);
         for (int i = 0; i < life.Count; i++) {
             life[i].SetActive(false);
         }
@@ -36,11 +40,17 @@ public class Player_management : MonoBehaviour
 
     void Update()
     {
-        if (startTimeRemain >= 0) {
+        if (startTimeRemain >= -1) {
             startTimeRemain -= Time.deltaTime;
         }
         else {
             enemy.EnemyStart();
+            go.SetActive(false);
+        }
+
+        if (startTimeRemain <= 0 && startTimeRemain > -1) {
+            go.SetActive(true);
+            ready.SetActive(false);
         }
     }
 }
