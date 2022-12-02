@@ -3821,7 +3821,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 88560f81ae9af0644ba5cd141dfe780d, type: 2}
   - {fileID: 11400000, guid: 1c8476f46be559d4fa19d80a04df84ba, type: 2}
   gameManagement: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
-  target: []
+  target:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   turnSpeed: 18
   maxHealth: 100
   Rigidbody: {fileID: 0}
@@ -4290,6 +4294,11 @@ MonoBehaviour:
   startTimeRemain: 4
   inputAction: {fileID: -944628639613478452, guid: a37d76bdf954ff94bb44e1557cff89b1, type: 3}
   inputManager: {fileID: 1269513677}
+  playersInput:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   life:
   - {fileID: 1391918037}
   - {fileID: 1121915636}

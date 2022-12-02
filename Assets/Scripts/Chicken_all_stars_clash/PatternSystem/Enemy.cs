@@ -48,10 +48,9 @@ namespace PatternSystem {
         public void EnemyStart() {
             if (!_enemyReady)
             {
-                if(GameObject.FindWithTag("Player_01")) target.Add(GameObject.FindWithTag("Player_01"));
-                if(GameObject.FindWithTag("Player_02")) target.Add(GameObject.FindWithTag("Player_02"));
-                if(GameObject.FindWithTag("Player_03")) target.Add(GameObject.FindWithTag("Player_03"));
-                if(GameObject.FindWithTag("Player_04")) target.Add(GameObject.FindWithTag("Player_04"));
+                for (int i = 0; i < target.Count; i++) {
+                    if(GameObject.FindWithTag("Player")) target.Add(GameObject.FindWithTag("Player"));
+                }
                 _enemyReady = true;
             }
         }

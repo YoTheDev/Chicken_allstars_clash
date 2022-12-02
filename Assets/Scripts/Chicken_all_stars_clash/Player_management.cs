@@ -15,6 +15,7 @@ public class Player_management : MonoBehaviour
     public float startTimeRemain;
     public InputActionAsset inputAction;
     public PlayerInputManager inputManager;
+    public List<PlayerInput> playersInput;
     public List<GameObject> life;
     public GameObject ready;
     public GameObject go;
@@ -33,7 +34,7 @@ public class Player_management : MonoBehaviour
             if(thisPlayer == null) continue;
             inputManager.playerPrefab = thisPlayer;
             inputManager.JoinPlayer(i,i,controller);
-            GameManagement.playerClassChoosen[i].transform.position = playerSpawnerArena[i].transform.position;
+            thisPlayer.transform.position = playerSpawnerArena[i].transform.position;
             life[i].SetActive(true);
         }
     }
