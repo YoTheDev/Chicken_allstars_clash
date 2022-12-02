@@ -15,11 +15,14 @@ public class Player_management : MonoBehaviour
     public float startTimeRemain;
     public InputActionAsset inputAction;
     public PlayerInputManager inputManager;
+    public List<GameObject> life;
     
     private int playerInputIndex;
 
-    private void Start()
-    {
+    private void Start() {
+        for (int i = 0; i < life.Count; i++) {
+            life[i].SetActive(false);
+        }
         for (int i = 0; i < GameManagement.playerClassChoosen.Count; i++) {
             GameObject thisPlayer = GameManagement.playerClassChoosen[i];
             string controller = GameManagement.Controll[i];
@@ -27,6 +30,7 @@ public class Player_management : MonoBehaviour
             inputManager.playerPrefab = thisPlayer;
             inputManager.JoinPlayer(i,i,controller);
             GameManagement.playerClassChoosen[i].transform.position = playerSpawnerArena[i].transform.position;
+            life[i].SetActive(true);
         }
     }
 
