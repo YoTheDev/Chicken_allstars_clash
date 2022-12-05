@@ -86,12 +86,13 @@ public class UI_title : MonoBehaviour {
     }
 
     void JoinedPlayer() {
-        if(_playerIndex >= playerSpawner.Count || _playerIndex >= player.Count) return;
+        if(_playerIndex > playerSpawner.Count || _playerIndex > player.Count) return;
         player[_playerIndex].transform.position = playerSpawner[_playerIndex].transform.position;
-        _inputManager.playerPrefab = player[_playerIndex+1];
         playerui[_playerIndex].SetActive(true);
         _playerReadyBool = true;
         _playerIndex++;
+        if (_playerIndex > 3) return;
+        _inputManager.playerPrefab = player[_playerIndex];
     }
 
     void OnPlayerJoined() {

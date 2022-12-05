@@ -467,22 +467,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": true,
+                    ""isOptional"": false,
                     ""isOR"": false
                 }
             ]
@@ -495,21 +480,6 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                     ""devicePath"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >"",
                     ""isOptional"": false,
                     ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >"",
-                    ""isOptional"": true,
-                    ""isOR"": false
                 }
             ]
         },
@@ -520,21 +490,6 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                 {
                     ""devicePath"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>"",
                     ""isOptional"": false,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<HID::Logitech Logitech(R) Precision(TM) Gamepad>"",
-                    ""isOptional"": true,
                     ""isOR"": false
                 }
             ]

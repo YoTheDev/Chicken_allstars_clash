@@ -365,7 +365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5696438109243170727}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.06, z: 0}
+  m_LocalPosition: {x: 346.70007, y: 1.0300293, z: -176.136}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3150034781660102560}
@@ -420,14 +420,14 @@ MonoBehaviour:
   crochet: {fileID: 0}
   readyButton: {fileID: 0}
   _class: []
+  playerData: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
+  playerTag: Player_04
+  playerUI: P4
   _classObject:
   - {fileID: 4958694138709226251}
   - {fileID: 2858660359985994851}
   - {fileID: 7751350070698218572}
   - {fileID: 1495799322527385150}
-  playerData: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
-  playerTag: Player_04
-  playerUI: P4
 --- !u!1 &7751350070698218572
 GameObject:
   m_ObjectHideFlags: 0
