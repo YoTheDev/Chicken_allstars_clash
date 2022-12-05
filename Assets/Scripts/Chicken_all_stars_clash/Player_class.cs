@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using PatternSystem;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -49,15 +50,20 @@ public class Player_class : MonoBehaviour {
     public GameObject attackBox;
     public GameObject attack2Box;
     public GameObject projectile;
+    public GameObject deathBalloon;
     public List<WeaponData> weapon;
     public Game_management Game_management;
+    public TextMeshPro PlayerIndicator;
     public List<string> playerLifeUIstring;
 
     void Start() {
+        deathBalloon.SetActive(false);
         player_management = GameObject.Find("Player_manager").GetComponent<Player_management>();
         currentPlayerInputIndex = GetComponent<PlayerInput>().playerIndex;
+        Game_management.playerAlive[currentPlayerInputIndex] = true;
         _slider01 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_01").GetComponent<Slider>();
         _slider02 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_02").GetComponent<Slider>();
+        PlayerIndicator.text = "Player " + (currentPlayerInputIndex + 1);
         attackBox.SetActive(false); attack2Box.SetActive(false);
         _boss = GameObject.FindWithTag("Boss");
         _rigidbody = GetComponent<Rigidbody>();
@@ -151,6 +157,7 @@ public class Player_class : MonoBehaviour {
             _rigidbody.drag = 10;
             playerSpeed = _saveSpeed;
             _isGrounded = true;
+            AttackCooldown();
         }
         if (other.gameObject.CompareTag("Boss")) {
             _rigidbody.velocity = new Vector3(0, 0, 0);

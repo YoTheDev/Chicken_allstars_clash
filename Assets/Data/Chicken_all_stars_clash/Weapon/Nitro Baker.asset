@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16888bb26ba5f04db7f6e0479908d47, type: 3}
   m_Name: Nitro Baker
   m_EditorClassIdentifier: 
-  airSimpleDamage: 48
+  airSimpleDamage: 60
   airSimpleScore: 105
   saveDamage: 48

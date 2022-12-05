@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d79677562cf6c949aed3e6051dd15a7, type: 3}
   m_Name: Metal fist
   m_EditorClassIdentifier: 
-  simpleDamage: 10
-  airSimpleDamage: 5
+  simpleDamage: 40
+  airSimpleDamage: 40
   simpleScore: 100
   airSimpleScore: 110
-  saveDamage: 10
+  saveDamage: 40

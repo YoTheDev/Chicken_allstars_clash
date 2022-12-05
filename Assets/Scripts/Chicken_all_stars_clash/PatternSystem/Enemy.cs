@@ -41,13 +41,12 @@ namespace PatternSystem {
         private void Start() {
             Rigidbody = GetComponent<Rigidbody>();
             Physics.gravity = new Vector3(0, -180f, 0);
-            _currentHealth = maxHealth;
             fixedDeltaTime = Time.fixedDeltaTime;
         }
 
         public void EnemyStart() {
-            if (!_enemyReady)
-            {
+            _currentHealth = maxHealth;
+            if (!_enemyReady) {
                 for (int i = 0; i < target.Count; i++) {
                     if(GameObject.FindWithTag("Player")) target[i] = GameObject.FindWithTag("Player");
                 }
@@ -57,11 +56,8 @@ namespace PatternSystem {
 
         private void Update() {
             if(!_enemyReady) return;
-            if (Pattern.Count == 0) {
-                Debug.LogWarning("List for " + gameObject.name + " is set to 0");
-                return;
-            }
-            if (!_isDead || !gameManagement.gameOver) {
+            if (Pattern.Count == 0) { Debug.LogWarning("List for " + gameObject.name + " is set to 0"); return; }
+            if (!_isDead && !gameManagement.gameOver) {
                 if (_currentPatternAction == null || _currentPatternAction.IsFinished(this) &&
                     _patternTimer >= _currentPatternAction.PatternDuration) {
                     if (_currentPatternAction == null) _currentPatternAction = Pattern.First();

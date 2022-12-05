@@ -9,9 +9,9 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(fileName = "new Game manager",menuName = "ChickenAllStarsClash/InGame/Game_manager")]
 public class Game_management : ScriptableObject
 {
-    [SerializeField] private List<bool> playerAlive;
     [SerializeField] private List<GameObject> playerClass;
     
+    public List<bool> playerAlive;
     public List<GameObject> playerClassChoosen;
     public List<int> ControllerOrder;
     public int _aliveIndex;
@@ -21,12 +21,10 @@ public class Game_management : ScriptableObject
     public bool gameOver;
 
     public void PlayerCount() {
-        playerAlive[_aliveIndex] = true;
         playerClassChoosen[_aliveIndex] = playerClass[_classIndex];
     }
     
     public void PlayerLeft() {
-        playerAlive[_aliveIndex] = false;
         playerClassChoosen[_aliveIndex] = null;
     }
     
@@ -41,7 +39,7 @@ public class Game_management : ScriptableObject
     public void GameOver() { gameOver = true; }
     public void Victory() { victory = true; }
 
-    private void OnEnable() {
+    public void OnEnable() {
         for (int i = 0; i < playerClassChoosen.Count; i++) {
             playerClassChoosen[i] = null;
         }
@@ -53,6 +51,12 @@ public class Game_management : ScriptableObject
         }
         for (int i = 0; i < Controll.Count; i++) {
             Controll[i] = null;
+        }
+    }
+
+    public void ResetPlayerAlive() {
+        for (int i = 0; i < playerAlive.Count; i++) {
+            playerAlive[i] = false;
         }
     }
 }

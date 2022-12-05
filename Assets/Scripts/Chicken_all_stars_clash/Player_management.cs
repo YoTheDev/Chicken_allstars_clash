@@ -62,18 +62,28 @@ public class Player_management : MonoBehaviour
             inputManager.JoinPlayer(i,i,controller);
             thisPlayer.transform.position = playerSpawnerArena[i].transform.position;
             life[i].SetActive(true);
+            countPlayer++;
+        }
+        switch (countPlayer) {
+            case 1:
+                enemy.maxHealth = 15000;
+                break;
+            case 2:
+                enemy.maxHealth = 25000;
+                break;
+            case 3:
+                enemy.maxHealth = 30000;
+                break;
+            case 4:
+                enemy.maxHealth = 35000;
+                break;
         }
     }
 
     void Update() {
         if (GameManagement.victory && !playOneShot) {
             victoryUI.SetActive(true);
-            for (int i = 0; i < GameManagement.playerClassChoosen.Count; i++) {
-                if(GameManagement.playerClassChoosen[i] == null) continue;
-                countPlayer++;
-            }
-            switch (countPlayer)
-            {
+            switch (countPlayer) {
                 case 1:
                     scoreEarned += 10000;
                     break;
@@ -97,7 +107,7 @@ public class Player_management : MonoBehaviour
         }
         else {
             time += Time.deltaTime;
-            if (time >= secondUpdate && !GameManagement.victory) {
+            if (time >= secondUpdate && !GameManagement.victory && !GameManagement.gameOver) {
                 secondUpdate++;
                 timeBonus -= 100;
                 playOneShot = false;
@@ -126,10 +136,12 @@ public class Player_management : MonoBehaviour
     }
     public void Retry() {
         Scene thisScene = SceneManager.GetActiveScene();
+        GameManagement.ResetPlayerAlive();
         SceneManager.LoadScene(thisScene.name);
     }
 
     public void BackToTitle() {
         SceneManager.LoadScene("Island_outside");
+        GameManagement.OnEnable();
     }
 }

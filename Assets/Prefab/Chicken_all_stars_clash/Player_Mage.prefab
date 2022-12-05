@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2918346698355864921}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.13, y: 0, z: 0}
+  m_LocalPosition: {x: 7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2918346699212776199}
@@ -55,6 +55,7 @@ MonoBehaviour:
   knockbackForce: 12
   knockbackForceUp: 50
   maxHealth: 110
+  player_management: {fileID: 0}
   _currentWeapon: {fileID: 0}
   _canAirAttack: 0
   _saveAxisXpositive: 0
@@ -80,6 +81,7 @@ MonoBehaviour:
   weapon:
   - {fileID: 11400000, guid: cf3604e1f629a804eb496b69b2146606, type: 2}
   Game_management: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
+  PlayerIndicator: {fileID: 2918346698864746625}
   playerLifeUIstring:
   - P1_health
   - P2_health

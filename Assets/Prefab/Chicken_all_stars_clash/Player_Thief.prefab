@@ -613,6 +613,7 @@ MonoBehaviour:
   knockbackForce: 10
   knockbackForceUp: 50
   maxHealth: 100
+  player_management: {fileID: 0}
   _currentWeapon: {fileID: 0}
   _canAirAttack: 0
   _saveAxisXpositive: 0
@@ -638,6 +639,7 @@ MonoBehaviour:
   weapon:
   - {fileID: 11400000, guid: 7784eb112799eb9468e0ef8a3872dab0, type: 2}
   Game_management: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
+  PlayerIndicator: {fileID: 7067628303682677451}
   playerLifeUIstring:
   - P1_health
   - P2_health
