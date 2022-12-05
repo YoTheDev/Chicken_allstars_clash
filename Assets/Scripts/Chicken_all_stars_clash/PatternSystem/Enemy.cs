@@ -49,7 +49,7 @@ namespace PatternSystem {
             if (!_enemyReady)
             {
                 for (int i = 0; i < target.Count; i++) {
-                    if(GameObject.FindWithTag("Player")) target.Add(GameObject.FindWithTag("Player"));
+                    if(GameObject.FindWithTag("Player")) target[i] = GameObject.FindWithTag("Player");
                 }
                 _enemyReady = true;
             }
@@ -61,7 +61,7 @@ namespace PatternSystem {
                 Debug.LogWarning("List for " + gameObject.name + " is set to 0");
                 return;
             }
-            if (_isDead == false) {
+            if (!_isDead || !gameManagement.gameOver) {
                 if (_currentPatternAction == null || _currentPatternAction.IsFinished(this) &&
                     _patternTimer >= _currentPatternAction.PatternDuration) {
                     if (_currentPatternAction == null) _currentPatternAction = Pattern.First();
@@ -84,7 +84,7 @@ namespace PatternSystem {
         }
 
         public void OnCollisionEnter(Collision other) {
-            if (other.gameObject.CompareTag("Player_01") || other.gameObject.CompareTag("Player_02") || other.gameObject.CompareTag("Player_03") || other.gameObject.CompareTag("Player_04")) {
+            if (other.gameObject.CompareTag("Player")) {
                 player = other.gameObject;
                 _currentPatternAction.isCollided(this);
             }
@@ -109,6 +109,10 @@ namespace PatternSystem {
             if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("Projectile")) {
                 if (other.gameObject.CompareTag("Attack")) {
                     float damage = other.GetComponentInParent<Player_class>()._currentWeapon.DamageData;
+                    float score = other.GetComponentInParent<Player_class>()._currentWeapon.ScoreData;
+                    Player_management playerManagement =
+                        GameObject.Find("Player_manager").GetComponent<Player_management>();
+                    playerManagement.scoreEarned += score;
                     _currentHealth -= damage;
                 }
                 if (other.gameObject.CompareTag("Projectile")) {

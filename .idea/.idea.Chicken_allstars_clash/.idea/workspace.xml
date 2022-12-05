@@ -24,6 +24,14 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Dash.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Stay.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Turn.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/WeaponData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/StickOfTrue.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/DoubleSaber.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/MetalFist.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/NitroBaker.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Player_class.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Game_management.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/PatternSystem/Enemy.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Player_management.cs" />
       </list>
     </option>
@@ -63,9 +71,8 @@
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
-      <option name="projectPathOnTarget" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -73,9 +80,8 @@
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
-      <option name="projectPathOnTarget" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -112,6 +118,10 @@
       <workItem from="1669798622925" duration="20127000" />
       <workItem from="1669883989175" duration="19606000" />
       <workItem from="1669938852713" duration="384000" />
+      <workItem from="1670009282372" duration="7345000" />
+      <workItem from="1670076935473" duration="1466000" />
+      <workItem from="1670095583760" duration="8973000" />
+      <workItem from="1670155924528" duration="31174000" />
     </task>
     <servers />
   </component>
@@ -131,6 +141,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simpleDamage: 100
   airSimpleDamage: 80
+  simpleScore: 95
+  airSimpleScore: 100
+  saveDamage: 100

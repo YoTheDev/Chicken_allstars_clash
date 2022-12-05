@@ -6,16 +6,21 @@ using UnityEngine;
 public class StickOfTrue : WeaponData
 {
     private float damageGiven;
+    private float scoreGiven;
     
     public float simpleDamage;
     public float airSimpleDamage;
+    public float simpleScore;
+    public float airSimpleScore;
     public float airProjectileCount;
     public float saveDamage;
 
     public override float DamageData => damageGiven;
+    public override float ScoreData => scoreGiven;
     public override float currentAirProjectile { get; set; }
 
     public override void DoSimple(Player_class player) {
+        scoreGiven = simpleScore;
         saveDamage = simpleDamage;
         player.attackBox.SetActive(true);
         player.playerSpeed = 50;
@@ -40,6 +45,7 @@ public class StickOfTrue : WeaponData
         player._airAttack = true;
         player._attack = false;
         player._rigidbody.AddForce(Vector3.up * player.airattackjumpHeight, ForceMode.Impulse);
+        scoreGiven = airSimpleScore;
         damageGiven = airSimpleDamage;
         currentAirProjectile++;
         if (currentAirProjectile >= airProjectileCount) player._canAirAttack = false;

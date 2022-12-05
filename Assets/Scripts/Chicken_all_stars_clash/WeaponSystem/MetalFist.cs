@@ -5,15 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Metal fist",menuName = "ChickenAllStarsClash/InGame/Weapon/Metal fist")]
 public class MetalFist : WeaponData {
     private float damageGiven;
+    private float scoreGiven;
 
     public float simpleDamage;
     public float airSimpleDamage;
+    public float simpleScore;
+    public float airSimpleScore;
     public float saveDamage;
 
     public override float DamageData => damageGiven;
+    public override float ScoreData => scoreGiven;
     public override float currentAirProjectile { get; set; }
 
     public override void DoSimple(Player_class player) {
+        scoreGiven = simpleScore;
         player._attack = true;
         saveDamage = simpleDamage;
         player.attackBox.SetActive(true);
@@ -22,8 +27,7 @@ public class MetalFist : WeaponData {
         simpleDamage = saveDamage;
     }
 
-    public override void DoAirSimple(Player_class player)
-    {
+    public override void DoAirSimple(Player_class player) {
         player._canAirAttack = false;
         saveDamage = airSimpleDamage;
         player.attack2Box.SetActive(true);
@@ -40,6 +44,7 @@ public class MetalFist : WeaponData {
         player._airAttack = true;
         player._rigidbody.AddForce(Vector3.up * player.airattackjumpHeight,ForceMode.Impulse);
         airSimpleDamage = Random.Range(airSimpleDamage, airSimpleDamage + 3);
+        scoreGiven = airSimpleScore;
         damageGiven = airSimpleDamage;
         airSimpleDamage = saveDamage;
     }

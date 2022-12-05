@@ -22,6 +22,7 @@ public class Player_class : MonoBehaviour {
     private bool _isJumpPressed;
     private float _damage;
     private GameObject _boss;
+    public Player_management player_management;
     private Slider _slider01;
     private Slider _slider02;
     
@@ -53,6 +54,7 @@ public class Player_class : MonoBehaviour {
     public List<string> playerLifeUIstring;
 
     void Start() {
+        player_management = GameObject.Find("Player_manager").GetComponent<Player_management>();
         currentPlayerInputIndex = GetComponent<PlayerInput>().playerIndex;
         _slider01 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_01").GetComponent<Slider>();
         _slider02 = GameObject.Find(playerLifeUIstring[currentPlayerInputIndex]+"/Health_bar_02").GetComponent<Slider>();
@@ -68,7 +70,7 @@ public class Player_class : MonoBehaviour {
         }
         if (_currentWeapon == null) _currentWeapon = weapon.First();
     }
-
+    
     private void FixedUpdate()
     {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
@@ -84,6 +86,13 @@ public class Player_class : MonoBehaviour {
             _canAirAttack = true;
             _doubleJump = true;
         }
+        if (Game_management.victory) {
+            player_management.scoreEarned += _slider02.value;
+            if (_slider02.value >= maxHealth) {
+                player_management.scoreEarned += 1000;
+                Debug.Log("No damage bonus");
+            }
+        }
         if (_slider01.value < _slider02.value) _slider02.value -= 0.05f;
         if (isDead) return;
         if (!(_slider02.value <= 0)) return;
@@ -97,7 +106,7 @@ public class Player_class : MonoBehaviour {
     }
 
     public void OnMove(InputValue Moving) {
-        if (isDead) return;
+        if (isDead || !player_management.ActivateInput || Game_management.victory) return;
         var rotation = transform.rotation;
         _axisX = Moving.Get<float>();
         if (_axisX < 0) {
@@ -115,7 +124,7 @@ public class Player_class : MonoBehaviour {
     }
 
     public void OnJump() {
-        if (isDead) return;
+        if (isDead || !player_management.ActivateInput || Game_management.victory) return;
         if (isNearGrounded && !_attack) {
             _isJumpPressed = true;
         }
@@ -166,7 +175,7 @@ public class Player_class : MonoBehaviour {
     }
 
     public void OnAttack() {
-        if (_attack || isDead) return;
+        if (_attack || isDead || !player_management.ActivateInput) return;
         if (isNearGrounded && !_attack && !_airAttack) {
             _currentWeapon.DoSimple(this);
             CancelInvoke(nameof(AttackCooldown));

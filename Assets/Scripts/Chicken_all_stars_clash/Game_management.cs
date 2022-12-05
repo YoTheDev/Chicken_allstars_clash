@@ -17,6 +17,8 @@ public class Game_management : ScriptableObject
     public int _aliveIndex;
     public int _classIndex;
     public List<string> Controll;
+    public bool victory;
+    public bool gameOver;
 
     public void PlayerCount() {
         playerAlive[_aliveIndex] = true;
@@ -36,15 +38,8 @@ public class Game_management : ScriptableObject
         GameOver();
     }
 
-    public bool GameOver() {
-        Debug.Log("GameOver");
-        return true;
-    }
-
-    public bool Victory() {
-        Debug.Log("Victory!");
-        return true;
-    }
+    public void GameOver() { gameOver = true; }
+    public void Victory() { victory = true; }
 
     private void OnEnable() {
         for (int i = 0; i < playerClassChoosen.Count; i++) {

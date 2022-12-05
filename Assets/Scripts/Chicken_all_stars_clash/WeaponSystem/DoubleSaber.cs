@@ -5,15 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Double saber",menuName = "ChickenAllStarsClash/InGame/Weapon/Double saber")]
 public class DoubleSaber : WeaponData {
     private float damageGiven;
+    private float scoreGiven;
 
     public float simpleDamage;
     public float airSimpleDamage;
+    public float simpleScore;
+    public float airSimpleScore;
     public float saveDamage;
 
     public override float DamageData => damageGiven;
+    public override float ScoreData => scoreGiven;
     public override float currentAirProjectile { get; set; }
 
     public override void DoSimple(Player_class player) {
+        scoreGiven = simpleScore;
         saveDamage = simpleDamage;
         player.attackBox.SetActive(true);
         player.playerSpeed = 0;
@@ -23,8 +28,7 @@ public class DoubleSaber : WeaponData {
         simpleDamage = saveDamage;
     }
 
-    public override void DoAirSimple(Player_class player)
-    {
+    public override void DoAirSimple(Player_class player) {
         saveDamage = airSimpleDamage;
         player.attack2Box.SetActive(true);
         player._doubleJump = false;
@@ -41,6 +45,7 @@ public class DoubleSaber : WeaponData {
         player._canAirAttack = false;
         player._rigidbody.AddForce(Vector3.up * player.airattackjumpHeight,ForceMode.Impulse);
         airSimpleDamage = Random.Range(airSimpleDamage, airSimpleDamage + 3);
+        scoreGiven = airSimpleScore;
         damageGiven = airSimpleDamage;
         airSimpleDamage = saveDamage;
     }

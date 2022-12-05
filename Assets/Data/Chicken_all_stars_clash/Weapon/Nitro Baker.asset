@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Nitro Baker
   m_EditorClassIdentifier: 
   airSimpleDamage: 48
+  airSimpleScore: 105
   saveDamage: 48
