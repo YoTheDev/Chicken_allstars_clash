@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
@@ -26,6 +27,11 @@ namespace PatternSystem {
         [SerializeField] private float deathKnockback;
         [SerializeField] private float deathKnockbackUp;
         [SerializeField] private float deathKnockbackBack;
+        [SerializeField] private float shakeDistance;
+        [SerializeField] private GameObject graphics;
+        [SerializeField] private GameObject HideBarImage;
+        [SerializeField] private GameObject HideBarText;
+        [SerializeField] private Slider Slider;
 
         private PatternAction _currentPatternAction;
         private int _currentPatternIndex;
@@ -33,12 +39,19 @@ namespace PatternSystem {
         private float _currentHealth;
         private float _patternTimer;
         private float fixedDeltaTime;
+        private float ShakeTimer;
+        private float saveSpeed;
         private bool _isDead;
         private bool _enemyReady;
+        private bool _playOneShot;
         private Quaternion _rotGoal;
         private Vector3 _direction;
+        private Vector2 startPos;
+        private Vector2 randomPos;
 
         private void Start() {
+            HideBarImage.SetActive(false);
+            HideBarText.SetActive(false);
             Rigidbody = GetComponent<Rigidbody>();
             Physics.gravity = new Vector3(0, -180f, 0);
             fixedDeltaTime = Time.fixedDeltaTime;
@@ -46,6 +59,8 @@ namespace PatternSystem {
 
         public void EnemyStart() {
             _currentHealth = maxHealth;
+            Slider.maxValue = maxHealth;
+            Slider.value = maxHealth;
             if (!_enemyReady) {
                 for (int i = 0; i < target.Count; i++) {
                     if(GameObject.FindWithTag("Player")) target[i] = GameObject.FindWithTag("Player");
@@ -55,6 +70,7 @@ namespace PatternSystem {
         }
 
         private void Update() {
+            ShakeTimer += Time.deltaTime;
             if(!_enemyReady) return;
             if (Pattern.Count == 0) { Debug.LogWarning("List for " + gameObject.name + " is set to 0"); return; }
             if (!_isDead && !gameManagement.gameOver) {
@@ -76,6 +92,15 @@ namespace PatternSystem {
                 _direction.y = 0; _direction.z = 0;
                 _rotGoal = Quaternion.LookRotation(_direction);
                 transform.rotation = Quaternion.Slerp(rotOrigin,_rotGoal,turnSpeed * Time.deltaTime);
+            }
+            if (ShakeTimer < 0.2) {
+                startPos = transform.position;
+                randomPos = startPos + (Random.insideUnitCircle * shakeDistance);
+                graphics.transform.position = randomPos;
+            }
+            if (_currentHealth <= maxHealth / 3) {
+                HideBarImage.SetActive(true);
+                HideBarText.SetActive(true);
             }
         }
 
@@ -104,12 +129,14 @@ namespace PatternSystem {
         private void OnTriggerEnter(Collider other) {
             if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("Projectile")) {
                 if (other.gameObject.CompareTag("Attack")) {
+                    ShakeTimer = 0;
                     float damage = other.GetComponentInParent<Player_class>()._currentWeapon.DamageData;
                     float score = other.GetComponentInParent<Player_class>()._currentWeapon.ScoreData;
                     Player_management playerManagement =
                         GameObject.Find("Player_manager").GetComponent<Player_management>();
                     playerManagement.scoreEarned += score;
                     _currentHealth -= damage;
+                    Slider.value -= damage;
                 }
                 if (other.gameObject.CompareTag("Projectile")) {
                     float damage = other.GetComponentInParent<projectile>().damage;
