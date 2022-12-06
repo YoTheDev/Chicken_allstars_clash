@@ -5131,11 +5131,11 @@ MonoBehaviour:
   deathKnockbackUp: 50
   deathKnockbackBack: 8
   shakeDistance: 0.1
-  healthShakeDistance: 0.5
   graphics: {fileID: 2086711874}
-  HealthBar: {fileID: 1642646446}
   HideBarImage: {fileID: 919816792}
   HideBarText: {fileID: 1330977063}
+  damageFeedback: {fileID: 7123912831782043356, guid: 9216370e0238bf74aa1038c84a36185d, type: 3}
+  deathFeedback: {fileID: 7123912831782043356, guid: 8464ca8cb4407704ea7011ed0dc217b8, type: 3}
   Slider: {fileID: 85313760}
 --- !u!4 &1111019502
 Transform:

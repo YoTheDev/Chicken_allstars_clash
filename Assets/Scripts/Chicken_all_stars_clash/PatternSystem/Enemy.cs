@@ -31,6 +31,8 @@ namespace PatternSystem {
         [SerializeField] private GameObject graphics;
         [SerializeField] private GameObject HideBarImage;
         [SerializeField] private GameObject HideBarText;
+        [SerializeField] private GameObject damageFeedback;
+        [SerializeField] private GameObject deathFeedback;
         [SerializeField] private Slider Slider;
 
         private PatternAction _currentPatternAction;
@@ -135,15 +137,22 @@ namespace PatternSystem {
                     Player_management playerManagement =
                         GameObject.Find("Player_manager").GetComponent<Player_management>();
                     playerManagement.scoreEarned += score;
+                    Instantiate(damageFeedback, transform.position, transform.rotation);
                     _currentHealth -= damage;
                     Slider.value -= damage;
                 }
                 if (other.gameObject.CompareTag("Projectile")) {
+                    ShakeTimer = 0;
                     float damage = other.GetComponentInParent<projectile>().damage;
+                    //Player_management playerManagement =
+                        //GameObject.Find("Player_manager").GetComponent<Player_management>();
+                    Instantiate(damageFeedback, transform.position, transform.rotation);
                     _currentHealth -= damage;
+                    Slider.value -= damage;
                 }
                 Debug.Log(_currentHealth);
                 if (_currentHealth <= 0) {
+                    Instantiate(deathFeedback,transform.position,transform.rotation);
                     _isDead = true;
                     player = other.gameObject;
                     Vector3 posTarget = player.transform.position;

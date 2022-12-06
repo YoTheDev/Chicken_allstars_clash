@@ -69,13 +69,13 @@ public class Player_management : MonoBehaviour
                 enemy.maxHealth = 15000;
                 break;
             case 2:
-                enemy.maxHealth = 25000;
+                enemy.maxHealth = 20000;
                 break;
             case 3:
-                enemy.maxHealth = 30000;
+                enemy.maxHealth = 23000;
                 break;
             case 4:
-                enemy.maxHealth = 35000;
+                enemy.maxHealth = 25000;
                 break;
         }
     }

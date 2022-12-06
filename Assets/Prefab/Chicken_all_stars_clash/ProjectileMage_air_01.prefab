@@ -114,7 +114,7 @@ MonoBehaviour:
   savantPotion: 0
   potionDamage: 0
   mageStick: 1
-  stickDamage: 20
+  stickDamage: 60
   explosionTime: 0
   explosion: {fileID: 0}
   rb: {fileID: 5169451685005016988}

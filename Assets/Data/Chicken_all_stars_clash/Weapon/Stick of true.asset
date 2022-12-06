@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65efb98bcc74328488f3670b094620d4, type: 3}
   m_Name: Stick of true
   m_EditorClassIdentifier: 
-  simpleDamage: 70
-  airSimpleDamage: 40
+  simpleDamage: 100
+  airSimpleDamage: 85
   simpleScore: 90
   airSimpleScore: 40
   airProjectileCount: 3
-  saveDamage: 70
+  saveDamage: 100
