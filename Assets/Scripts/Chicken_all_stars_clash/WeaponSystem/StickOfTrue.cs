@@ -14,6 +14,7 @@ public class StickOfTrue : WeaponData
     public float airSimpleScore;
     public float airProjectileCount;
     public float saveDamage;
+    public bool doMultipleDamage;
 
     public override float DamageData => damageGiven;
     public override float ScoreData => scoreGiven;
@@ -22,7 +23,8 @@ public class StickOfTrue : WeaponData
     public override void DoSimple(Player_class player) {
         scoreGiven = simpleScore;
         saveDamage = simpleDamage;
-        player.attackBox.SetActive(true);
+        player.attackBoxCollider.enabled = false;
+        player.attackBoxCollider.enabled = true;
         player.playerSpeed = 50;
         player._attack = true;
         simpleDamage = Random.Range(simpleDamage, simpleDamage + 3);
@@ -50,6 +52,8 @@ public class StickOfTrue : WeaponData
         currentAirProjectile++;
         if (currentAirProjectile >= airProjectileCount) player._canAirAttack = false;
     }
+
+    public override bool SimpleMultipleDamage => doMultipleDamage;
 
     public override void Interrupt(Player_class player) {
         player.attackBox.SetActive(false);

@@ -18,3 +18,4 @@ MonoBehaviour:
   airSimpleScore: 40
   airProjectileCount: 3
   saveDamage: 100
+  doMultipleDamage: 1

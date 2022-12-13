@@ -10,6 +10,7 @@ public class NitroBaker : WeaponData {
     public float airSimpleDamage;
     public float airSimpleScore;
     public float saveDamage;
+    public bool doMultipleDamage;
 
     public override float DamageData => damageGiven;
     public override float ScoreData => scoreGiven;
@@ -42,6 +43,8 @@ public class NitroBaker : WeaponData {
         damageGiven = airSimpleDamage;
         airSimpleDamage = saveDamage;
     }
+
+    public override bool SimpleMultipleDamage => doMultipleDamage;
 
     public override void Interrupt(Player_class player) {
         player.attackBox.SetActive(false); player.attack2Box.SetActive(false);

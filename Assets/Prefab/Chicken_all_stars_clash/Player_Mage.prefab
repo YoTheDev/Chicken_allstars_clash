@@ -56,6 +56,8 @@ MonoBehaviour:
   knockbackForce: 12
   knockbackForceUp: 50
   maxHealth: 110
+  repeatAttackTime: 1
+  repeatAttackNumber: 1
   player_management: {fileID: 0}
   _currentWeapon: {fileID: 0}
   _canAirAttack: 0
@@ -72,8 +74,9 @@ MonoBehaviour:
   _attack: 0
   _airAttack: 0
   _rigidbody: {fileID: 0}
+  attackBoxCollider: {fileID: 0}
   playerSpeed: 120
-  simpleReload: 1
+  simpleReload: 2
   airReload: 1
   propulsion: 5
   attackBox: {fileID: 2918346698499495316}
@@ -735,7 +738,7 @@ Transform:
   m_GameObject: {fileID: 8216640073782268733}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 13, y: 13, z: 13}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children: []
   m_Father: {fileID: 2918346698355864926}
   m_RootOrder: 2
@@ -796,7 +799,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8216640073782268733}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e6b4254735f713249905e7370bcd25f9, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

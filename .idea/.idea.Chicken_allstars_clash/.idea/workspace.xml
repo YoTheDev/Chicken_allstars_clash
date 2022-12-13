@@ -45,13 +45,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Discover.Launch.Via.Unity": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/../Desktop/Chicken_all_stars_clas_build_01\Chickens_all_stars_clash.exe" />
@@ -130,6 +130,9 @@
       <workItem from="1670259334472" duration="6471000" />
       <workItem from="1670272177411" duration="11874000" />
       <workItem from="1670316677563" duration="7725000" />
+      <workItem from="1670835692294" duration="1188000" />
+      <workItem from="1670857159456" duration="2163000" />
+      <workItem from="1670921327622" duration="17584000" />
     </task>
     <servers />
   </component>

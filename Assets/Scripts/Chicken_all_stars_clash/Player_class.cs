@@ -19,8 +19,11 @@ public class Player_class : MonoBehaviour {
     [SerializeField] private float knockbackForce;
     [SerializeField] private float knockbackForceUp;
     [SerializeField] private float maxHealth;
+    [SerializeField] private float repeatAttackTime;
+    [SerializeField] private float repeatAttackNumber;
 
     private bool _isJumpPressed;
+    private bool _playOneShot;
     private float _damage;
     private GameObject _boss;
     public Player_management player_management;
@@ -42,6 +45,7 @@ public class Player_class : MonoBehaviour {
     [HideInInspector] public bool _attack;
     [HideInInspector] public bool _airAttack;
     [HideInInspector] public Rigidbody _rigidbody;
+    [HideInInspector] public Collider attackBoxCollider;
     
     public float playerSpeed;
     public float simpleReload;
@@ -92,12 +96,13 @@ public class Player_class : MonoBehaviour {
             _canAirAttack = true;
             _doubleJump = true;
         }
-        if (Game_management.victory) {
+        if (Game_management.victory && !_playOneShot) {
             player_management.scoreEarned += _slider02.value;
             if (_slider02.value >= maxHealth) {
                 player_management.scoreEarned += 1000;
                 Debug.Log("No damage bonus");
             }
+            _playOneShot = true;
         }
         if (_slider01.value < _slider02.value) _slider02.value -= 0.05f;
         if (isDead) return;
@@ -109,6 +114,12 @@ public class Player_class : MonoBehaviour {
         gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
         Game_management._aliveIndex = currentPlayerInputIndex;
         Game_management.PlayerDead();
+        Invoke(nameof(PlayerBigger),2);
+    }
+
+    void PlayerBigger() {
+        playerPivot.SetActive(false);
+        deathBalloon.SetActive(true);
     }
 
     public void OnMove(InputValue Moving) {
@@ -154,7 +165,7 @@ public class Player_class : MonoBehaviour {
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Ground")) {
             _currentWeapon.currentAirProjectile = 0;
-            _rigidbody.drag = 10;
+            if(!isDead) _rigidbody.drag = 10;
             playerSpeed = _saveSpeed;
             _isGrounded = true;
             AttackCooldown();
@@ -164,7 +175,7 @@ public class Player_class : MonoBehaviour {
             Vector3 knockbackDirection = new Vector3(transform.position.x - _boss.transform.position.x, 0);
             _rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
             _rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
-            gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+            if(!isDead) gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
             Invoke(nameof(InvulnerabilityEnd),1);
             AttackCooldown();
             Damage();
@@ -184,7 +195,12 @@ public class Player_class : MonoBehaviour {
     public void OnAttack() {
         if (_attack || isDead || !player_management.ActivateInput) return;
         if (isNearGrounded && !_attack && !_airAttack) {
+            attackBoxCollider = attackBox.GetComponent<Collider>();
             _currentWeapon.DoSimple(this);
+            if (_currentWeapon.SimpleMultipleDamage) {
+                attackBox.SetActive(true);
+                InvokeRepeating(nameof(DoSimpleAttack), repeatAttackTime, repeatAttackNumber);
+            }
             CancelInvoke(nameof(AttackCooldown));
             Invoke(nameof(AttackCooldown),simpleReload);
         }
@@ -194,8 +210,11 @@ public class Player_class : MonoBehaviour {
             Invoke(nameof(AttackCooldown),airReload);
         }
     }
+    
+    void DoSimpleAttack() { _currentWeapon.DoSimple(this); }
 
     public void AttackCooldown() {
+        CancelInvoke(nameof(DoSimpleAttack));
         var rotation = transform.rotation;
         if (_saveAxisXpositive) playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
         else playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);

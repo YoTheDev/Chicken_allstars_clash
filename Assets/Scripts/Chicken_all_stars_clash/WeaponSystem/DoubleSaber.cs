@@ -12,6 +12,7 @@ public class DoubleSaber : WeaponData {
     public float simpleScore;
     public float airSimpleScore;
     public float saveDamage;
+    public bool doMultipleDamage;
 
     public override float DamageData => damageGiven;
     public override float ScoreData => scoreGiven;
@@ -49,6 +50,8 @@ public class DoubleSaber : WeaponData {
         damageGiven = airSimpleDamage;
         airSimpleDamage = saveDamage;
     }
+
+    public override bool SimpleMultipleDamage => doMultipleDamage;
 
     public override void Interrupt(Player_class player) {
         player.attackBox.SetActive(false); player.attack2Box.SetActive(false);

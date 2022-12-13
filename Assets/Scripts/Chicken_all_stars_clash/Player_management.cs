@@ -85,16 +85,16 @@ public class Player_management : MonoBehaviour
             victoryUI.SetActive(true);
             switch (countPlayer) {
                 case 1:
-                    scoreEarned += 10000;
+                    scoreEarned += 500;
                     break;
                 case 2:
-                    scoreEarned += 5000;
+                    scoreEarned += 375;
                     break;
                 case 3:
-                    scoreEarned += 2000;
+                    scoreEarned += 200;
                     break;
                 case 4:
-                    scoreEarned += 1000;
+                    scoreEarned += 100;
                     break;
             }
             scoreEarned += timeBonus;
