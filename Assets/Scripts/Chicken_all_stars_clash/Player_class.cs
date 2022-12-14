@@ -13,6 +13,7 @@ using Debug = UnityEngine.Debug;
 public class Player_class : MonoBehaviour {
     
     [SerializeField] private GameObject playerPivot;
+    [SerializeField] private GameObject kickTrigger;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float doubleJumpHeight;
     [SerializeField] public float airattackjumpHeight;
@@ -84,7 +85,7 @@ public class Player_class : MonoBehaviour {
     private void FixedUpdate()
     {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
-        if (!isNearGrounded) {
+        if (!isNearGrounded && !isDead) {
             _rigidbody.drag = 3;
             playerSpeed = 50;
         }
@@ -108,8 +109,8 @@ public class Player_class : MonoBehaviour {
         if (isDead) return;
         if (!(_slider02.value <= 0)) return;
         isDead = true;
-        _axisX = 0;
-        playerSpeed = 0;
+        playerSpeed = 10;
+        kickTrigger.SetActive(false);
         CancelInvoke(nameof(InvulnerabilityEnd));
         gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
         Game_management._aliveIndex = currentPlayerInputIndex;
@@ -118,12 +119,16 @@ public class Player_class : MonoBehaviour {
     }
 
     void PlayerBigger() {
+        _rigidbody.AddForce(Vector3.up * 100,ForceMode.Impulse);
+        jumpHeight = 5;
+        _rigidbody.mass = 0.10f;
+        playerSpeed = 20;
         playerPivot.SetActive(false);
         deathBalloon.SetActive(true);
     }
 
     public void OnMove(InputValue Moving) {
-        if (isDead || !player_management.ActivateInput || Game_management.victory) return;
+        if (!player_management.ActivateInput || Game_management.victory) return;
         var rotation = transform.rotation;
         _axisX = Moving.Get<float>();
         if (_axisX < 0) {
@@ -141,12 +146,12 @@ public class Player_class : MonoBehaviour {
     }
 
     public void OnJump() {
-        if (isDead || !player_management.ActivateInput || Game_management.victory) return;
+        if (!player_management.ActivateInput || Game_management.victory) return;
         if (isNearGrounded && !_attack) {
             _isJumpPressed = true;
         }
-        if (!_isGrounded && _doubleJump) {
-            _rigidbody.velocity = new Vector3(0, 0, 0);
+        if (!_isGrounded && _doubleJump && !isDead) {
+            _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
             if (_axisX != 0) {
                 if (!_saveAxisXpositive) {
@@ -160,23 +165,30 @@ public class Player_class : MonoBehaviour {
             _isJumpPressed = false;
             _canAirAttack = true;
         }
+        if (!isDead || _isJumpPressed) return;
+        _isJumpPressed = true;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Ground")) {
             _currentWeapon.currentAirProjectile = 0;
-            if(!isDead) _rigidbody.drag = 10;
-            playerSpeed = _saveSpeed;
-            _isGrounded = true;
-            AttackCooldown();
+            if(!isDead) {
+                _rigidbody.drag = 10;
+                playerSpeed = _saveSpeed;
+                _isGrounded = true;
+                AttackCooldown();
+            }
         }
         if (other.gameObject.CompareTag("Boss")) {
+            if (isDead) return;
             _rigidbody.velocity = new Vector3(0, 0, 0);
             Vector3 knockbackDirection = new Vector3(transform.position.x - _boss.transform.position.x, 0);
             _rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
             _rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
-            if(!isDead) gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
-            Invoke(nameof(InvulnerabilityEnd),1);
+            gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+            Invoke(nameof(InvulnerabilityEnd), 1);
             AttackCooldown();
             Damage();
         }
