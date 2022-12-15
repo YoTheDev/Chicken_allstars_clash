@@ -62,6 +62,7 @@ public class Player_class : MonoBehaviour {
     public List<string> playerLifeUIstring;
 
     void Start() {
+        _saveAxisXpositive = true;
         deathBalloon.SetActive(false);
         player_management = GameObject.Find("Player_manager").GetComponent<Player_management>();
         currentPlayerInputIndex = GetComponent<PlayerInput>().playerIndex;
@@ -79,7 +80,7 @@ public class Player_class : MonoBehaviour {
             Debug.LogWarning("List for " + gameObject.name + " is set to 0");
             return;
         }
-        if (_currentWeapon == null) _currentWeapon = weapon.First();
+        if (_currentWeapon == null) _currentWeapon = weapon[1];
     }
     
     private void FixedUpdate()
@@ -120,15 +121,16 @@ public class Player_class : MonoBehaviour {
 
     void PlayerBigger() {
         _rigidbody.AddForce(Vector3.up * 100,ForceMode.Impulse);
-        jumpHeight = 5;
         _rigidbody.mass = 0.10f;
-        playerSpeed = 20;
+        _currentWeapon = weapon.First();
+        playerSpeed = 2;
+        _rigidbody.drag = 0.3f;
         playerPivot.SetActive(false);
         deathBalloon.SetActive(true);
     }
 
     public void OnMove(InputValue Moving) {
-        if (!player_management.ActivateInput || Game_management.victory) return;
+        if (!player_management.ActivateInput || Game_management.victory || Game_management.gameOver) return;
         var rotation = transform.rotation;
         _axisX = Moving.Get<float>();
         if (_axisX < 0) {
@@ -146,11 +148,11 @@ public class Player_class : MonoBehaviour {
     }
 
     public void OnJump() {
-        if (!player_management.ActivateInput || Game_management.victory) return;
+        if (!player_management.ActivateInput || Game_management.victory || isDead) return;
         if (isNearGrounded && !_attack) {
             _isJumpPressed = true;
         }
-        if (!_isGrounded && _doubleJump && !isDead) {
+        if (!_isGrounded && _doubleJump) {
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
             if (_axisX != 0) {
@@ -165,19 +167,15 @@ public class Player_class : MonoBehaviour {
             _isJumpPressed = false;
             _canAirAttack = true;
         }
-        if (!isDead || _isJumpPressed) return;
-        _isJumpPressed = true;
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Ground")) {
             _currentWeapon.currentAirProjectile = 0;
+            _isGrounded = true;
             if(!isDead) {
                 _rigidbody.drag = 10;
                 playerSpeed = _saveSpeed;
-                _isGrounded = true;
                 AttackCooldown();
             }
         }
@@ -192,6 +190,7 @@ public class Player_class : MonoBehaviour {
             AttackCooldown();
             Damage();
         }
+        if (isDead) _currentWeapon.Interrupt(this);
     }
 
     void Damage() {
@@ -205,7 +204,7 @@ public class Player_class : MonoBehaviour {
     }
 
     public void OnAttack() {
-        if (_attack || isDead || !player_management.ActivateInput) return;
+        if (_attack || !player_management.ActivateInput) return;
         if (isNearGrounded && !_attack && !_airAttack) {
             attackBoxCollider = attackBox.GetComponent<Collider>();
             _currentWeapon.DoSimple(this);
@@ -228,9 +227,11 @@ public class Player_class : MonoBehaviour {
     public void AttackCooldown() {
         CancelInvoke(nameof(DoSimpleAttack));
         var rotation = transform.rotation;
-        if (_saveAxisXpositive) playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
-        else playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);
-        playerSpeed = _saveSpeed;
+        if (!isDead) {
+            if (_saveAxisXpositive) playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
+            else playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180,rotation.z);
+            playerSpeed = _saveSpeed;
+        }
         if(_attack) {
             _attack = false;
             attackBox.SetActive(false);

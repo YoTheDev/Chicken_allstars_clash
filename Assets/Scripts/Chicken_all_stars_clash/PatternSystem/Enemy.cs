@@ -107,7 +107,7 @@ namespace PatternSystem {
         }
 
         public void OnCollisionEnter(Collision other) {
-            if (other.gameObject.CompareTag("Player")) {
+            if (other.gameObject.CompareTag("Player") && !Knockback) {
                 player = other.gameObject;
                 _currentPatternAction.isCollided(this);
             }
@@ -129,8 +129,8 @@ namespace PatternSystem {
         }
 
         private void OnTriggerEnter(Collider other) {
-            if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("Projectile")) {
-                if (other.gameObject.CompareTag("Attack")) {
+            if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("Projectile") || other.gameObject.CompareTag("DeathBalloon")) {
+                if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("DeathBalloon")) {
                     ShakeTimer = 0;
                     float damage = other.GetComponentInParent<Player_class>()._currentWeapon.DamageData;
                     float score = other.GetComponentInParent<Player_class>()._currentWeapon.ScoreData;

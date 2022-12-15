@@ -144,7 +144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1354727619046288791
 Transform:
   m_ObjectHideFlags: 0
@@ -402,6 +402,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   deathBalloon: {fileID: 3750967302860024381}
   weapon:
+  - {fileID: 11400000, guid: ffd1b754e0d40fd4b8fda55e9777a8b0, type: 2}
   - {fileID: 11400000, guid: a188c22641412bd4aa6869a0e24a5207, type: 2}
   Game_management: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
   PlayerIndicator: {fileID: 1354727620890921846}
@@ -767,6 +768,7 @@ GameObject:
   - component: {fileID: 3857724170930514203}
   - component: {fileID: 7314998738124499017}
   - component: {fileID: 8597691730789704585}
+  - component: {fileID: 1689948781982961578}
   m_Layer: 6
   m_Name: Ballon
   m_TagString: DeathBalloon
@@ -849,4 +851,17 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.49999997
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &1689948781982961578
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750967302860024381}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.55
   m_Center: {x: 0, y: 0, z: 0}

@@ -12,6 +12,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Player_management.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/DeathBallonAttack.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -134,6 +135,7 @@
       <workItem from="1670857159456" duration="2163000" />
       <workItem from="1670921327622" duration="19138000" />
       <workItem from="1671010480624" duration="14685000" />
+      <workItem from="1671093401517" duration="11358000" />
     </task>
     <servers />
   </component>
