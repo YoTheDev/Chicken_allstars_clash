@@ -13,6 +13,7 @@ using UnityEngine.UI;
 public class UI_title : MonoBehaviour {
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject grayOpacity;
+    [SerializeField] private List<GameObject> pressStartText;
     [SerializeField] private Button startButton;
     [SerializeField] private Button readyButton;
     [SerializeField] private Button startMissionAnyway;
@@ -89,6 +90,7 @@ public class UI_title : MonoBehaviour {
         if(_playerIndex > playerSpawner.Count || _playerIndex > player.Count) return;
         player[_playerIndex].transform.position = playerSpawner[_playerIndex].transform.position;
         playerui[_playerIndex].SetActive(true);
+        pressStartText[_playerIndex].SetActive(false);
         _playerReadyBool = true;
         _playerIndex++;
         if (_playerIndex > 3) return;

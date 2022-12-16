@@ -31,5 +31,5 @@ MonoBehaviour:
   - 
   - 
   - 
-  victory: 0
+  victory: 1
   gameOver: 0

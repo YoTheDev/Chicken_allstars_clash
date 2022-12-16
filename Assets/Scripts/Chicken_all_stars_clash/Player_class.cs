@@ -13,7 +13,6 @@ using Debug = UnityEngine.Debug;
 public class Player_class : MonoBehaviour {
     
     [SerializeField] private GameObject playerPivot;
-    [SerializeField] private GameObject kickTrigger;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float doubleJumpHeight;
     [SerializeField] public float airattackjumpHeight;
@@ -111,23 +110,26 @@ public class Player_class : MonoBehaviour {
         if (!(_slider02.value <= 0)) return;
         isDead = true;
         playerSpeed = 10;
-        kickTrigger.SetActive(false);
         CancelInvoke(nameof(InvulnerabilityEnd));
         gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
         Game_management._aliveIndex = currentPlayerInputIndex;
-        Game_management.PlayerDead();
         Invoke(nameof(PlayerBigger),2);
     }
 
     void PlayerBigger() {
+        _rigidbody.velocity = Vector3.zero;
         _rigidbody.AddForce(Vector3.up * 100,ForceMode.Impulse);
+        Game_management.PlayerDead();
         _rigidbody.mass = 0.10f;
         _currentWeapon = weapon.First();
         playerSpeed = 2;
         _rigidbody.drag = 0.3f;
         playerPivot.SetActive(false);
         deathBalloon.SetActive(true);
+        deathBalloon.layer = LayerMask.NameToLayer("IgnoreCollision");
+        Invoke(nameof(BalloonCollisionActive),1);
     }
+    void BalloonCollisionActive() { deathBalloon.layer = LayerMask.NameToLayer("Default"); }
 
     public void OnMove(InputValue Moving) {
         if (!player_management.ActivateInput || Game_management.victory || Game_management.gameOver) return;
