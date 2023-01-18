@@ -78,7 +78,16 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                     ""id"": ""7d33955b-798e-481b-9a11-b8551aebe8e1"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UnBlock"",
+                    ""type"": ""Button"",
+                    ""id"": ""f1ed4235-eba6-4a44-a84e-de8236fbd893"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -518,6 +527,39 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                     ""action"": ""Start"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de0ca323-f2b9-4cdc-812e-9607656e25b0"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UnBlock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aacac0ae-0941-43c1-981e-0fe86ca71d8b"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UnBlock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""908496f9-efcb-46bd-978d-91e90cb47bf3"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UnBlock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -619,6 +661,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
         m_InGame_Attack = m_InGame.FindAction("Attack", throwIfNotFound: true);
         m_InGame_AttackHold = m_InGame.FindAction("AttackHold", throwIfNotFound: true);
         m_InGame_Block = m_InGame.FindAction("Block", throwIfNotFound: true);
+        m_InGame_UnBlock = m_InGame.FindAction("UnBlock", throwIfNotFound: true);
         m_InGame_Back = m_InGame.FindAction("Back", throwIfNotFound: true);
         m_InGame_Start = m_InGame.FindAction("Start", throwIfNotFound: true);
         // UI
@@ -690,6 +733,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_Attack;
     private readonly InputAction m_InGame_AttackHold;
     private readonly InputAction m_InGame_Block;
+    private readonly InputAction m_InGame_UnBlock;
     private readonly InputAction m_InGame_Back;
     private readonly InputAction m_InGame_Start;
     public struct InGameActions
@@ -702,6 +746,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_InGame_Attack;
         public InputAction @AttackHold => m_Wrapper.m_InGame_AttackHold;
         public InputAction @Block => m_Wrapper.m_InGame_Block;
+        public InputAction @UnBlock => m_Wrapper.m_InGame_UnBlock;
         public InputAction @Back => m_Wrapper.m_InGame_Back;
         public InputAction @Start => m_Wrapper.m_InGame_Start;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
@@ -731,6 +776,9 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                 @Block.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnBlock;
                 @Block.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnBlock;
                 @Block.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnBlock;
+                @UnBlock.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnUnBlock;
+                @UnBlock.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnUnBlock;
+                @UnBlock.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnUnBlock;
                 @Back.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnBack;
@@ -759,6 +807,9 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                 @Block.started += instance.OnBlock;
                 @Block.performed += instance.OnBlock;
                 @Block.canceled += instance.OnBlock;
+                @UnBlock.started += instance.OnUnBlock;
+                @UnBlock.performed += instance.OnUnBlock;
+                @UnBlock.canceled += instance.OnUnBlock;
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
@@ -854,6 +905,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnAttackHold(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
+        void OnUnBlock(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
     }

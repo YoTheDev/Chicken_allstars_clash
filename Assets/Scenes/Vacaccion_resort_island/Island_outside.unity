@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 756662029}
         m_TargetAssemblyTypeName: UI_title, Assembly-CSharp
-        m_MethodName: StartMission
+        m_MethodName: InvokeStartMission
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

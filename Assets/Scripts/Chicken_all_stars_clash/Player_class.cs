@@ -25,6 +25,7 @@ public class Player_class : MonoBehaviour {
     private bool _isJumpPressed;
     private bool _playOneShot;
     private float _damage;
+    private float _shieldTimer;
     private GameObject _boss;
     public Player_management player_management;
     private Slider _slider01;
@@ -37,6 +38,7 @@ public class Player_class : MonoBehaviour {
     [HideInInspector] public float _axisX;
     [HideInInspector] public float _saveSpeed;
     [HideInInspector] public float nearGroundedRange;
+    [HideInInspector] public float reloadTimer;
     [HideInInspector] public int weaponIndex;
     [HideInInspector] public int currentPlayerInputIndex;
     [HideInInspector] public bool isDead;
@@ -44,15 +46,17 @@ public class Player_class : MonoBehaviour {
     [HideInInspector] public bool _isGrounded;
     [HideInInspector] public bool _attack;
     [HideInInspector] public bool _airAttack;
+    [HideInInspector] public bool block;
     [HideInInspector] public Rigidbody _rigidbody;
     [HideInInspector] public Collider attackBoxCollider;
     
     public float playerSpeed;
-    public float simpleReload;
-    public float airReload;
     public float propulsion;
+    public float shieldRemain;
+    public float shieldRecharge;
     public GameObject attackBox;
     public GameObject attack2Box;
+    public GameObject Shield;
     public GameObject projectile;
     public GameObject deathBalloon;
     public List<WeaponData> weapon;
@@ -85,6 +89,25 @@ public class Player_class : MonoBehaviour {
     private void FixedUpdate()
     {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
+        if (block) {
+            _shieldTimer += shieldRemain;
+            Debug.Log(_shieldTimer);
+            if (_shieldTimer >= 100) {
+                _shieldTimer = 0;
+                Shield.SetActive(false);
+                player_management.ActivateInput = false;
+                gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+                playerSpeed = 0;
+                _slider01.value -= 15;
+                Invoke(nameof(ShieldBroke),5);
+            }
+        }
+        else {
+            if (_shieldTimer > 0) {
+                _shieldTimer -= shieldRecharge;
+                Debug.Log(_shieldTimer);
+            }
+        }
         if (!isNearGrounded && !isDead) {
             _rigidbody.drag = 3;
             playerSpeed = 50;
@@ -108,6 +131,7 @@ public class Player_class : MonoBehaviour {
         if (_slider01.value < _slider02.value) _slider02.value -= 0.05f;
         if (isDead) return;
         if (!(_slider02.value <= 0)) return;
+        Shield.SetActive(false);
         isDead = true;
         playerSpeed = 10;
         CancelInvoke(nameof(InvulnerabilityEnd));
@@ -127,12 +151,13 @@ public class Player_class : MonoBehaviour {
         playerPivot.SetActive(false);
         deathBalloon.SetActive(true);
         deathBalloon.layer = LayerMask.NameToLayer("IgnoreCollision");
-        Invoke(nameof(BalloonCollisionActive),1);
+        if (!Game_management.gameOver || !Game_management.victory)
+            Invoke(nameof(BalloonCollisionActive), 1);
     }
     void BalloonCollisionActive() { deathBalloon.layer = LayerMask.NameToLayer("Default"); }
 
     public void OnMove(InputValue Moving) {
-        if (!player_management.ActivateInput || Game_management.victory || Game_management.gameOver) return;
+        if (!player_management.ActivateInput) return;
         var rotation = transform.rotation;
         _axisX = Moving.Get<float>();
         if (_axisX < 0) {
@@ -150,7 +175,7 @@ public class Player_class : MonoBehaviour {
     }
 
     public void OnJump() {
-        if (!player_management.ActivateInput || Game_management.victory || isDead) return;
+        if (!player_management.ActivateInput || Game_management.victory || isDead || block) return;
         if (isNearGrounded && !_attack) {
             _isJumpPressed = true;
         }
@@ -169,6 +194,21 @@ public class Player_class : MonoBehaviour {
             _isJumpPressed = false;
             _canAirAttack = true;
         }
+    }
+
+    void OnBlock() {
+        if (!player_management.ActivateInput || block || isDead) return;
+        block = true;
+        _currentWeapon.DoBlock(this);
+        _currentWeapon.Interrupt(this);
+        playerSpeed /= 2;
+    }
+
+    void OnUnBlock() {
+        if (!player_management.ActivateInput || isDead) return;
+        playerSpeed = _saveSpeed;
+        block = false;
+        _currentWeapon.DoUnBlock(this);
     }
 
     private void OnCollisionEnter(Collision other) {
@@ -202,11 +242,20 @@ public class Player_class : MonoBehaviour {
     }
 
     void InvulnerabilityEnd() {
+        if(block) return;
+        gameObject.layer = LayerMask.NameToLayer("Player_one");
+    }
+
+    void ShieldBroke()
+    {
+        block = false;
+        player_management.ActivateInput = true;
+        playerSpeed = _saveSpeed;
         gameObject.layer = LayerMask.NameToLayer("Player_one");
     }
 
     public void OnAttack() {
-        if (_attack || !player_management.ActivateInput) return;
+        if (_attack || !player_management.ActivateInput || block) return;
         if (isNearGrounded && !_attack && !_airAttack) {
             attackBoxCollider = attackBox.GetComponent<Collider>();
             _currentWeapon.DoSimple(this);
@@ -215,12 +264,12 @@ public class Player_class : MonoBehaviour {
                 InvokeRepeating(nameof(DoSimpleAttack), repeatAttackTime, repeatAttackNumber);
             }
             CancelInvoke(nameof(AttackCooldown));
-            Invoke(nameof(AttackCooldown),simpleReload);
+            Invoke(nameof(AttackCooldown),reloadTimer);
         }
         else if (_canAirAttack) {
             _currentWeapon.DoAirSimple(this);
             CancelInvoke(nameof(AttackCooldown));
-            Invoke(nameof(AttackCooldown),airReload);
+            Invoke(nameof(AttackCooldown),reloadTimer);
         }
     }
     

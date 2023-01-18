@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simpleDamage: 100
   airSimpleDamage: 85
+  shieldDamage: 0
   simpleScore: 90
   airSimpleScore: 40
+  shieldScore: 0
   airProjectileCount: 3
   saveDamage: 100
+  reloadTime: 1.5
+  airReloadTime: 1
   doMultipleDamage: 1

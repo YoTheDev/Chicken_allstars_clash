@@ -131,49 +131,48 @@ namespace PatternSystem {
             }
         }
 
-        private void OnTriggerEnter(Collider other) {
-            if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("Projectile") || other.gameObject.CompareTag("DeathBalloon")) {
-                if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("DeathBalloon")) {
-                    ShakeTimer = 0;
-                    float damage = other.GetComponentInParent<Player_class>()._currentWeapon.DamageData;
-                    float score = other.GetComponentInParent<Player_class>()._currentWeapon.ScoreData;
-                    Player_management playerManagement =
-                        GameObject.Find("Player_manager").GetComponent<Player_management>();
-                    playerManagement.scoreEarned += score;
-                    Instantiate(damageFeedback, transform.position, transform.rotation);
-                    healthStartPos = HealthBar.transform.position;
-                    healthRandomPos = healthStartPos + (Random.insideUnitCircle * shakeDistance);
-                    HealthBar.transform.position = healthRandomPos;
-                    _currentHealth -= damage;
-                    Slider.value -= damage;
-                }
-                if (other.gameObject.CompareTag("Projectile")) {
-                    ShakeTimer = 0;
-                    float damage = other.GetComponentInParent<projectile>().damage;
-                    Instantiate(damageFeedback, transform.position, transform.rotation);
-                    _currentHealth -= damage;
-                    Slider.value -= damage;
-                }
-                Debug.Log(_currentHealth);
-                if (_currentHealth <= 0) {
-                    Instantiate(deathFeedback,transform.position,transform.rotation);
-                    _isDead = true;
-                    player = other.gameObject;
-                    Vector3 posTarget = player.transform.position;
-                    Vector3 posOrigin = transform.position;
-                    _direction = (posTarget - posOrigin).normalized;
-                    _direction.y = 0; _direction.z = 0;
-                    transform.rotation = Quaternion.LookRotation(_direction);
-                    Rigidbody.velocity = Vector3.zero;
-                    Vector3 knockbackDirection = new Vector3(posOrigin.x - posTarget.x, 0);
-                    Rigidbody.AddForce(knockbackDirection * deathKnockback,ForceMode.Impulse);
-                    Rigidbody.AddForce(Vector3.up * deathKnockbackUp,ForceMode.Impulse);
-                    Rigidbody.AddForce(Vector3.back * deathKnockbackBack,ForceMode.Impulse);
-                    gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
-                    Time.timeScale = 0.05f;
-                    Time.fixedDeltaTime = fixedDeltaTime * Time.timeScale;
-                    Invoke(nameof(NormalizeTime),0.05f);
-                }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("DeathBalloon") || other.gameObject.CompareTag("Shield")) {
+                ShakeTimer = 0;
+                float damage = other.GetComponentInParent<Player_class>()._currentWeapon.DamageData;
+                float score = other.GetComponentInParent<Player_class>()._currentWeapon.ScoreData;
+                Player_management playerManagement =
+                    GameObject.Find("Player_manager").GetComponent<Player_management>();
+                playerManagement.scoreEarned += score;
+                Instantiate(damageFeedback, transform.position, transform.rotation);
+                healthStartPos = HealthBar.transform.position;
+                healthRandomPos = healthStartPos + (Random.insideUnitCircle * shakeDistance);
+                HealthBar.transform.position = healthRandomPos;
+                _currentHealth -= damage;
+                Slider.value -= damage;
+            }
+            if (other.gameObject.CompareTag("Projectile")) {
+                ShakeTimer = 0;
+                float damage = other.GetComponentInParent<projectile>().damage;
+                Instantiate(damageFeedback, transform.position, transform.rotation);
+                _currentHealth -= damage;
+                Slider.value -= damage;
+            }
+            Debug.Log(_currentHealth);
+            if (_currentHealth <= 0) {
+                Instantiate(deathFeedback,transform.position,transform.rotation);
+                _isDead = true;
+                player = other.gameObject;
+                Vector3 posTarget = player.transform.position;
+                Vector3 posOrigin = transform.position;
+                _direction = (posTarget - posOrigin).normalized;
+                _direction.y = 0; _direction.z = 0;
+                transform.rotation = Quaternion.LookRotation(_direction);
+                Rigidbody.velocity = Vector3.zero;
+                Vector3 knockbackDirection = new Vector3(posOrigin.x - posTarget.x, 0);
+                Rigidbody.AddForce(knockbackDirection * deathKnockback,ForceMode.Impulse);
+                Rigidbody.AddForce(Vector3.up * deathKnockbackUp,ForceMode.Impulse);
+                Rigidbody.AddForce(Vector3.back * deathKnockbackBack,ForceMode.Impulse);
+                gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+                Time.timeScale = 0.05f;
+                Time.fixedDeltaTime = fixedDeltaTime * Time.timeScale;
+                Invoke(nameof(NormalizeTime),0.05f);
             }
         }
 

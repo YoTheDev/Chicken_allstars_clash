@@ -9,9 +9,13 @@ public class DoubleSaber : WeaponData {
 
     public float simpleDamage;
     public float airSimpleDamage;
+    public float shieldDamage;
     public float simpleScore;
     public float airSimpleScore;
+    public float shieldScore;
     public float saveDamage;
+    public float reloadTime;
+    public float airReloadTime;
     public bool doMultipleDamage;
 
     public override float DamageData => damageGiven;
@@ -19,6 +23,7 @@ public class DoubleSaber : WeaponData {
     public override float currentAirProjectile { get; set; }
 
     public override void DoSimple(Player_class player) {
+        player.reloadTimer = reloadTime;
         scoreGiven = simpleScore;
         saveDamage = simpleDamage;
         player.attackBox.SetActive(true);
@@ -30,6 +35,7 @@ public class DoubleSaber : WeaponData {
     }
 
     public override void DoAirSimple(Player_class player) {
+        player.reloadTimer = airReloadTime;
         saveDamage = airSimpleDamage;
         player.attack2Box.SetActive(true);
         player._doubleJump = false;
@@ -49,6 +55,22 @@ public class DoubleSaber : WeaponData {
         scoreGiven = airSimpleScore;
         damageGiven = airSimpleDamage;
         airSimpleDamage = saveDamage;
+    }
+
+    public override void DoBlock(Player_class player) {
+        player.gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+        scoreGiven = shieldScore;
+        saveDamage = shieldDamage;
+        player.Shield.SetActive(true);
+        shieldDamage = Random.Range(shieldDamage, shieldDamage + 3);
+        scoreGiven = shieldScore;
+        damageGiven = shieldDamage;
+        shieldDamage = saveDamage;
+    }
+
+    public override void DoUnBlock(Player_class player) {
+        player.gameObject.layer = LayerMask.NameToLayer("Player_one");
+        player.Shield.SetActive(false);
     }
 
     public override bool SimpleMultipleDamage => doMultipleDamage;

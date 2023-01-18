@@ -42,7 +42,7 @@ public class UI_title : MonoBehaviour {
         titleScreen.SetActive(true);
         startButton.onClick.AddListener(() => PlayerJoining());
         readyButton.onClick.AddListener(() => MorePlayer());
-        startMissionAnyway.onClick.AddListener(() => StartMission());
+        startMissionAnyway.onClick.AddListener(() => InvokeStartMission());
         readyButton.interactable = false;
         _inputManager = GetComponent<PlayerInputManager>();
         _playerInput = GetComponent<PlayerInput>();
@@ -78,13 +78,16 @@ public class UI_title : MonoBehaviour {
             grayOpacity.SetActive(true);
         }
         else {
-            StartMission();
+            InvokeStartMission();
+            ui[2].SetActive(false); grayOpacity.SetActive(false);
         }
     }
 
-    public void StartMission() {
-        SceneManager.LoadScene(missionScene[0]);
+    public void InvokeStartMission() {
+        readyButton.interactable = false;
+        Invoke(nameof(StartMission),1);
     }
+    public void StartMission() { SceneManager.LoadScene(missionScene[0]); }
 
     void JoinedPlayer() {
         if(_playerIndex > playerSpawner.Count || _playerIndex > player.Count) return;

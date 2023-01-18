@@ -56,7 +56,16 @@
                     "id": "7d33955b-798e-481b-9a11-b8551aebe8e1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UnBlock",
+                    "type": "Button",
+                    "id": "f1ed4235-eba6-4a44-a84e-de8236fbd893",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
                 },
                 {
@@ -494,6 +503,39 @@
                     "processors": "",
                     "groups": "Generic_USB",
                     "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de0ca323-f2b9-4cdc-812e-9607656e25b0",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UnBlock",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aacac0ae-0941-43c1-981e-0fe86ca71d8b",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UnBlock",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "908496f9-efcb-46bd-978d-91e90cb47bf3",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UnBlock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

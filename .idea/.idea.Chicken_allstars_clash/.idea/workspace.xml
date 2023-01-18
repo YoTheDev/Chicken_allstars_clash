@@ -25,16 +25,18 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Dash.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Stay.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PatternSystem/Turn.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/WeaponData.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/StickOfTrue.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/DoubleSaber.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/MetalFist.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/NitroBaker.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Player_class.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Game_management.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Player_management.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/PatternSystem/Dash.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Vacation_resort_island/UI_title.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/PatternSystem/Enemy.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/WeaponData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/DeathBallonAttack.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/DoubleSaber.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/MetalFist.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/NitroBaker.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/StickOfTrue.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Player_class.cs" />
       </list>
     </option>
   </component>
@@ -46,13 +48,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="Discover.Launch.Via.Unity" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/../Desktop/Chicken_all_stars_clas_build_01\Chickens_all_stars_clash.exe" />
@@ -74,9 +74,8 @@
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
-      <option name="projectPathOnTarget" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -84,9 +83,8 @@
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
-      <option name="projectPathOnTarget" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -137,6 +135,9 @@
       <workItem from="1671010480624" duration="14685000" />
       <workItem from="1671093401517" duration="11358000" />
       <workItem from="1671184353989" duration="7725000" />
+      <workItem from="1671364004673" duration="15460000" />
+      <workItem from="1673342444180" duration="12252000" />
+      <workItem from="1673429037505" duration="11310000" />
     </task>
     <servers />
   </component>
@@ -156,6 +157,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

@@ -24,7 +24,10 @@ public class DeathBallonAttack : WeaponData
         damageGiven = deathBalloonAttackDamage;
         scoreGiven = airSimpleScore;
     }
-    
+
+    public override void DoBlock(Player_class player) { }
+    public override void DoUnBlock(Player_class player) { }
+
     public override bool SimpleMultipleDamage { get; }
 
     public override void Interrupt(Player_class player) {
