@@ -13,6 +13,7 @@ using Debug = UnityEngine.Debug;
 public class Player_class : MonoBehaviour {
     
     [SerializeField] private GameObject playerPivot;
+    [SerializeField] private Animator animator;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float doubleJumpHeight;
     [SerializeField] public float airattackjumpHeight;
@@ -63,10 +64,12 @@ public class Player_class : MonoBehaviour {
     public Game_management Game_management;
     public TextMeshPro PlayerIndicator;
     public List<string> playerLifeUIstring;
+    private static readonly int Speed = Animator.StringToHash("speed");
 
     void Start() {
         _saveAxisXpositive = true;
         deathBalloon.SetActive(false);
+        animator = GetComponentInChildren<Animator>();
         player_management = GameObject.Find("Player_manager").GetComponent<Player_management>();
         currentPlayerInputIndex = GetComponent<PlayerInput>().playerIndex;
         Game_management.playerAlive[currentPlayerInputIndex] = true;
@@ -89,6 +92,13 @@ public class Player_class : MonoBehaviour {
     private void FixedUpdate()
     {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
+        if (_axisX > 0 || _axisX < 0) {
+            animator.SetFloat("speed",1);
+            CancelInvoke(nameof(WalkOver));
+        }
+        else {
+            Invoke(nameof(WalkOver),0.2f);
+        }
         if (block) {
             _shieldTimer += shieldRemain;
             Debug.Log(_shieldTimer);
@@ -138,6 +148,11 @@ public class Player_class : MonoBehaviour {
         gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
         Game_management._aliveIndex = currentPlayerInputIndex;
         Invoke(nameof(PlayerBigger),2);
+    }
+
+    void WalkOver()
+    {
+        animator.SetFloat("speed",0);
     }
 
     void PlayerBigger() {
