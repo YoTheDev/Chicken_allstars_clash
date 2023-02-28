@@ -64,7 +64,6 @@ public class Player_class : MonoBehaviour {
     public Game_management Game_management;
     public TextMeshPro PlayerIndicator;
     public List<string> playerLifeUIstring;
-    private static readonly int Speed = Animator.StringToHash("speed");
 
     void Start() {
         _saveAxisXpositive = true;
@@ -92,12 +91,16 @@ public class Player_class : MonoBehaviour {
     private void FixedUpdate()
     {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
-        if (_axisX > 0 || _axisX < 0) {
+        if (_axisX > 0 && !_attack && _isGrounded || _axisX < 0 && !_attack && _isGrounded) {
             animator.SetFloat("speed",1);
             CancelInvoke(nameof(WalkOver));
         }
-        else {
-            Invoke(nameof(WalkOver),0.2f);
+        else { Invoke(nameof(WalkOver),0.2f); }
+        if(_slider01.value <= maxHealth / 3) {
+            animator.SetBool("low", true);
+        }
+        if(_slider02.value <= 0) {
+            animator.SetBool("almostdead", true);
         }
         if (block) {
             _shieldTimer += shieldRemain;
@@ -150,10 +153,7 @@ public class Player_class : MonoBehaviour {
         Invoke(nameof(PlayerBigger),2);
     }
 
-    void WalkOver()
-    {
-        animator.SetFloat("speed",0);
-    }
+    void WalkOver() { animator.SetFloat("speed",0); }
 
     void PlayerBigger() {
         _rigidbody.velocity = Vector3.zero;
@@ -272,6 +272,7 @@ public class Player_class : MonoBehaviour {
     public void OnAttack() {
         if (_attack || !player_management.ActivateInput || block) return;
         if (isNearGrounded && !_attack && !_airAttack) {
+            animator.SetBool("attack",true);
             attackBoxCollider = attackBox.GetComponent<Collider>();
             _currentWeapon.DoSimple(this);
             if (_currentWeapon.SimpleMultipleDamage) {
@@ -292,6 +293,7 @@ public class Player_class : MonoBehaviour {
 
     public void AttackCooldown() {
         CancelInvoke(nameof(DoSimpleAttack));
+        animator.SetBool("attack",false);
         var rotation = transform.rotation;
         if (!isDead) {
             if (_saveAxisXpositive) playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
