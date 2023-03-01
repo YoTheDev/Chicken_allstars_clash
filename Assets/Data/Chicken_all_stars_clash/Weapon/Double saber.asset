@@ -18,7 +18,7 @@ MonoBehaviour:
   simpleScore: 95
   airSimpleScore: 100
   shieldScore: 0
-  saveDamage: 0
-  reloadTime: 0.5
+  saveDamage: 100
+  reloadTime: 0.4
   airReloadTime: 0.5
   doMultipleDamage: 0

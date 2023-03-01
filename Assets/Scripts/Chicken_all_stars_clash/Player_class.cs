@@ -24,6 +24,7 @@ public class Player_class : MonoBehaviour {
     [SerializeField] private float repeatAttackNumber;
 
     private bool _isJumpPressed;
+    private bool _isAttackPressed;
     private bool _playOneShot;
     private float _damage;
     private float _shieldTimer;
@@ -270,6 +271,10 @@ public class Player_class : MonoBehaviour {
     }
 
     public void OnAttack() {
+        if (isNearGrounded && player_management.ActivateInput) {
+            _isAttackPressed = true;
+            Invoke(nameof(attackBuffer),0.25f);
+        }
         if (_attack || !player_management.ActivateInput || block) return;
         if (isNearGrounded && !_attack && !_airAttack) {
             animator.SetBool("attack",true);
@@ -279,19 +284,23 @@ public class Player_class : MonoBehaviour {
                 attackBox.SetActive(true);
                 InvokeRepeating(nameof(DoSimpleAttack), repeatAttackTime, repeatAttackNumber);
             }
-            CancelInvoke(nameof(AttackCooldown));
             Invoke(nameof(AttackCooldown),reloadTimer);
         }
         else if (_canAirAttack) {
             _currentWeapon.DoAirSimple(this);
-            CancelInvoke(nameof(AttackCooldown));
             Invoke(nameof(AttackCooldown),reloadTimer);
         }
     }
+    void attackBuffer() { _isAttackPressed = false; CancelInvoke(nameof(attackBuffer)); }
     
     void DoSimpleAttack() { _currentWeapon.DoSimple(this); }
 
     public void AttackCooldown() {
+        if(_isAttackPressed) {
+            _isAttackPressed = false;
+            Debug.Log("hello");
+            OnAttack();
+        }
         CancelInvoke(nameof(DoSimpleAttack));
         animator.SetBool("attack",false);
         var rotation = transform.rotation;
