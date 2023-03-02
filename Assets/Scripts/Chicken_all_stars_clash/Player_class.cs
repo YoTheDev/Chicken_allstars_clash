@@ -24,10 +24,10 @@ public class Player_class : MonoBehaviour {
     [SerializeField] private float repeatAttackNumber;
 
     private bool _isJumpPressed;
-    private bool _isAttackPressed;
     private bool _playOneShot;
     private float _damage;
     private float _shieldTimer;
+    private int _attackCount;
     private GameObject _boss;
     public Player_management player_management;
     private Slider _slider01;
@@ -124,7 +124,7 @@ public class Player_class : MonoBehaviour {
         }
         if (!isNearGrounded && !isDead) {
             _rigidbody.drag = 3;
-            playerSpeed = 50;
+            playerSpeed = 100;
         }
         _rigidbody.AddForce(Vector3.left * _axisX * playerSpeed,ForceMode.Force);
         if (_isJumpPressed && _isGrounded) {
@@ -167,7 +167,7 @@ public class Player_class : MonoBehaviour {
         playerPivot.SetActive(false);
         deathBalloon.SetActive(true);
         deathBalloon.layer = LayerMask.NameToLayer("IgnoreCollision");
-        if (!Game_management.gameOver || !Game_management.victory)
+        if (!Game_management.gameOver && !Game_management.victory)
             Invoke(nameof(BalloonCollisionActive), 1);
     }
     void BalloonCollisionActive() { deathBalloon.layer = LayerMask.NameToLayer("Default"); }
@@ -193,9 +193,12 @@ public class Player_class : MonoBehaviour {
     public void OnJump() {
         if (!player_management.ActivateInput || Game_management.victory || isDead || block) return;
         if (isNearGrounded && !_attack) {
+            animator.SetBool("jump",true);
             _isJumpPressed = true;
         }
         if (!_isGrounded && _doubleJump) {
+            animator.SetBool("double_jump",true);
+            animator.SetBool("jump",false);
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(Vector3.up * doubleJumpHeight,ForceMode.Impulse);
             if (_axisX != 0) {
@@ -234,6 +237,9 @@ public class Player_class : MonoBehaviour {
             if(!isDead) {
                 _rigidbody.drag = 10;
                 playerSpeed = _saveSpeed;
+                animator.SetBool("jump",false);
+                animator.SetBool("double_jump",false);
+                animator.SetBool("grounded",true);
                 AttackCooldown();
             }
         }
@@ -271,10 +277,6 @@ public class Player_class : MonoBehaviour {
     }
 
     public void OnAttack() {
-        if (isNearGrounded && player_management.ActivateInput) {
-            _isAttackPressed = true;
-            Invoke(nameof(attackBuffer),0.25f);
-        }
         if (_attack || !player_management.ActivateInput || block) return;
         if (isNearGrounded && !_attack && !_airAttack) {
             animator.SetBool("attack",true);
@@ -285,22 +287,24 @@ public class Player_class : MonoBehaviour {
                 InvokeRepeating(nameof(DoSimpleAttack), repeatAttackTime, repeatAttackNumber);
             }
             Invoke(nameof(AttackCooldown),reloadTimer);
+            if (_attackCount <= 0) {
+                _attackCount = 1;
+                animator.SetInteger("attack_count",1);
+            }
+            else {
+                _attackCount = 0;
+                animator.SetInteger("attack_count",0);
+            }
         }
         else if (_canAirAttack) {
             _currentWeapon.DoAirSimple(this);
             Invoke(nameof(AttackCooldown),reloadTimer);
         }
     }
-    void attackBuffer() { _isAttackPressed = false; CancelInvoke(nameof(attackBuffer)); }
-    
+
     void DoSimpleAttack() { _currentWeapon.DoSimple(this); }
 
     public void AttackCooldown() {
-        if(_isAttackPressed) {
-            _isAttackPressed = false;
-            Debug.Log("hello");
-            OnAttack();
-        }
         CancelInvoke(nameof(DoSimpleAttack));
         animator.SetBool("attack",false);
         var rotation = transform.rotation;
