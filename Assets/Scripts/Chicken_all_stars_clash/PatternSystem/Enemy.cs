@@ -28,6 +28,7 @@ namespace PatternSystem {
         [SerializeField] private float deathKnockbackUp;
         [SerializeField] private float deathKnockbackBack;
         [SerializeField] private float shakeDistance;
+        [SerializeField] private float shakeHealthBarDistance;
         [SerializeField] private GameObject graphics;
         [SerializeField] private GameObject HideBarImage;
         [SerializeField] private GameObject HideBarText;
@@ -42,7 +43,7 @@ namespace PatternSystem {
         private float _currentHealth;
         private float _patternTimer;
         private float fixedDeltaTime;
-        private float ShakeTimer;
+        private float ShakeTimer = 1;
         private float saveSpeed;
         private bool _isDead;
         private bool _enemyReady;
@@ -51,8 +52,7 @@ namespace PatternSystem {
         private Vector3 _direction;
         private Vector2 startPos;
         private Vector2 randomPos;
-        private Vector2 healthStartPos;
-        private Vector2 healthRandomPos;
+        private Vector3 healthBarStartPos;
 
         private void Start() {
             HideBarImage.SetActive(false);
@@ -60,6 +60,7 @@ namespace PatternSystem {
             Rigidbody = GetComponent<Rigidbody>();
             Physics.gravity = new Vector3(0, -180f, 0);
             fixedDeltaTime = Time.fixedDeltaTime;
+            healthBarStartPos = HealthBar.transform.position;
         }
 
         public void EnemyStart() {
@@ -75,7 +76,11 @@ namespace PatternSystem {
         }
 
         private void Update() {
-            ShakeTimer += Time.deltaTime;
+            if(ShakeTimer < 1) ShakeTimer += Time.deltaTime;
+            if (ShakeTimer < 0.2) {
+                HealthBar.transform.position = healthBarStartPos + Random.insideUnitSphere * shakeHealthBarDistance;
+            }
+            else HealthBar.transform.position = healthBarStartPos;
             if(!_enemyReady) return;
             if (Pattern.Count == 0) { Debug.LogWarning("List for " + gameObject.name + " is set to 0"); return; }
             if (!_isDead && !gameManagement.gameOver) {
@@ -98,6 +103,7 @@ namespace PatternSystem {
                 _rotGoal = Quaternion.LookRotation(_direction);
                 transform.rotation = Quaternion.Slerp(rotOrigin,_rotGoal,turnSpeed * Time.deltaTime);
             }
+
             if (ShakeTimer < 0.2) {
                 startPos = transform.position;
                 randomPos = startPos + (Random.insideUnitCircle * shakeDistance);
@@ -118,7 +124,7 @@ namespace PatternSystem {
                 Wall = other.gameObject;
                 _currentPatternAction.isCollidedWall(this);
             }
-            if(other.gameObject.CompareTag("Ground")) {
+            if (other.gameObject.CompareTag("Ground")) {
                 if (Knockback) {
                     Rigidbody.velocity = Vector3.zero;
                     _patternTimer = _currentPatternAction.PatternDuration;
@@ -141,9 +147,6 @@ namespace PatternSystem {
                     GameObject.Find("Player_manager").GetComponent<Player_management>();
                 playerManagement.scoreEarned += score;
                 Instantiate(damageFeedback, transform.position, transform.rotation);
-                healthStartPos = HealthBar.transform.position;
-                healthRandomPos = healthStartPos + (Random.insideUnitCircle * shakeDistance);
-                HealthBar.transform.position = healthRandomPos;
                 _currentHealth -= damage;
                 Slider.value -= damage;
             }

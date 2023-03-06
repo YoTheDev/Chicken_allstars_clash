@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 public class Player_class : MonoBehaviour {
     
@@ -22,17 +23,20 @@ public class Player_class : MonoBehaviour {
     [SerializeField] private float maxHealth;
     [SerializeField] private float repeatAttackTime;
     [SerializeField] private float repeatAttackNumber;
+    [SerializeField] private Camera_manager camera_script;
 
     private bool _isJumpPressed;
     private bool _playOneShot;
+    private bool _tookDamage;
     private float _damage;
     private float _shieldTimer;
     private int _attackCount;
     private GameObject _boss;
+    private GameObject _camera;
     public Player_management player_management;
     private Slider _slider01;
     private Slider _slider02;
-    
+
     [HideInInspector] public WeaponData _currentWeapon;
     [HideInInspector] public bool _canAirAttack;
     [HideInInspector] public bool _saveAxisXpositive;
@@ -68,6 +72,8 @@ public class Player_class : MonoBehaviour {
 
     void Start() {
         _saveAxisXpositive = true;
+        _camera = GameObject.Find("Main Camera");
+        camera_script = _camera.GetComponent<Camera_manager>();
         deathBalloon.SetActive(false);
         animator = GetComponentInChildren<Animator>();
         player_management = GameObject.Find("Player_manager").GetComponent<Player_management>();
@@ -89,8 +95,7 @@ public class Player_class : MonoBehaviour {
         if (_currentWeapon == null) _currentWeapon = weapon[1];
     }
     
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         isNearGrounded = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), nearGroundedRange);
         if (_axisX > 0 && !_attack && _isGrounded || _axisX < 0 && !_attack && _isGrounded) {
             animator.SetFloat("speed",1);
@@ -177,13 +182,13 @@ public class Player_class : MonoBehaviour {
         var rotation = transform.rotation;
         _axisX = Moving.Get<float>();
         if (_axisX < 0) {
-            if (!_attack && !_airAttack) {
+            if (!_attack && !_airAttack && !_tookDamage) {
                 playerPivot.transform.rotation = Quaternion.Euler(rotation.x,180, rotation.z);
             }
             _saveAxisXpositive = false;
         }
         else if (_axisX > 0) {
-            if (!_attack && !_airAttack) {
+            if (!_attack && !_airAttack && !_tookDamage) {
                 playerPivot.transform.rotation = Quaternion.Euler(rotation.x,0,rotation.z);
             }
             _saveAxisXpositive = true;
@@ -194,6 +199,7 @@ public class Player_class : MonoBehaviour {
         if (!player_management.ActivateInput || Game_management.victory || isDead || block) return;
         if (isNearGrounded && !_attack) {
             animator.SetBool("jump",true);
+            animator.SetBool("grounded",false);
             _isJumpPressed = true;
         }
         if (!_isGrounded && _doubleJump) {
@@ -234,17 +240,21 @@ public class Player_class : MonoBehaviour {
         if (other.gameObject.CompareTag("Ground")) {
             _currentWeapon.currentAirProjectile = 0;
             _isGrounded = true;
+            _tookDamage = false;
+            animator.SetBool("jump",false);
+            animator.SetBool("double_jump",false);
+            animator.SetBool("grounded",true);
+            animator.SetBool("attack",false);
+            animator.SetBool("damage",false);
             if(!isDead) {
                 _rigidbody.drag = 10;
                 playerSpeed = _saveSpeed;
-                animator.SetBool("jump",false);
-                animator.SetBool("double_jump",false);
-                animator.SetBool("grounded",true);
                 AttackCooldown();
             }
         }
         if (other.gameObject.CompareTag("Boss")) {
             if (isDead) return;
+            animator.SetBool("damage",true);
             _rigidbody.velocity = new Vector3(0, 0, 0);
             Vector3 knockbackDirection = new Vector3(transform.position.x - _boss.transform.position.x, 0);
             _rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
@@ -257,7 +267,11 @@ public class Player_class : MonoBehaviour {
         if (isDead) _currentWeapon.Interrupt(this);
     }
 
-    void Damage() {
+    void Damage()
+    {
+        camera_script.shakeStart = true;
+        camera_script.ShakeTime = 0;
+        _tookDamage = true;
         _damage = FindObjectOfType<Enemy>().damageCoast;
         if (_slider01.value > 0) _slider01.value -= _damage;
         else _slider02.value -= _damage;
@@ -279,6 +293,7 @@ public class Player_class : MonoBehaviour {
     public void OnAttack() {
         if (_attack || !player_management.ActivateInput || block) return;
         if (isNearGrounded && !_attack && !_airAttack) {
+            Debug.Log(_attackCount);
             animator.SetBool("attack",true);
             attackBoxCollider = attackBox.GetComponent<Collider>();
             _currentWeapon.DoSimple(this);
@@ -286,7 +301,6 @@ public class Player_class : MonoBehaviour {
                 attackBox.SetActive(true);
                 InvokeRepeating(nameof(DoSimpleAttack), repeatAttackTime, repeatAttackNumber);
             }
-            Invoke(nameof(AttackCooldown),reloadTimer);
             if (_attackCount <= 0) {
                 _attackCount = 1;
                 animator.SetInteger("attack_count",1);
@@ -295,13 +309,17 @@ public class Player_class : MonoBehaviour {
                 _attackCount = 0;
                 animator.SetInteger("attack_count",0);
             }
+            Invoke(nameof(AttackCooldown),reloadTimer);
         }
         else if (_canAirAttack) {
+            animator.SetBool("attack",true);
+            animator.SetBool("damage",false);
+            _rigidbody.drag = 3;
             _currentWeapon.DoAirSimple(this);
             Invoke(nameof(AttackCooldown),reloadTimer);
         }
     }
-
+    
     void DoSimpleAttack() { _currentWeapon.DoSimple(this); }
 
     public void AttackCooldown() {

@@ -11,6 +11,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Camera_manager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/Player_management.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Chicken_all_stars_clash/WeaponSystem/DeathBallonAttack.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -146,6 +147,8 @@
       <workItem from="1677581196239" duration="5256000" />
       <workItem from="1677662630463" duration="11783000" />
       <workItem from="1677756786050" duration="7438000" />
+      <workItem from="1677838893233" duration="6639000" />
+      <workItem from="1678095467150" duration="18603000" />
     </task>
     <servers />
   </component>
