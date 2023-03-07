@@ -7,14 +7,16 @@ using UnityEngine;
 public class Turn : PatternAction
 {
     public Vector3 JumpPower;
-    public float knockbackForce;
-    public float knockbackForceUp;
     public float Duration;
     public float damage;
 
     private Vector3 knockbackDirection;
 
     public override void isCollidedWall(Enemy enemy) {
+        return;
+    }
+
+    public override void isCollidedGround(Enemy enemy) {
         return;
     }
 
@@ -25,6 +27,8 @@ public class Turn : PatternAction
         enemy.Rigidbody.velocity = Vector3.zero;
         enemy.Rigidbody.AddForce(enemy.transform.TransformDirection(JumpPower), ForceMode.Impulse);
         enemy.Turn = true;
+        enemy.camera_script.ShakeDistance = 0.2f;
+        enemy.camera_script.ShakeDuration = 1;
     }
 
     public override bool IsFinished(Enemy enemy) {
@@ -33,9 +37,5 @@ public class Turn : PatternAction
 
     public override void isCollided(Enemy enemy) {
         enemy.Rigidbody.velocity = Vector3.zero;
-        knockbackDirection = new Vector3(enemy.transform.position.x - enemy.player.transform.position.x, 0);
-        enemy.Rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
-        enemy.Rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
-        enemy.Knockback = true;
     }
 }

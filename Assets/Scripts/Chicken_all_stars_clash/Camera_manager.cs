@@ -7,9 +7,9 @@ public class Camera_manager : MonoBehaviour
     private Vector3 startPos;
     private Vector3 randomPos;
     
-    [SerializeField] private float ShakeDistance;
-
+    [HideInInspector] public float ShakeDistance;
     [HideInInspector] public float ShakeTime;
+    [HideInInspector] public float ShakeDuration;
     [HideInInspector] public bool shakeStart;
     
     void Start() {

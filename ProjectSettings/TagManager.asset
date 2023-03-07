@@ -17,6 +17,7 @@ TagManager:
   - DeathBalloon
   - KickZone
   - Shield
+  - AttackBoss
   layers:
   - Default
   - TransparentFX

@@ -28,6 +28,7 @@ public class Player_class : MonoBehaviour {
     private bool _isJumpPressed;
     private bool _playOneShot;
     private bool _tookDamage;
+    private bool _TouchBossAttack;
     private float _damage;
     private float _shieldTimer;
     private int _attackCount;
@@ -116,6 +117,7 @@ public class Player_class : MonoBehaviour {
                 Shield.SetActive(false);
                 player_management.ActivateInput = false;
                 gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+                animator.SetInteger("speed",0);
                 playerSpeed = 0;
                 _slider01.value -= 15;
                 Invoke(nameof(ShieldBroke),5);
@@ -252,8 +254,10 @@ public class Player_class : MonoBehaviour {
                 AttackCooldown();
             }
         }
-        if (other.gameObject.CompareTag("Boss")) {
+        if (other.gameObject.CompareTag("Boss") || other.gameObject.CompareTag("AttackBoss")) {
             if (isDead) return;
+            if (other.gameObject.CompareTag("Boss")) _TouchBossAttack = false;
+            else if (other.gameObject.CompareTag("AttackBoss")) _TouchBossAttack = true;
             animator.SetBool("damage",true);
             _rigidbody.velocity = new Vector3(0, 0, 0);
             Vector3 knockbackDirection = new Vector3(transform.position.x - _boss.transform.position.x, 0);
@@ -267,12 +271,14 @@ public class Player_class : MonoBehaviour {
         if (isDead) _currentWeapon.Interrupt(this);
     }
 
-    void Damage()
-    {
+    void Damage() {
         camera_script.shakeStart = true;
         camera_script.ShakeTime = 0;
+        camera_script.ShakeDuration = 0.2f;
+        camera_script.ShakeDistance = 1;
         _tookDamage = true;
-        _damage = FindObjectOfType<Enemy>().damageCoast;
+        if (_TouchBossAttack) _damage = FindObjectOfType<Enemy>().attackDamageCoast;
+        else _damage = FindObjectOfType<Enemy>().damageCoast;
         if (_slider01.value > 0) _slider01.value -= _damage;
         else _slider02.value -= _damage;
     }
@@ -282,8 +288,7 @@ public class Player_class : MonoBehaviour {
         gameObject.layer = LayerMask.NameToLayer("Player_one");
     }
 
-    void ShieldBroke()
-    {
+    void ShieldBroke() {
         block = false;
         player_management.ActivateInput = true;
         playerSpeed = _saveSpeed;
@@ -293,7 +298,6 @@ public class Player_class : MonoBehaviour {
     public void OnAttack() {
         if (_attack || !player_management.ActivateInput || block) return;
         if (isNearGrounded && !_attack && !_airAttack) {
-            Debug.Log(_attackCount);
             animator.SetBool("attack",true);
             attackBoxCollider = attackBox.GetComponent<Collider>();
             _currentWeapon.DoSimple(this);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
@@ -13,6 +14,7 @@ namespace PatternSystem {
         public bool RandomizePattern;
         public List<PatternAction> Pattern;
         public Game_management gameManagement;
+        public Camera_manager camera_script;
         public List<GameObject> target = new List<GameObject>();
         public float turnSpeed = .01f;
         public float maxHealth;
@@ -23,6 +25,7 @@ namespace PatternSystem {
         [HideInInspector] public GameObject player;
         [HideInInspector] public GameObject Wall;
         [HideInInspector] public float damageCoast;
+        [HideInInspector] public float attackDamageCoast;
 
         [SerializeField] private float deathKnockback;
         [SerializeField] private float deathKnockbackUp;
@@ -31,11 +34,12 @@ namespace PatternSystem {
         [SerializeField] private float shakeHealthBarDistance;
         [SerializeField] private GameObject graphics;
         [SerializeField] private GameObject HideBarImage;
-        [SerializeField] private GameObject HideBarText;
         [SerializeField] private GameObject HealthBar;
         [SerializeField] private GameObject damageFeedback;
         [SerializeField] private GameObject deathFeedback;
         [SerializeField] private Slider Slider;
+        [SerializeField] private TextMeshProUGUI Health_text;
+        [SerializeField] private TextMeshProUGUI Health_text_02;
 
         private PatternAction _currentPatternAction;
         private int _currentPatternIndex;
@@ -55,8 +59,12 @@ namespace PatternSystem {
         private Vector3 healthBarStartPos;
 
         private void Start() {
+            _currentHealth = maxHealth;
+            Slider.maxValue = maxHealth;
+            Slider.value = maxHealth;
+            Health_text.text = _currentHealth.ToString();
+            Health_text_02.text = maxHealth.ToString();
             HideBarImage.SetActive(false);
-            HideBarText.SetActive(false);
             Rigidbody = GetComponent<Rigidbody>();
             Physics.gravity = new Vector3(0, -180f, 0);
             fixedDeltaTime = Time.fixedDeltaTime;
@@ -64,9 +72,6 @@ namespace PatternSystem {
         }
 
         public void EnemyStart() {
-            _currentHealth = maxHealth;
-            Slider.maxValue = maxHealth;
-            Slider.value = maxHealth;
             if (!_enemyReady) {
                 for (int i = 0; i < target.Count; i++) {
                     if(GameObject.FindWithTag("Player")) target[i] = GameObject.FindWithTag("Player");
@@ -111,8 +116,12 @@ namespace PatternSystem {
             }
             if (_currentHealth <= maxHealth / 3) {
                 HideBarImage.SetActive(true);
-                HideBarText.SetActive(true);
             }
+        }
+
+        public void PlayerDead()
+        {
+            
         }
 
         public void OnCollisionEnter(Collision other) {
@@ -134,6 +143,8 @@ namespace PatternSystem {
                 _rngPlayer = Random.Range(0, target.Count);
                 Rigidbody.velocity = Vector3.zero;
                 Turn = false;
+                camera_script.shakeStart = true;
+                camera_script.ShakeTime = 0;
             }
         }
 
@@ -149,6 +160,8 @@ namespace PatternSystem {
                 Instantiate(damageFeedback, transform.position, transform.rotation);
                 _currentHealth -= damage;
                 Slider.value -= damage;
+                if (_currentHealth > maxHealth / 3) Health_text.text = _currentHealth.ToString();
+                else Health_text.text = "???";
             }
             if (other.gameObject.CompareTag("Projectile")) {
                 ShakeTimer = 0;
@@ -156,6 +169,8 @@ namespace PatternSystem {
                 Instantiate(damageFeedback, transform.position, transform.rotation);
                 _currentHealth -= damage;
                 Slider.value -= damage;
+                if (_currentHealth > maxHealth / 3) Health_text.text = _currentHealth.ToString();
+                else Health_text.text = "???";
             }
             Debug.Log(_currentHealth);
             if (_currentHealth <= 0) {

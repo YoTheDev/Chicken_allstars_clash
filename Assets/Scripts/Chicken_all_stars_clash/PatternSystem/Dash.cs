@@ -29,12 +29,19 @@ public class Dash : PatternAction {
         enemy.Knockback = true;
     }
 
+    public override void isCollidedGround(Enemy enemy)
+    {
+        return;
+    }
+
     public override float PatternDuration => Duration;
     public override float PatternDamage => damage;
 
     public override void Do(Enemy enemy) {
         enemy.Rigidbody.velocity = Vector3.zero;
         enemy.Rigidbody.AddForce(enemy.transform.TransformDirection(DashPower), ForceMode.Impulse);
+        enemy.camera_script.ShakeDistance = 0.2f;
+        enemy.camera_script.ShakeDuration = 1;
     }
 
     public override bool IsFinished(Enemy enemy) {

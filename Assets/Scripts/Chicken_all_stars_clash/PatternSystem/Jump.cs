@@ -2,33 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using PatternSystem;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 [CreateAssetMenu(fileName = "New Jump", menuName = "ChickenAllStarsClash/InGame/PatternAction/Jump")]
 public class Jump : PatternAction
 {
-    void Start()
-    {
-        
-    }
+    public float Duration;
+    public float Damage;
+    public Vector3 JumpPower;
 
-    void Update()
-    {
-        
-    }
-    
     public override void Do(Enemy enemy)
     {
-        throw new System.NotImplementedException();
+        enemy.Rigidbody.velocity = Vector3.zero;
+        enemy.Rigidbody.AddForce(enemy.transform.TransformDirection(JumpPower), ForceMode.Impulse);
+        enemy.camera_script.ShakeDistance = 0.6f;
+        enemy.camera_script.ShakeDuration = 2;
     }
-
-    public override bool IsFinished(Enemy enemy)
-    {
-        throw new System.NotImplementedException();
+    
+    public override bool IsFinished(Enemy enemy) {
+        return enemy.Rigidbody.velocity.y <= 0;
     }
 
     public override void isCollided(Enemy enemy)
     {
-        throw new System.NotImplementedException();
+        enemy.Rigidbody.velocity = Vector3.zero;
     }
 
     public override void isCollidedWall(Enemy enemy)
@@ -36,6 +33,11 @@ public class Jump : PatternAction
         throw new System.NotImplementedException();
     }
 
-    public override float PatternDuration { get; }
-    public override float PatternDamage { get; }
+    public override void isCollidedGround(Enemy enemy)
+    {
+        return;
+    }
+
+    public override float PatternDuration => Duration;
+    public override float PatternDamage => Damage;
 }
