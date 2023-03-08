@@ -15,6 +15,9 @@ namespace PatternSystem {
         public List<PatternAction> Pattern;
         public Game_management gameManagement;
         public Camera_manager camera_script;
+        public Camera mainCamera;
+        public Vector2 widthThresold;
+        public Vector2 heightThresold;
         public List<GameObject> target = new List<GameObject>();
         public float turnSpeed = .01f;
         public float maxHealth;
@@ -22,6 +25,7 @@ namespace PatternSystem {
         [HideInInspector] public Rigidbody Rigidbody;
         [HideInInspector] public bool Knockback;
         [HideInInspector] public bool Turn;
+        [HideInInspector] public bool Jump;
         [HideInInspector] public GameObject player;
         [HideInInspector] public GameObject Wall;
         [HideInInspector] public float damageCoast;
@@ -37,6 +41,8 @@ namespace PatternSystem {
         [SerializeField] private GameObject HealthBar;
         [SerializeField] private GameObject damageFeedback;
         [SerializeField] private GameObject deathFeedback;
+        [SerializeField] private GameObject Shock_wave_01;
+        [SerializeField] private GameObject Shock_wave_02;
         [SerializeField] private Slider Slider;
         [SerializeField] private TextMeshProUGUI Health_text;
         [SerializeField] private TextMeshProUGUI Health_text_02;
@@ -58,7 +64,9 @@ namespace PatternSystem {
         private Vector2 randomPos;
         private Vector3 healthBarStartPos;
 
-        private void Start() {
+        private void Start()
+        {
+            Jump = true;
             _currentHealth = maxHealth;
             Slider.maxValue = maxHealth;
             Slider.value = maxHealth;
@@ -81,6 +89,9 @@ namespace PatternSystem {
         }
 
         private void Update() {
+            Vector2 screenPosition = mainCamera.WorldToScreenPoint (transform.position);
+            if (screenPosition.x < widthThresold.x || screenPosition.x > widthThresold.y || screenPosition.y < heightThresold.x || screenPosition.y > heightThresold.y) 
+                Shock_wave_01.SetActive(false); Shock_wave_02.SetActive(false);
             if(ShakeTimer < 1) ShakeTimer += Time.deltaTime;
             if (ShakeTimer < 0.2) {
                 HealthBar.transform.position = healthBarStartPos + Random.insideUnitSphere * shakeHealthBarDistance;
@@ -125,6 +136,8 @@ namespace PatternSystem {
         }
 
         public void OnCollisionEnter(Collision other) {
+            Rigidbody rbShockWave_01 = Shock_wave_01.GetComponent<Rigidbody>();
+            Rigidbody rbShockWave_02 = Shock_wave_02.GetComponent<Rigidbody>();
             if (other.gameObject.CompareTag("Player") && !Knockback) {
                 player = other.gameObject;
                 _currentPatternAction.isCollided(this);
@@ -145,11 +158,17 @@ namespace PatternSystem {
                 Turn = false;
                 camera_script.shakeStart = true;
                 camera_script.ShakeTime = 0;
+                if (Jump) {
+                    Shock_wave_01.SetActive(true);
+                        Shock_wave_02.SetActive(true);
+                    rbShockWave_01.AddForce(Vector3.left * 20, ForceMode.Impulse);
+                        rbShockWave_02.AddForce(Vector3.right * 20, ForceMode.Impulse);
+                    Jump = false;
+                }
             }
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
+        private void OnTriggerEnter(Collider other) {
             if (other.gameObject.CompareTag("Attack") || other.gameObject.CompareTag("DeathBalloon") || other.gameObject.CompareTag("Shield")) {
                 ShakeTimer = 0;
                 float damage = other.GetComponentInParent<Player_class>()._currentWeapon.DamageData;

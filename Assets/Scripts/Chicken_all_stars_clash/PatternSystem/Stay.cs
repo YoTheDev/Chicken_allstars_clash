@@ -14,8 +14,7 @@ public class Stay : PatternAction {
         enemy.Rigidbody.velocity = Vector3.zero;
     }
 
-    public override void isCollidedGround(Enemy enemy)
-    {
+    public override void isCollidedGround(Enemy enemy) {
         return;
     }
 

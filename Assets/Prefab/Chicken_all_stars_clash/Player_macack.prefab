@@ -99,7 +99,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1354727619046288791
 Transform:
   m_ObjectHideFlags: 0
@@ -108,8 +108,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354727619046288788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.88, z: 0}
-  m_LocalScale: {x: 14.295008, y: 14.295008, z: 14.295008}
+  m_LocalPosition: {x: 0, y: 2.29, z: 0}
+  m_LocalScale: {x: 18.595402, y: 18.595402, z: 18.595402}
   m_Children: []
   m_Father: {fileID: 1354727620907376733}
   m_RootOrder: 3
@@ -323,8 +323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPivot: {fileID: 1354727620907376730}
   animator: {fileID: 0}
-  jumpHeight: 60
-  doubleJumpHeight: 90
+  jumpHeight: 80
+  doubleJumpHeight: 110
   airattackjumpHeight: 60
   knockbackForce: 10
   knockbackForceUp: 50

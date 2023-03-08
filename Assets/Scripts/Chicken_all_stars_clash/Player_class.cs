@@ -167,10 +167,10 @@ public class Player_class : MonoBehaviour {
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.AddForce(Vector3.up * 100,ForceMode.Impulse);
         Game_management.PlayerDead();
-        _rigidbody.mass = 0.10f;
+        _rigidbody.mass = 0.02f;
         _currentWeapon = weapon.First();
         playerSpeed = 2;
-        _rigidbody.drag = 0.3f;
+        _rigidbody.drag = 0.5f;
         playerPivot.SetActive(false);
         deathBalloon.SetActive(true);
         deathBalloon.layer = LayerMask.NameToLayer("IgnoreCollision");
@@ -318,7 +318,7 @@ public class Player_class : MonoBehaviour {
         else if (_canAirAttack) {
             animator.SetBool("attack",true);
             animator.SetBool("damage",false);
-            _rigidbody.drag = 3;
+            if(!isDead) _rigidbody.drag = 3;
             _currentWeapon.DoAirSimple(this);
             Invoke(nameof(AttackCooldown),reloadTimer);
         }
