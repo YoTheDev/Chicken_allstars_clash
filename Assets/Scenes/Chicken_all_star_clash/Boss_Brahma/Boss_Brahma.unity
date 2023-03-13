@@ -4323,6 +4323,7 @@ GameObject:
   - component: {fileID: 1111019501}
   - component: {fileID: 1111019504}
   - component: {fileID: 1111019503}
+  - component: {fileID: 1111019505}
   m_Layer: 3
   m_Name: Boss
   m_TagString: Boss
@@ -4344,9 +4345,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RandomizePattern: 1
   Pattern:
-  - {fileID: 11400000, guid: 88560f81ae9af0644ba5cd141dfe780d, type: 2}
+  - {fileID: 11400000, guid: 5bb94c3bc55d2874bbc78d1cf57fb03d, type: 2}
   - {fileID: 11400000, guid: 94c204ad024ab7d42b172977193537cd, type: 2}
+  - {fileID: 11400000, guid: 95d90d4215f4aa747a3ebd5e9a40b62f, type: 2}
   - {fileID: 11400000, guid: 1c8476f46be559d4fa19d80a04df84ba, type: 2}
+  - {fileID: 11400000, guid: 08e55d5f28deceb4691d1cf300edd292, type: 2}
   - {fileID: 11400000, guid: 7ba6bbbf4b1da2e4793aa3f185f5106d, type: 2}
   - {fileID: 11400000, guid: 88560f81ae9af0644ba5cd141dfe780d, type: 2}
   gameManagement: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
@@ -4427,6 +4430,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8, y: 10, z: 8}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &1111019505
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111019500}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 21e890cfc42f6ff48995a374495161a1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1121915636
 GameObject:
   m_ObjectHideFlags: 0

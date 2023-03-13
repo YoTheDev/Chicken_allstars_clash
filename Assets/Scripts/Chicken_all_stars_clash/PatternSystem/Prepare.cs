@@ -1,10 +1,11 @@
 ﻿using PatternSystem;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Stay", menuName = "ChickenAllStarsClash/InGame/PatternAction/Stay")]
+[CreateAssetMenu(fileName = "New Prepare", menuName = "ChickenAllStarsClash/InGame/PatternAction/Prepare")]
 public class Prepare : PatternAction {
     
     public float Duration;
+    public string attackAnimationName;
 
     public override void isCollided(Enemy enemy) {
         enemy.Rigidbody.velocity = Vector3.zero;

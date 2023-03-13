@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a191b038994a2a8ee9131abd70eab2, type: 3}
-  m_Name: After_dash
+  m_Script: {fileID: 11500000, guid: 462f5e8b9811fb443a52c72e59e027cf, type: 3}
+  m_Name: Prepare_dash
   m_EditorClassIdentifier: 
   Duration: 1
+  attackAnimationName: 

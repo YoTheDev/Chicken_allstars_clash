@@ -44,9 +44,11 @@ namespace PatternSystem {
         [SerializeField] private Slider Slider;
         [SerializeField] private TextMeshProUGUI Health_text;
         [SerializeField] private TextMeshProUGUI Health_text_02;
-
+        
+        private Animator animator;
         private PatternAction _currentPatternAction;
         private int _afterAction;
+        private int[] _PatternIndex = {0,2,4};
         private int _currentPatternIndex;
         private int _rngPlayer;
         private float _currentHealth;
@@ -64,6 +66,7 @@ namespace PatternSystem {
         private Vector3 healthBarStartPos;
 
         private void Start() {
+            animator = GetComponent<Animator>();
             _currentHealth = maxHealth;
             Slider.maxValue = maxHealth;
             Slider.value = maxHealth;
@@ -180,6 +183,7 @@ namespace PatternSystem {
                 Instantiate(damageFeedback, transform.position, transform.rotation);
                 _currentHealth -= damage;
                 Slider.value -= damage;
+                Debug.Log(_currentHealth);
                 if (_currentHealth > maxHealth / 3) Health_text.text = _currentHealth.ToString();
                 else Health_text.text = "???";
             }
@@ -189,10 +193,10 @@ namespace PatternSystem {
                 Instantiate(damageFeedback, transform.position, transform.rotation);
                 _currentHealth -= damage;
                 Slider.value -= damage;
+                Debug.Log(_currentHealth);
                 if (_currentHealth > maxHealth / 3) Health_text.text = _currentHealth.ToString();
                 else Health_text.text = "???";
             }
-            Debug.Log(_currentHealth);
             if (_currentHealth <= 0) {
                 Instantiate(deathFeedback,transform.position,transform.rotation);
                 _isDead = true;
@@ -221,13 +225,33 @@ namespace PatternSystem {
         }
 
         private PatternAction GetRandomPatternAction() {
-            if (_afterAction == 0) {
-                _currentPatternIndex = Random.Range(0, Pattern.Count);
-                _afterAction ++;
-            }
-            else if (_afterAction == 1) {
-                _currentPatternIndex = Pattern.Count - 1;
-                _afterAction --;
+            switch (_afterAction)
+            {
+                case 0:
+                    int randomNumber = Random.Range(0, _PatternIndex.Length);
+                    _currentPatternIndex = _PatternIndex[randomNumber];
+                    Debug.Log(Pattern[_currentPatternIndex]);
+                    switch (_currentPatternIndex)
+                    {
+                        case 0:
+                            break;
+                        case 2:
+                            break;
+                        case 4:
+                            break;
+                    }
+                    _afterAction++;
+                    break;
+                case 1:
+                    _currentPatternIndex++;
+                    Debug.Log(Pattern[_currentPatternIndex]);
+                    _afterAction++;
+                    break;
+                case 2:
+                    _currentPatternIndex = Pattern.Count - 1;
+                    Debug.Log(Pattern[_currentPatternIndex]);
+                    _afterAction = 0;
+                    break;
             }
             return Pattern[_currentPatternIndex];
         }
