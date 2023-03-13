@@ -11,12 +11,12 @@ public class Jump : PatternAction
     public float Damage;
     public Vector3 JumpPower;
 
-    public override void Do(Enemy enemy)
-    {
+    public override void Do(Enemy enemy) {
         enemy.Rigidbody.velocity = Vector3.zero;
         enemy.Rigidbody.AddForce(enemy.transform.TransformDirection(JumpPower), ForceMode.Impulse);
         enemy.camera_script.ShakeDistance = 0.6f;
         enemy.camera_script.ShakeDuration = 2;
+        enemy.Jump = true;
     }
     
     public override bool IsFinished(Enemy enemy) {

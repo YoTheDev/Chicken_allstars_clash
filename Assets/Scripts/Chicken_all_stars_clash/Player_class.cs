@@ -33,10 +33,12 @@ public class Player_class : MonoBehaviour {
     private float _shieldTimer;
     private int _attackCount;
     private GameObject _boss;
+    private GameObject _bossAttack;
     private GameObject _camera;
     public Player_management player_management;
     private Slider _slider01;
     private Slider _slider02;
+    private Vector3 knockbackDirection;
 
     [HideInInspector] public WeaponData _currentWeapon;
     [HideInInspector] public bool _canAirAttack;
@@ -254,21 +256,40 @@ public class Player_class : MonoBehaviour {
                 AttackCooldown();
             }
         }
-        if (other.gameObject.CompareTag("Boss") || other.gameObject.CompareTag("AttackBoss")) {
+        if (other.gameObject.CompareTag("Boss")) {
             if (isDead) return;
             if (other.gameObject.CompareTag("Boss")) _TouchBossAttack = false;
-            else if (other.gameObject.CompareTag("AttackBoss")) _TouchBossAttack = true;
-            animator.SetBool("damage",true);
-            _rigidbody.velocity = new Vector3(0, 0, 0);
-            Vector3 knockbackDirection = new Vector3(transform.position.x - _boss.transform.position.x, 0);
-            _rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
-            _rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
-            gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
-            Invoke(nameof(InvulnerabilityEnd), 1);
-            AttackCooldown();
-            Damage();
+            CollisionBoss();
         }
         if (isDead) _currentWeapon.Interrupt(this);
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (isDead) return;
+        if (other.gameObject.CompareTag("AttackBoss")) {
+            _bossAttack = other.gameObject;
+            _TouchBossAttack = true;
+            CollisionBoss();
+        }
+    }
+
+    void CollisionBoss() {
+        animator.SetBool("damage",true);
+        _rigidbody.velocity = new Vector3(0, 0, 0);
+        if(_TouchBossAttack) {
+            knockbackDirection = new Vector3(transform.position.x - _bossAttack.transform.position.x, 0);
+            _rigidbody.AddForce(knockbackDirection * (knockbackForce + 40),ForceMode.Impulse);
+        }
+        else {
+            knockbackDirection = new Vector3(transform.position.x - _boss.transform.position.x, 0);
+            _rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
+        }
+        _rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
+        _rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
+        gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
+        Invoke(nameof(InvulnerabilityEnd), 1);
+        AttackCooldown();
+        Damage();
     }
 
     void Damage() {

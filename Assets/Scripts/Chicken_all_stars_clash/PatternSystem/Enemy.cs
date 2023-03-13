@@ -15,9 +15,6 @@ namespace PatternSystem {
         public List<PatternAction> Pattern;
         public Game_management gameManagement;
         public Camera_manager camera_script;
-        public Camera mainCamera;
-        public Vector2 widthThresold;
-        public Vector2 heightThresold;
         public List<GameObject> target = new List<GameObject>();
         public float turnSpeed = .01f;
         public float maxHealth;
@@ -41,6 +38,7 @@ namespace PatternSystem {
         [SerializeField] private GameObject HealthBar;
         [SerializeField] private GameObject damageFeedback;
         [SerializeField] private GameObject deathFeedback;
+        [SerializeField] private GameObject Shock_wave_prefab;
         [SerializeField] private GameObject Shock_wave_01;
         [SerializeField] private GameObject Shock_wave_02;
         [SerializeField] private Slider Slider;
@@ -48,6 +46,7 @@ namespace PatternSystem {
         [SerializeField] private TextMeshProUGUI Health_text_02;
 
         private PatternAction _currentPatternAction;
+        private int _afterAction;
         private int _currentPatternIndex;
         private int _rngPlayer;
         private float _currentHealth;
@@ -64,9 +63,7 @@ namespace PatternSystem {
         private Vector2 randomPos;
         private Vector3 healthBarStartPos;
 
-        private void Start()
-        {
-            Jump = true;
+        private void Start() {
             _currentHealth = maxHealth;
             Slider.maxValue = maxHealth;
             Slider.value = maxHealth;
@@ -89,9 +86,6 @@ namespace PatternSystem {
         }
 
         private void Update() {
-            Vector2 screenPosition = mainCamera.WorldToScreenPoint (transform.position);
-            if (screenPosition.x < widthThresold.x || screenPosition.x > widthThresold.y || screenPosition.y < heightThresold.x || screenPosition.y > heightThresold.y) 
-                Shock_wave_01.SetActive(false); Shock_wave_02.SetActive(false);
             if(ShakeTimer < 1) ShakeTimer += Time.deltaTime;
             if (ShakeTimer < 0.2) {
                 HealthBar.transform.position = healthBarStartPos + Random.insideUnitSphere * shakeHealthBarDistance;
@@ -129,15 +123,13 @@ namespace PatternSystem {
                 HideBarImage.SetActive(true);
             }
         }
-
+        
         public void PlayerDead()
         {
             
         }
 
         public void OnCollisionEnter(Collision other) {
-            Rigidbody rbShockWave_01 = Shock_wave_01.GetComponent<Rigidbody>();
-            Rigidbody rbShockWave_02 = Shock_wave_02.GetComponent<Rigidbody>();
             if (other.gameObject.CompareTag("Player") && !Knockback) {
                 player = other.gameObject;
                 _currentPatternAction.isCollided(this);
@@ -159,10 +151,19 @@ namespace PatternSystem {
                 camera_script.shakeStart = true;
                 camera_script.ShakeTime = 0;
                 if (Jump) {
+                    Instantiate(Shock_wave_prefab, new Vector3(transform.position.x,transform.position.y - 2,transform.position.z), transform.rotation);
+                    Shock_wave_01 = GameObject.Find("Shock_wave_01");
+                        Shock_wave_02 = GameObject.Find("Shock_wave_02");
                     Shock_wave_01.SetActive(true);
                         Shock_wave_02.SetActive(true);
+                    Rigidbody rbShockWave_01 = Shock_wave_01.GetComponent<Rigidbody>();
+                        Rigidbody rbShockWave_02 = Shock_wave_02.GetComponent<Rigidbody>();
                     rbShockWave_01.AddForce(Vector3.left * 20, ForceMode.Impulse);
                         rbShockWave_02.AddForce(Vector3.right * 20, ForceMode.Impulse);
+                    Shock_wave_01.name = "Shock_wave_03";
+                        Shock_wave_02.name = "Shock_wave_04";
+                    Shock_wave_01 = null;
+                        Shock_wave_02 = null;
                     Jump = false;
                 }
             }
@@ -220,7 +221,14 @@ namespace PatternSystem {
         }
 
         private PatternAction GetRandomPatternAction() {
-            _currentPatternIndex = Random.Range(0, Pattern.Count);
+            if (_afterAction == 0) {
+                _currentPatternIndex = Random.Range(0, Pattern.Count);
+                _afterAction ++;
+            }
+            else if (_afterAction == 1) {
+                _currentPatternIndex = Pattern.Count - 1;
+                _afterAction --;
+            }
             return Pattern[_currentPatternIndex];
         }
 
