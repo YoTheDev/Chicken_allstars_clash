@@ -59,6 +59,7 @@ namespace PatternSystem {
         private bool _isDead;
         private bool _enemyReady;
         private bool _playOneShot;
+        private bool _playerDetection;
         private Quaternion _rotGoal;
         private Vector3 _direction;
         private Vector2 startPos;
@@ -147,7 +148,9 @@ namespace PatternSystem {
                     _patternTimer = _currentPatternAction.PatternDuration;
                     Knockback = false;
                 }
-                if (Turn) transform.rotation = Quaternion.LookRotation(_direction);
+                if (Turn) {
+                    transform.rotation = Quaternion.LookRotation(_direction);
+                }
                 _rngPlayer = Random.Range(0, target.Count);
                 Rigidbody.velocity = Vector3.zero;
                 Turn = false;
@@ -165,9 +168,13 @@ namespace PatternSystem {
                         rbShockWave_02.AddForce(Vector3.right * 20, ForceMode.Impulse);
                     Shock_wave_01.name = "Shock_wave_03";
                         Shock_wave_02.name = "Shock_wave_04";
+                    Shock_wave_01.transform.parent = null;
+                        Shock_wave_02.transform.parent = null;
+                    GameObject Shock_wave_Instantiate = GameObject.Find("Shock_Wave(Clone)");
+                    Destroy(Shock_wave_Instantiate);
                     Shock_wave_01 = null;
                         Shock_wave_02 = null;
-                    Jump = false;
+                        Jump = false;
                 }
             }
         }
@@ -230,26 +237,14 @@ namespace PatternSystem {
                 case 0:
                     int randomNumber = Random.Range(0, _PatternIndex.Length);
                     _currentPatternIndex = _PatternIndex[randomNumber];
-                    Debug.Log(Pattern[_currentPatternIndex]);
-                    switch (_currentPatternIndex)
-                    {
-                        case 0:
-                            break;
-                        case 2:
-                            break;
-                        case 4:
-                            break;
-                    }
                     _afterAction++;
                     break;
                 case 1:
                     _currentPatternIndex++;
-                    Debug.Log(Pattern[_currentPatternIndex]);
                     _afterAction++;
                     break;
                 case 2:
                     _currentPatternIndex = Pattern.Count - 1;
-                    Debug.Log(Pattern[_currentPatternIndex]);
                     _afterAction = 0;
                     break;
             }

@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 1354727619046288776}
   - component: {fileID: 1354727619046288777}
   - component: {fileID: 1354727619046288790}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Attack2_placeholder
   m_TagString: Attack
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 1354727619247397005}
   - component: {fileID: 1354727619247397002}
   - component: {fileID: 1354727619247397003}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Attack_placeholder
   m_TagString: Attack
   m_Icon: {fileID: 0}

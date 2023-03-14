@@ -258,7 +258,7 @@ public class Player_class : MonoBehaviour {
         }
         if (other.gameObject.CompareTag("Boss")) {
             if (isDead) return;
-            if (other.gameObject.CompareTag("Boss")) _TouchBossAttack = false;
+            _TouchBossAttack = false;
             CollisionBoss();
         }
         if (isDead) _currentWeapon.Interrupt(this);
