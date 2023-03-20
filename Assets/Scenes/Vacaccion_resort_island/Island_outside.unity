@@ -3353,6 +3353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 756662030}
   - component: {fileID: 756662029}
+  - component: {fileID: 756662031}
   - component: {fileID: 756662028}
   - component: {fileID: 756662027}
   m_Layer: 0
@@ -3480,8 +3481,10 @@ MonoBehaviour:
   - {fileID: 128983739}
   - {fileID: 1777072383}
   startButton: {fileID: 763050582}
+  optionButton: {fileID: 1165088773}
   readyButton: {fileID: 674820341}
   startMissionAnyway: {fileID: 18082515}
+  noMissionAnyway: {fileID: 1140254028}
   ui:
   - {fileID: 1450577703}
   - {fileID: 646316043}
@@ -3521,6 +3524,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &756662031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756662026}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394390c34f4caeb4297785d063728f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UiObject:
+  - {fileID: 1476045443}
+  - {fileID: 1450577703}
+  - {fileID: 646316043}
+  - {fileID: 843679544}
+  - {fileID: 538824848}
+  UiButton:
+  - {fileID: 763050582}
+  - {fileID: 1165088773}
+  - {fileID: 674820341}
+  - {fileID: 18082515}
+  - {fileID: 1140254028}
+  PlayerSpawner: []
+  PlayerUI: []
+  UiAction: []
+  _attackPressed: 0
+  _jumpPressed: 0
 --- !u!1 &763050580
 GameObject:
   m_ObjectHideFlags: 0
@@ -5573,6 +5605,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 18082515}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1140254028}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1140254029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5779,7 +5835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1165088772
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6877,7 +6933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1476045444
 RectTransform:
   m_ObjectHideFlags: 0

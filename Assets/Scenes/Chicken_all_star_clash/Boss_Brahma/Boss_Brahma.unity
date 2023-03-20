@@ -4415,11 +4415,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 88560f81ae9af0644ba5cd141dfe780d, type: 2}
   gameManagement: {fileID: 11400000, guid: 0450177e13c26b14f8faf79bd073995c, type: 2}
   camera_script: {fileID: 963194229}
-  target:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  target: []
   turnSpeed: 18
   maxHealth: 20000
   Rigidbody: {fileID: 0}

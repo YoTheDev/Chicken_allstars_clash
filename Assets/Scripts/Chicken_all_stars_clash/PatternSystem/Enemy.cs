@@ -49,6 +49,7 @@ namespace PatternSystem {
         private PatternAction _currentPatternAction;
         private int _afterAction;
         private int[] _PatternIndex = {0,2,4};
+        private List<int> _RandomTarget = new List<int>() {0,1,2,3};
         private int _currentPatternIndex;
         private int _rngPlayer;
         private float _currentHealth;
@@ -82,8 +83,9 @@ namespace PatternSystem {
 
         public void EnemyStart() {
             if (!_enemyReady) {
-                for (int i = 0; i < target.Count; i++) {
-                    if(GameObject.FindWithTag("Player")) target[i] = GameObject.FindWithTag("Player");
+                for (int i = 0; i < gameManagement.playerAlive.Count; i++) {
+                    if(!gameManagement.playerAlive[i]) continue;
+                    target.Add(GameObject.FindWithTag("Player"));
                 }
                 _enemyReady = true;
             }
@@ -109,7 +111,7 @@ namespace PatternSystem {
                 _patternTimer += Time.deltaTime;
             }
             if (Turn) {
-                Vector3 posTarget = target[_rngPlayer].transform.position ;
+                Vector3 posTarget = target[_rngPlayer].transform.position;
                 Vector3 posOrigin = transform.position;
                 Quaternion rotOrigin = transform.rotation;
                 _direction = (posTarget - posOrigin).normalized;
@@ -117,7 +119,10 @@ namespace PatternSystem {
                 _rotGoal = Quaternion.LookRotation(_direction);
                 transform.rotation = Quaternion.Slerp(rotOrigin,_rotGoal,turnSpeed * Time.deltaTime);
             }
-
+            if (!gameManagement.playerAlive[gameManagement._aliveIndex] && !target[gameManagement._aliveIndex]) {
+                target[gameManagement._aliveIndex] = null;
+                _RandomTarget.Remove(_RandomTarget[gameManagement._aliveIndex]);
+            }
             if (ShakeTimer < 0.2) {
                 startPos = transform.position;
                 randomPos = startPos + (Random.insideUnitCircle * shakeDistance);
@@ -126,11 +131,6 @@ namespace PatternSystem {
             if (_currentHealth <= maxHealth / 3) {
                 HideBarImage.SetActive(true);
             }
-        }
-        
-        public void PlayerDead()
-        {
-            
         }
 
         public void OnCollisionEnter(Collision other) {
@@ -151,7 +151,8 @@ namespace PatternSystem {
                 if (Turn) {
                     transform.rotation = Quaternion.LookRotation(_direction);
                 }
-                _rngPlayer = Random.Range(0, target.Count);
+                int randomNumber = Random.Range(0, target.Count);
+                _rngPlayer = _RandomTarget[randomNumber];
                 Rigidbody.velocity = Vector3.zero;
                 Turn = false;
                 camera_script.shakeStart = true;

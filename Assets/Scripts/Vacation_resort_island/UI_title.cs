@@ -15,8 +15,10 @@ public class UI_title : MonoBehaviour {
     [SerializeField] private GameObject grayOpacity;
     [SerializeField] private List<GameObject> pressStartText;
     [SerializeField] private Button startButton;
+    [SerializeField] private Button optionButton;
     [SerializeField] private Button readyButton;
     [SerializeField] private Button startMissionAnyway;
+    [SerializeField] private Button noMissionAnyway;
 
     public List<GameObject> ui = new List<GameObject>();
     public List<GameObject> playerui = new List<GameObject>();
@@ -38,6 +40,10 @@ public class UI_title : MonoBehaviour {
     void OnJumpHold() { _jumpPressed = !_jumpPressed; }
     
     private void Start() {
+        startButton.interactable = false;
+        optionButton.interactable = false;
+        startMissionAnyway.interactable = false;
+        noMissionAnyway.interactable = false;
         _playOneShot = true;
         titleScreen.SetActive(true);
         startButton.onClick.AddListener(() => PlayerJoining());
@@ -54,6 +60,7 @@ public class UI_title : MonoBehaviour {
         if (titleScreen.activeSelf && _jumpPressed && _attackPressed) {
             titleScreen.SetActive(false);
             ui[0].SetActive(true);
+            Invoke(nameof(ButtonCooldown),0.4f);
             _playerInput.enabled = false;
         }
         if (!ui[1].activeSelf || ui[2].activeSelf) return;
@@ -75,6 +82,7 @@ public class UI_title : MonoBehaviour {
         if (_playerIndex != player.Count) {
             _inputManager.DisableJoining();
             ui[2].SetActive(true);
+            Invoke(nameof(ButtonCooldown),0.4f);
             grayOpacity.SetActive(true);
         }
         else {
@@ -103,5 +111,19 @@ public class UI_title : MonoBehaviour {
     void OnPlayerJoined() {
         if (!ui[1].activeSelf) return;
         JoinedPlayer();
+    }
+
+    void ButtonCooldown()
+    {
+        if (ui[0].activeSelf)
+        {
+            startButton.interactable = true;
+            optionButton.interactable = true;
+        }
+        if (ui[2].activeSelf)
+        {
+            startMissionAnyway.interactable = true;
+            noMissionAnyway.interactable = true;
+        }
     }
 }
