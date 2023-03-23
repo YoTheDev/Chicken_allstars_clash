@@ -27,6 +27,7 @@ public class Turn : PatternAction
         enemy.Rigidbody.velocity = Vector3.zero;
         enemy.Rigidbody.AddForce(enemy.transform.TransformDirection(JumpPower), ForceMode.Impulse);
         enemy.Turn = true;
+        enemy.animator.SetBool("grounded",false);
         enemy.camera_script.ShakeDistance = 0.2f;
         enemy.camera_script.ShakeDuration = 1;
     }

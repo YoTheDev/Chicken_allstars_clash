@@ -14,9 +14,10 @@ public class Jump : PatternAction
     public override void Do(Enemy enemy) {
         enemy.Rigidbody.velocity = Vector3.zero;
         enemy.Rigidbody.AddForce(enemy.transform.TransformDirection(JumpPower), ForceMode.Impulse);
-        enemy.camera_script.ShakeDistance = 0.6f;
-        enemy.camera_script.ShakeDuration = 2;
+        enemy.camera_script.ShakeDistance = 2;
+        enemy.camera_script.ShakeDuration = 5;
         enemy.Jump = true;
+        enemy.animator.SetBool("grounded",false);
     }
     
     public override bool IsFinished(Enemy enemy) {

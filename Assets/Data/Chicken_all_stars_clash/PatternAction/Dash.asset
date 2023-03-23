@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DashPower: {x: 0, y: 0, z: 35}
   knockbackForce: 2
-  knockbackForceUp: 30
+  knockbackForceUp: 60
   Duration: 10
   damage: 10

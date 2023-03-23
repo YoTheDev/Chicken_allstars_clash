@@ -19,6 +19,8 @@ public class Dash : PatternAction {
         enemy.Rigidbody.AddForce(knockbackDirection * knockbackForce,ForceMode.Impulse);
         enemy.Rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
         enemy.Knockback = true;
+        enemy.animator.SetBool("collided",true);
+        enemy.animator.SetBool("grounded",false);
     }
 
     public override void isCollidedWall(Enemy enemy) {
@@ -27,6 +29,8 @@ public class Dash : PatternAction {
         enemy.Rigidbody.AddForce(knockbackDirectionWall * knockbackForce,ForceMode.Impulse);
         enemy.Rigidbody.AddForce(Vector3.up * knockbackForceUp,ForceMode.Impulse);
         enemy.Knockback = true;
+        enemy.animator.SetBool("collided",true);
+        enemy.animator.SetBool("grounded",false);
     }
 
     public override void isCollidedGround(Enemy enemy)

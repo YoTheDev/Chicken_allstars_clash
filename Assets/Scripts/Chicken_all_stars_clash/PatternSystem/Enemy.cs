@@ -20,9 +20,12 @@ namespace PatternSystem {
         public float maxHealth;
         
         [HideInInspector] public Rigidbody Rigidbody;
+        [HideInInspector] public Animator animator;
         [HideInInspector] public bool Knockback;
         [HideInInspector] public bool Turn;
         [HideInInspector] public bool Jump;
+        [HideInInspector] public bool Dash;
+        [HideInInspector] public int _currentPatternIndex;
         [HideInInspector] public GameObject player;
         [HideInInspector] public GameObject Wall;
         [HideInInspector] public float damageCoast;
@@ -45,12 +48,10 @@ namespace PatternSystem {
         [SerializeField] private TextMeshProUGUI Health_text;
         [SerializeField] private TextMeshProUGUI Health_text_02;
         
-        private Animator animator;
         private PatternAction _currentPatternAction;
         private int _afterAction;
         private int[] _PatternIndex = {0,2,4};
         private List<int> _RandomTarget = new List<int>() {0,1,2,3};
-        private int _currentPatternIndex;
         private int _rngPlayer;
         private float _currentHealth;
         private float _patternTimer;
@@ -61,14 +62,19 @@ namespace PatternSystem {
         private bool _enemyReady;
         private bool _playOneShot;
         private bool _playerDetection;
+        private bool _boxCast;
+        private RaycastHit m_hit;
         private Quaternion _rotGoal;
         private Vector3 _direction;
         private Vector2 startPos;
         private Vector2 randomPos;
         private Vector3 healthBarStartPos;
 
-        private void Start() {
-            animator = GetComponent<Animator>();
+        private void Start()
+        {
+            _boxCast = Physics.BoxCast(gameObject.GetComponent<Collider>().bounds.center, transform.localScale,
+                transform.forward);
+            animator = GetComponentInChildren<Animator>();
             _currentHealth = maxHealth;
             Slider.maxValue = maxHealth;
             Slider.value = maxHealth;
@@ -92,6 +98,11 @@ namespace PatternSystem {
         }
 
         private void Update() {
+            if (_boxCast)
+            {
+                Debug.Log("hit" + m_hit.collider.name);
+            }
+            //-------------------------------
             if(ShakeTimer < 1) ShakeTimer += Time.deltaTime;
             if (ShakeTimer < 0.2) {
                 HealthBar.transform.position = healthBarStartPos + Random.insideUnitSphere * shakeHealthBarDistance;
@@ -102,8 +113,7 @@ namespace PatternSystem {
             if (!_isDead && !gameManagement.gameOver) {
                 if (_currentPatternAction == null || _currentPatternAction.IsFinished(this) &&
                     _patternTimer >= _currentPatternAction.PatternDuration) {
-                    if (_currentPatternAction == null) _currentPatternAction = Pattern.First();
-                    else _currentPatternAction = RandomizePattern ? GetRandomPatternAction() : GetNextPatternAction();
+                    _currentPatternAction = RandomizePattern ? GetRandomPatternAction() : GetNextPatternAction();
                     _currentPatternAction.Do(this);
                     _patternTimer = 0;
                     damageCoast = _currentPatternAction.PatternDamage;
@@ -143,10 +153,13 @@ namespace PatternSystem {
                 _currentPatternAction.isCollidedWall(this);
             }
             if (other.gameObject.CompareTag("Ground")) {
+                animator.SetBool("grounded",true);
+                animator.SetInteger("attack",0);
                 if (Knockback) {
                     Rigidbody.velocity = Vector3.zero;
                     _patternTimer = _currentPatternAction.PatternDuration;
                     Knockback = false;
+                    animator.SetBool("collided",false);
                 }
                 if (Turn) {
                     transform.rotation = Quaternion.LookRotation(_direction);
